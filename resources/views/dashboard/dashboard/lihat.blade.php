@@ -39,7 +39,7 @@
 					        	</div>
 					        </div>
 				    		<div class="col-sm-6">
-				    			<div style="margin-top: 70px">
+				    			<div style="margin-top: 70px; text-align: center">
 				        			<p style="font-weight: bold; font-size: 20px; margin-bottom: 5px">Halo, {{Auth::user()->name}}</p>
 				        			<p style="font-size: 16px">Selamat Datang di halaman dashboard</p>
 				    			</div>
