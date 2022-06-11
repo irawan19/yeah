@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
-use Nesiatix;
+use Yeah;
 use Auth;
 
 class KonfigurasiProfilController extends Controller

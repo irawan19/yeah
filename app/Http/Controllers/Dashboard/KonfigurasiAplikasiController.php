@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
-use Nesiatix;
+use Yeah;
 use Auth;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
@@ -13,7 +13,7 @@ class KonfigurasiAplikasiController extends Controller
     public function index()
     {
         $link_konfigurasi_aplikasi = 'konfigurasi_aplikasi';
-        if(Nesiatix::hakAkses($link_konfigurasi_aplikasi, 'lihat') == 'true')
+        if(Yeah::hakAkses($link_konfigurasi_aplikasi, 'lihat') == 'true')
         {
             $data['lihat_konfigurasi_aplikasis']       = \App\Models\Master_konfigurasi_aplikasi::first();
             session()->forget('halaman');
@@ -26,7 +26,7 @@ class KonfigurasiAplikasiController extends Controller
     public function prosesedit(Request $request)
     {
         $link_konfigurasi_aplikasi = 'konfigurasi_aplikasi';
-        if (Nesiatix::hakAkses($link_konfigurasi_aplikasi, 'lihat') == 'true')
+        if (Yeah::hakAkses($link_konfigurasi_aplikasi, 'lihat') == 'true')
         {
             $aturan = [
                 'nama_konfigurasi_aplikasis'                => 'required',
@@ -61,7 +61,7 @@ class KonfigurasiAplikasiController extends Controller
     public function proseseditlogo(Request $request)
     {
         $link_konfigurasi_aplikasi = 'konfigurasi_aplikasi';
-        if(Nesiatix::hakAkses($link_konfigurasi_aplikasi, 'lihat') == 'true')
+        if(Yeah::hakAkses($link_konfigurasi_aplikasi, 'lihat') == 'true')
         {
             $aturan = [
                 'userfile_logo'     => 'required|mimes:png,jpg,jpeg,svg',
@@ -103,7 +103,7 @@ class KonfigurasiAplikasiController extends Controller
     public function prosesediticon(Request $request)
     {
         $link_konfigurasi_aplikasi = 'konfigurasi_aplikasi';
-        if(Nesiatix::hakAkses($link_konfigurasi_aplikasi, 'lihat') == 'true')
+        if(Yeah::hakAkses($link_konfigurasi_aplikasi, 'lihat') == 'true')
         {
             $aturan = [
                 'userfile_icon'             => 'required|mimes:png,jpg,jpeg,svg',
@@ -143,7 +143,7 @@ class KonfigurasiAplikasiController extends Controller
     public function proseseditlogotext(Request $request)
     {
         $link_konfigurasi_aplikasi = 'konfigurasi_aplikasi';
-        if(Nesiatix::hakAkses($link_konfigurasi_aplikasi, 'lihat') == 'true')
+        if(Yeah::hakAkses($link_konfigurasi_aplikasi, 'lihat') == 'true')
         {
             $aturan = [
                 'userfile_logo_text'            => 'required|mimes:png,jpg,jpeg,svg',

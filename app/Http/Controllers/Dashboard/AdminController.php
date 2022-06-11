@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
-use Nesiatix;
+use Yeah;
 use Auth;
 
 class AdminController extends Controller
@@ -10,7 +10,7 @@ class AdminController extends Controller
     public function index(Request $request)
     {
         $link_admin = 'admin';
-        if(Nesiatix::hakAkses($link_admin,'lihat') == 'true')
+        if(Yeah::hakAkses($link_admin,'lihat') == 'true')
         {
             $data['link_admin']         = $link_admin;
             $data['hasil_kata']         = '';
@@ -32,7 +32,7 @@ class AdminController extends Controller
     public function cari(Request $request)
     {
         $link_admin = 'admin';
-        if(Nesiatix::hakAkses($link_admin,'lihat') == 'true')
+        if(Yeah::hakAkses($link_admin,'lihat') == 'true')
         {
             $data['link_admin']         = $link_admin;
             $url_sekarang               = $request->fullUrl();
@@ -64,7 +64,7 @@ class AdminController extends Controller
     public function tambah()
     {
         $link_admin = 'admin';
-        if(Nesiatix::hakAkses($link_admin,'tambah') == 'true')
+        if(Yeah::hakAkses($link_admin,'tambah') == 'true')
         {
             $data['tambah_level_sistems']       = \App\Models\Master_level_sistem::orderBy('nama_level_sistems')
                                                                         ->get();
@@ -77,7 +77,7 @@ class AdminController extends Controller
     public function prosestambah(Request $request)
     {
         $link_admin = 'admin';
-        if(Nesiatix::hakAkses($link_admin,'tambah') == 'true')
+        if(Yeah::hakAkses($link_admin,'tambah') == 'true')
         {
             $ambil_foto_user = $request->userfile_foto_user;
             if($ambil_foto_user != '')
@@ -187,7 +187,7 @@ class AdminController extends Controller
     public function baca($id_admins=0)
     {
         $link_admin = 'admin';
-        if(Nesiatix::hakAkses($link_admin,'baca') == 'true')
+        if(Yeah::hakAkses($link_admin,'baca') == 'true')
         {
             $cek_admins = \App\Models\User::where('id',$id_admins)->first();
             if(!empty($cek_admins))
@@ -212,7 +212,7 @@ class AdminController extends Controller
     public function edit($id_admins=0)
     {
         $link_admin = 'admin';
-        if(Nesiatix::hakAkses($link_admin,'edit') == 'true')
+        if(Yeah::hakAkses($link_admin,'edit') == 'true')
         {
             $cek_admins = \App\Models\User::where('id',$id_admins)->count();
             if($cek_admins != 0)
@@ -233,7 +233,7 @@ class AdminController extends Controller
     public function prosesedit($id_admins=0, Request $request)
     {
         $link_admin = 'admin';
-        if(Nesiatix::hakAkses($link_admin,'edit') == 'true')
+        if(Yeah::hakAkses($link_admin,'edit') == 'true')
         {
             $cek_admins = \App\Models\User::where('id',$id_admins)->first();
             if(!empty($cek_admins))
@@ -397,7 +397,7 @@ class AdminController extends Controller
     public function hapus($id_admins=0)
     {
         $link_admin = 'admin';
-        if(Nesiatix::hakAkses($link_admin,'hapus') == 'true')
+        if(Yeah::hakAkses($link_admin,'hapus') == 'true')
         {
             $cek_admins = \App\Models\User::where('id',$id_admins)->first();
             if(!empty($cek_admins))
