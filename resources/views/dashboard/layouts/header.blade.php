@@ -73,7 +73,7 @@
 		</div>
 	</li>
 </ul>
-<script type="text/javascript">template/back/
+<script type="text/javascript">
 	window.setTimeout("timeJavascript()",1000);
     function timeJavascript()
 	{     

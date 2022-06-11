@@ -112,7 +112,7 @@
 	    		background-color: #fff !important;
 	    	}
 	    	.c-header-brand-minimized{
-	    		width: 128px;
+	    		width: 90px;
 	    	}
 		}
 	    @media (min-width: 768px)

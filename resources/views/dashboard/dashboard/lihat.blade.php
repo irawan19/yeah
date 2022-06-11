@@ -34,8 +34,8 @@
 				    <div class="card-body pb-0">
 				    	<div class="row">
 				    		<div class="col-sm-6">
-					        	<div style="max-width: 350px;text-align: center; margin-top: 50px">
-					        		<img src="{{URL::asset($lihat_konfigurasi_aplikasis->logo_text_konfigurasi_aplikasis)}}" width="300px">
+					        	<div style="max-width: 350px;text-align: center; margin-top: 20px">
+					        		<img src="{{URL::asset($lihat_konfigurasi_aplikasis->logo_text_konfigurasi_aplikasis)}}" width="256px">
 					        	</div>
 					        </div>
 				    		<div class="col-sm-6">
