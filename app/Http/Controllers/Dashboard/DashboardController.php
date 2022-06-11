@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
-use Yeah;
+use Nesiatix;
 use DB;
 use Auth;
 

@@ -103,7 +103,7 @@ class Yeah
 			if (Yeah::hakAkses($link_menus, 'tambah') == 'true') {
 				echo 	'<a href="' . URL($link) . '" class="btn btn-sm btn-success">
 								<svg class="c-icon" style="margin-right:5px;">
-		                          	<use xlink:href="' . URL::asset('template/back/assets/icons/coreui/free.svg#cil-plus') . '"></use>
+		                          	<use xlink:href="' . URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-plus') . '"></use>
 		                        </svg> Tambah
 							</a>';
 			}
@@ -114,7 +114,7 @@ class Yeah
 			if (Yeah::hakAkses($link_menus, 'tambah') == 'true') {
 				echo 	'<a href="' . URL($link) . '" class="btn btn-sm btn-success">
 								<svg class="c-icon" style="margin-right:5px;">
-		                          	<use xlink:href="' . URL::asset('template/back/assets/icons/coreui/free.svg#cil-cloud-download') . '"></use>
+		                          	<use xlink:href="' . URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-cloud-download') . '"></use>
 		                        </svg> Download Template
 							</a>';
 			}
@@ -125,7 +125,7 @@ class Yeah
 			if (Yeah::hakAkses($link_menus, 'tambah') == 'true') {
 				echo 	'<a href="' . URL($link) . '" class="btn btn-sm btn-secondary">
 								<svg class="c-icon" style="margin-right:5px;">
-		                          	<use xlink:href="' . URL::asset('template/back/assets/icons/coreui/free.svg#cil-pencil') . '"></use>
+		                          	<use xlink:href="' . URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-pencil') . '"></use>
 		                        </svg> Atur Absensi
 							</a>';
 			}
@@ -136,7 +136,7 @@ class Yeah
 			if (Yeah::hakAkses($link_menus, 'cetak') == 'true') {
 				echo 	'<a target="_blank" href="' . URL($link) . '" class="btn btn-sm btn-success">
 								<svg class="c-icon" style="margin-right:5px;">
-		                          	<use xlink:href="' . URL::asset('template/back/assets/icons/coreui/free.svg#cil-print') . '"></use>
+		                          	<use xlink:href="' . URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-print') . '"></use>
 		                        </svg> Cetak
 							</a>';
 			}
@@ -147,7 +147,7 @@ class Yeah
 			if (Yeah::hakAkses($link_menus, 'cetak') == 'true') {
 				echo 	'<a href="' . URL($link) . '" class="btn btn-sm btn-success">
 								<svg class="c-icon" style="margin-right:5px;">
-		                          	<use xlink:href="' . URL::asset('template/back/assets/icons/coreui/free.svg#cil-cloud-download') . '"></use>
+		                          	<use xlink:href="' . URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-cloud-download') . '"></use>
 		                        </svg> Cetak Excel
 							</a>';
 			}
@@ -158,7 +158,7 @@ class Yeah
 			if (Yeah::hakAkses($link_menus, 'cetak') == 'true') {
 				echo 	'<a href="' . URL($link) . '" class="btn btn-sm btn-success">
 								<svg class="c-icon" style="margin-right:5px;">
-		                          	<use xlink:href="' . URL::asset('template/back/assets/icons/coreui/free.svg#cil-print') . '"></use>
+		                          	<use xlink:href="' . URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-print') . '"></use>
 		                        </svg> Cetak
 							</a>';
 			}
@@ -169,7 +169,7 @@ class Yeah
 			if (Yeah::hakAkses($link_menus, 'cetak') == 'true') {
 				echo 	'<button class="btn btn-sm btn-success" disabled>
 								<svg class="c-icon" style="margin-right:5px;">
-		                          	<use xlink:href="' . URL::asset('template/back/assets/icons/coreui/free.svg#cil-print') . '"></use>
+		                          	<use xlink:href="' . URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-print') . '"></use>
 		                        </svg> Cetak
 							</button>';
 			}
@@ -180,7 +180,7 @@ class Yeah
 			if (Yeah::hakAkses($link_menus, 'cetak') == 'true') {
 				echo 	'<a target="_blank" href="' . URL($link) . '" class="btn btn-sm btn-danger">
 								<svg class="c-icon" style="margin-right:5px;">
-		                          	<use xlink:href="' . URL::asset('template/back/assets/icons/coreui/free.svg#cil-print') . '"></use>
+		                          	<use xlink:href="' . URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-print') . '"></use>
 		                        </svg> Cetak PDF
 							</a>';
 			}
@@ -191,7 +191,7 @@ class Yeah
 			if (Yeah::hakAkses($link_menus, 'baca') == 'true') {
 				echo 	'<a href="' . URL($link) . '" class="btn btn-sm btn-warning">
 								<svg class="c-icon" style="margin-right:5px;">
-		                          	<use xlink:href="' . URL::asset('template/back/assets/icons/coreui/free.svg#cil-folder-open') . '"></use>
+		                          	<use xlink:href="' . URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-folder-open') . '"></use>
 		                        </svg> Baca
 							</a>';
 			}
@@ -202,7 +202,7 @@ class Yeah
 			if (Yeah::hakAkses($link_menus, 'lihat') == 'true') {
 				echo 	'<a href="' . URL($link) . '" class="btn btn-sm btn-warning">
 								<svg class="c-icon" style="margin-right:5px;">
-		                          	<use xlink:href="' . URL::asset('template/back/assets/icons/coreui/free.svg#cil-folder-open') . '"></use>
+		                          	<use xlink:href="' . URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-folder-open') . '"></use>
 		                        </svg> Detail
 							</a>';
 			}
@@ -213,7 +213,7 @@ class Yeah
 			if (Yeah::hakAkses($link_menus, 'lihat') == 'true') {
 				echo 	'<a href="' . URL($link) . '" class="btn btn-sm btn-secondary">
 								<svg class="c-icon" style="margin-right:5px;">
-		                          	<use xlink:href="' . URL::asset('template/back/assets/icons/coreui/free.svg#cil-list-numbered') . '"></use>
+		                          	<use xlink:href="' . URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-list-numbered') . '"></use>
 		                        </svg> Urutan
 							</a>';
 			}
@@ -224,7 +224,7 @@ class Yeah
 			if (Yeah::hakAkses($link_menus, 'lihat') == 'true') {
 				echo 	'<a class="dropdown-item" href="' . URL($link) . '" style="color:green">
 								<svg class="c-icon" style="margin-right:5px;margin-top:-3px">
-		                          	<use xlink:href="' . URL::asset('template/back/assets/icons/coreui/free.svg#cil-menu') . '"></use>
+		                          	<use xlink:href="' . URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-menu') . '"></use>
 		                        </svg> Sub Menu
 							</a>';
 			}
@@ -235,7 +235,7 @@ class Yeah
 			if (Yeah::hakAkses($link_menus, 'baca') == 'true') {
 				echo 	'<a class="dropdown-item" href="' . URL($link) . '" style="color:orange">
 								<svg class="c-icon" style="margin-right:5px;margin-top:-3px">
-		                          	<use xlink:href="' . URL::asset('template/back/assets/icons/coreui/free.svg#cil-folder-open') . '"></use>
+		                          	<use xlink:href="' . URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-folder-open') . '"></use>
 		                        </svg> Baca
 							</a>';
 			}
@@ -246,7 +246,7 @@ class Yeah
 			if (Yeah::hakAkses($link_menus, 'edit') == 'true') {
 				echo 	'<a class="dropdown-item" href="' . URL($link) . '" style="color:purple">
 								<svg class="c-icon" style="margin-right:5px;margin-top:-3px">
-		                          	<use xlink:href="' . URL::asset('template/back/assets/icons/coreui/free.svg#cil-pencil') . '"></use>
+		                          	<use xlink:href="' . URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-pencil') . '"></use>
 		                        </svg> Edit
 							</a>';
 			}
@@ -257,7 +257,7 @@ class Yeah
 			if (Yeah::hakAkses($link_menus, 'edit') == 'true') {
 				echo 	'<a class="dropdown-item" href="' . URL($link) . '" style="color:green">
 								<svg class="c-icon" style="margin-right:5px;margin-top:-3px">
-		                          	<use xlink:href="' . URL::asset('template/back/assets/icons/coreui/free.svg#cil-check') . '"></use>
+		                          	<use xlink:href="' . URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-check') . '"></use>
 		                        </svg> Proses
 							</a>';
 			};
@@ -268,7 +268,7 @@ class Yeah
 			if (Yeah::hakAkses($link_menus, 'edit') == 'true') {
 				echo 	'<a href="' . URL($link) . '" class="btn btn-sm btn-success">
 								<svg class="c-icon" style="margin-right:5px;">
-		                          	<use xlink:href="' . URL::asset('template/back/assets/icons/coreui/free.svg#cil-check') . '"></use>
+		                          	<use xlink:href="' . URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-check') . '"></use>
 		                        </svg> Aktif
 							</a>';
 			}
@@ -279,7 +279,7 @@ class Yeah
 			if (Yeah::hakAkses($link_menus, 'edit') == 'true') {
 				echo 	'<a href="' . URL($link) . '" class="btn btn-sm btn-danger">
 								<svg class="c-icon" style="margin-right:5px;">
-		                          	<use xlink:href="' . URL::asset('template/back/assets/icons/coreui/free.svg#cil-ban') . '"></use>
+		                          	<use xlink:href="' . URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-ban') . '"></use>
 		                        </svg> Non Aktif
 							</a>';
 			}
@@ -290,7 +290,7 @@ class Yeah
 			if (Yeah::hakAkses($link_menus, 'edit') == 'true') {
 				echo 	'<a href="' . URL($link) . '" class="btn btn-sm btn-danger">
 								<svg class="c-icon" style="margin-right:5px;">
-		                          	<use xlink:href="' . URL::asset('template/back/assets/icons/coreui/free.svg#cil-check') . '"></use>
+		                          	<use xlink:href="' . URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-check') . '"></use>
 		                        </svg> Default
 							</a>';
 			}
@@ -301,7 +301,7 @@ class Yeah
 			if (Yeah::hakAkses($link_menus, 'edit') == 'true') {
 				echo 	'<a href="' . URL($link) . '" class="btn btn-sm btn-warning">
 								<svg class="c-icon" style="margin-right:5px;">
-		                          	<use xlink:href="' . URL::asset('template/back/assets/icons/coreui/free.svg#cil-pencil') . '"></use>
+		                          	<use xlink:href="' . URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-pencil') . '"></use>
 		                        </svg> Edit
 							</a>';
 			}
@@ -312,7 +312,7 @@ class Yeah
 			if (Yeah::hakAkses($link_menus, 'hapus') == 'true') {
 				echo 	'<button type="button" class="dropdown-item showModalHapus" style="color:red" data-link="' . URL($link) . '" data-nama="' . $label . '">
 								<svg class="c-icon" style="margin-right:5px;margin-top:-3px">
-		                          	<use xlink:href="' . URL::asset('template/back/assets/icons/coreui/free.svg#cil-trash') . '"></use>
+		                          	<use xlink:href="' . URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-trash') . '"></use>
 		                        </svg> Hapus
 							</button>';
 			}
@@ -323,7 +323,7 @@ class Yeah
 			if (Yeah::hakAkses($link_menus, 'hapus') == 'true') {
 				echo 	'<button type="button" class="btn btn-brand btn-sm btn-danger showModalHapus" style="color:white" data-link="' . URL($link) . '" data-nama="' . $label . '">
 								<svg class="c-icon" style="margin-right:5px;margin-top:-3px">
-		                          	<use xlink:href="' . URL::asset('template/back/assets/icons/coreui/free.svg#cil-trash') . '"></use>
+		                          	<use xlink:href="' . URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-trash') . '"></use>
 		                        </svg> Hapus
 							</button>';
 			}
@@ -334,7 +334,7 @@ class Yeah
 			if (Yeah::hakAkses($link_menus, 'lihat') == 'true') {
 				echo 	'<button type="button" class="btn btn-brand btn-sm btn-danger showModalHapus" style="color:white" data-link="' . URL($link) . '" data-nama="' . $label . '">
 								<svg class="c-icon" style="margin-right:5px;margin-top:-3px">
-		                          	<use xlink:href="' . URL::asset('template/back/assets/icons/coreui/free.svg#cil-trash') . '"></use>
+		                          	<use xlink:href="' . URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-trash') . '"></use>
 		                        </svg> Hapus
 							</button>';
 			}

@@ -2,35 +2,46 @@
 namespace App\Http\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
-use Yeah;
+use Nesiatix;
 use Auth;
 
 class KonfigurasiProfilController extends Controller
 {
     public function index()
     {
-    	$data['lihat_level_sistems']	= \App\Models\Master_level_sistem::where('id_level_sistems',Auth::user()->level_sistems_id)->first();
+        $data['lihat_level_sistems']    = \App\Models\Master_level_sistem::where('id_level_sistems',Auth::user()->level_sistems_id)->first();
         session()->forget('halaman');
-       	return view('dashboard.konfigurasi_profil.lihat',$data);
+        return view('dashboard.konfigurasi_profil.lihat',$data);
     }
 
     public function prosesedit(Request $request)
     {
-    	$id_user  	= Auth::user()->id;
+        $id_user    = Auth::user()->id;
         $ambil_foto_admin = $request->userfile_foto_admin;
         if($ambil_foto_admin != '')
         {
             $aturan = [
-                'userfile_foto_admin'       => 'required|mimes:png,jpg,jpeg,svg',
+                'userfile_foto_user'       => 'required|mimes:png,jpg,jpeg,svg',
                 'name'                      => 'required',
             ];
             $error_pesan = [
-                'userfile_foto_admin.required'  => 'Form Foto Harus Diisi.',
+                'userfile_foto_user.required'  => 'Form Foto Harus Diisi.',
                 'name.required'                 => 'Form Nama Harus Diisi.',
             ];
             $this->validate($request, $aturan, $error_pesan);
 
-           $data = [
+            $foto_user_lama        = Auth::user()->profile_photo_path;
+            if (file_exists($foto_user_lama))
+                unlink($foto_user_lama);
+
+            $nama_foto_user = date('Ymd').date('His').str_replace(')','',str_replace('(','',str_replace(' ','-',$request->file('userfile_foto_user')->getClientOriginalName())));
+            $path_foto_user = './public/uploads/foto_user/';
+            $request->file('userfile_foto_user')->move(
+                base_path() . '/public/uploads/foto_user/', $nama_foto_user
+            );
+
+            $data = [
+                'profile_photo_path'    => $path_foto_user.$nama_foto_user,
                 'name'                  => $request->name,
                 'updated_at'            => date('Y-m-d H:i:s'),
             ];
@@ -46,8 +57,8 @@ class KonfigurasiProfilController extends Controller
             $this->validate($request, $aturan, $error_pesan);
 
             $data = [
-                'name' 			     	=> $request->name,
-                'updated_at'	     	=> date('Y-m-d H:i:s'),
+                'name'                  => $request->name,
+                'updated_at'            => date('Y-m-d H:i:s'),
             ];
         }
 

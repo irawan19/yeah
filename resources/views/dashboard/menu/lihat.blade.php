@@ -63,7 +63,7 @@
 								    		<td class="nowrap">{{$no}}</td>
 								    		<td class="nowrap">
 								    			<svg class="c-sidebar-nav-icon">
-										          	<use xlink:href="{{URL::asset('template/back/assets/icons/coreui/free.svg#'.$menus->icon_menus)}}"></use>
+										          	<use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#'.$menus->icon_menus)}}"></use>
 										        </svg>
 								    		</td>
 								    		<td>{{$menus->nama_menus}}</td>

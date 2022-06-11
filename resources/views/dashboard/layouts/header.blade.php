@@ -4,7 +4,7 @@
 @php($tanggal_sekarang				= date('Y-m-d'))
 <button class="c-header-toggler c-class-toggler d-lg-none mfe-auto" type="button" data-target="#sidebar" data-class="c-sidebar-show">
 	<svg class="c-icon c-icon-lg">
-		<use xlink:href="{{URL::asset('template/back/vendors/@coreui/icons/svg/free.svg#cil-menu')}}"></use>
+		<use xlink:href="{{URL::asset('public/template/back/vendors/@coreui/icons/svg/free.svg#cil-menu')}}"></use>
 	</svg>
 </button>
 <a class="c-header-brand d-lg-none c-header-brand-sm-up-center" href="#">
@@ -16,7 +16,7 @@
 	<li class="c-header-nav-item dropdown d-md-down-none mx-2"><a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
    		@php($total_notifikasi 					= 0)
    		<svg class="c-icon">
-   		  	<use xlink:href="{{URL::asset('template/back/assets/icons/coreui/free.svg#cil-bell')}}"></use>
+   		  	<use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-bell')}}"></use>
    		</svg><span class="badge badge-pill badge-danger">{{$total_notifikasi}}</span></a>
    		<div class="dropdown-menu dropdown-menu-right dropdown-menu-lg pt-0" style="width:250px">
    			<div class="dropdown-header bg-light">
@@ -24,7 +24,7 @@
    			</div>
    			<a class="dropdown-item" href="{{URL('dashboard/lemburan')}}">
 		   		<svg class="c-icon mr-2 text-danger">
-		   		  	<use xlink:href="{{URL::asset('template/back/assets/icons/coreui/free.svg#cil-notes')}}"></use>
+		   		  	<use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-notes')}}"></use>
 		   		</svg> Pesanan <span class="badge badge-pill badge-danger">0</span>
 		   	</a>
    		</div>
@@ -53,23 +53,20 @@
 		  	</div>
 		  	<a class="dropdown-item" href="{{URL('dashboard/konfigurasi_profil')}}">
 		  	    <svg class="c-icon mr-2">
-		  	      <use xlink:href="{{URL::asset('template/back/assets/icons/coreui/free.svg#cil-child')}}"></use>
+		  	      <use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-child')}}"></use>
 		  	    </svg> Profil
 		  	</a>
 		  	<a class="dropdown-item" href="{{URL('dashboard/konfigurasi_akun')}}">
 		  	    <svg class="c-icon mr-2">
-		  	      <use xlink:href="{{URL::asset('template/back/assets/icons/coreui/free.svg#cil-contact')}}"></use>
+		  	      <use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-contact')}}"></use>
 		  	    </svg> Akun
 		  	</a>
 		  	<div class="dropdown-divider"></div>
-		  	<form method="POST" action="{{ route('logout') }}">
-      			@csrf
-			  	<a type="submit" class="dropdown-item" href="{{URL('logout')}}">
-			  	    <svg class="c-icon mr-2">
-			  	      <use xlink:href="{{URL::asset('template/back/assets/icons/coreui/free.svg#cil-task')}}"></use>
-			  	    </svg> Logout
-			  	</a>
-			</form>
+			<a type="submit" class="dropdown-item" href="{{URL('logout')}}">
+			    <svg class="c-icon mr-2">
+			      <use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-task')}}"></use>
+			    </svg> Logout
+			</a>
 		</div>
 	</li>
 </ul>

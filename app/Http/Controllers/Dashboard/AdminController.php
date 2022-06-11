@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
-use Yeah;
+use Nesiatix;
 use Auth;
 
 class AdminController extends Controller
@@ -10,12 +10,12 @@ class AdminController extends Controller
     public function index(Request $request)
     {
         $link_admin = 'admin';
-        if(Yeah::hakAkses($link_admin,'lihat') == 'true')
+        if(Nesiatix::hakAkses($link_admin,'lihat') == 'true')
         {
             $data['link_admin']         = $link_admin;
             $data['hasil_kata']         = '';
             $url_sekarang               = $request->fullUrl();
-        	$data['lihat_admins']    	= \App\Models\User::join('master_level_sistems','level_sistems_id','=','master_level_sistems.id_level_sistems')
+            $data['lihat_admins']       = \App\Models\User::join('master_level_sistems','level_sistems_id','=','master_level_sistems.id_level_sistems')
                                                             ->where('users.user_statuses_id','!=',3)
                                                             ->where('tipe_users_id',1)
                                                             ->orderBy('nama_level_sistems','asc')
@@ -23,7 +23,7 @@ class AdminController extends Controller
             session()->forget('halaman');
             session()->forget('hasil_kata');
             session(['halaman'          => $url_sekarang]);
-        	return view('dashboard.admin.lihat', $data);
+            return view('dashboard.admin.lihat', $data);
         }
         else
             return redirect('dashboard');
@@ -32,7 +32,7 @@ class AdminController extends Controller
     public function cari(Request $request)
     {
         $link_admin = 'admin';
-        if(Yeah::hakAkses($link_admin,'lihat') == 'true')
+        if(Nesiatix::hakAkses($link_admin,'lihat') == 'true')
         {
             $data['link_admin']         = $link_admin;
             $url_sekarang               = $request->fullUrl();
@@ -42,10 +42,10 @@ class AdminController extends Controller
                                                             ->where('nama_level_sistems', 'LIKE', '%'.$hasil_kata.'%')
                                                             ->where('users.user_statuses_id','!=',3)
                                                             ->where('tipe_users_id',1)
-                											->orWhere('name', 'LIKE', '%'.$hasil_kata.'%')
+                                                            ->orWhere('name', 'LIKE', '%'.$hasil_kata.'%')
                                                             ->where('users.user_statuses_id','!=',3)
                                                             ->where('tipe_users_id',1)
-                											->orWhere('username', 'LIKE', '%'.$hasil_kata.'%')
+                                                            ->orWhere('username', 'LIKE', '%'.$hasil_kata.'%')
                                                             ->where('users.user_statuses_id','!=',3)
                                                             ->where('tipe_users_id',1)
                                                             ->orWhere('email', 'LIKE', '%'.$hasil_kata.'%')
@@ -54,7 +54,7 @@ class AdminController extends Controller
                                                             ->orderBy('nama_level_sistems')
                                                             ->paginate(10);
             session(['halaman'          => $url_sekarang]);
-            session(['hasil_kata'		=> $hasil_kata]);
+            session(['hasil_kata'       => $hasil_kata]);
             return view('dashboard.admin.lihat', $data);
         }
         else
@@ -64,10 +64,10 @@ class AdminController extends Controller
     public function tambah()
     {
         $link_admin = 'admin';
-        if(Yeah::hakAkses($link_admin,'tambah') == 'true')
+        if(Nesiatix::hakAkses($link_admin,'tambah') == 'true')
         {
             $data['tambah_level_sistems']       = \App\Models\Master_level_sistem::orderBy('nama_level_sistems')
-                                                      					->get();
+                                                                        ->get();
             return view('dashboard.admin.tambah',$data);
         }
         else
@@ -76,8 +76,8 @@ class AdminController extends Controller
 
     public function prosestambah(Request $request)
     {
-    	$link_admin = 'admin';
-        if(Yeah::hakAkses($link_admin,'tambah') == 'true')
+        $link_admin = 'admin';
+        if(Nesiatix::hakAkses($link_admin,'tambah') == 'true')
         {
             $ambil_foto_user = $request->userfile_foto_user;
             if($ambil_foto_user != '')
@@ -102,22 +102,22 @@ class AdminController extends Controller
                 $this->validate($request, $aturan, $error_pesan);
 
                 $nama_foto_user = date('Ymd').date('His').str_replace(')','',str_replace('(','',str_replace(' ','-',$request->file('userfile_foto_user')->getClientOriginalName())));
-                $path_foto_user = './uploads/foto_user/';
+                $path_foto_user = './public/uploads/foto_user/';
                 $request->file('userfile_foto_user')->move(
                     base_path() . '/public/uploads/foto_user/', $nama_foto_user
                 );
 
                 $data = [
-                    'profile_photo_path' 	=> $path_foto_user.$nama_foto_user,
-                    'name'               	=> $request->name,
+                    'profile_photo_path'    => $path_foto_user.$nama_foto_user,
+                    'name'                  => $request->name,
                     'username'              => $request->username,
-                    'email'              	=> $request->email,
-                    'created_at'         	=> date('Y-m-d H:i:s'),
-                    'updated_at'         	=> date('Y-m-d H:i:s'),
-                    'password'           	=> bcrypt($request->password),
-                    'remember_token'     	=> str_random(100),
-                    'level_sistems_id'   	=> $request->level_sistems_id,
-                    'user_statuses_id'		=> 2,
+                    'email'                 => $request->email,
+                    'created_at'            => date('Y-m-d H:i:s'),
+                    'updated_at'            => date('Y-m-d H:i:s'),
+                    'password'              => bcrypt($request->password),
+                    'remember_token'        => str_random(100),
+                    'level_sistems_id'      => $request->level_sistems_id,
+                    'user_statuses_id'      => 2,
                     'tipe_users_id'         => 1,
                     'no_telp'               => '',
                     'alamat'                => '',
@@ -143,42 +143,42 @@ class AdminController extends Controller
                 $this->validate($request, $aturan, $error_pesan);
 
                 $data = [
-                    'profile_photo_path' 	=> null,
-                    'name'               	=> $request->name,
+                    'profile_photo_path'    => null,
+                    'name'                  => $request->name,
                     'username'              => $request->username,
-                    'email'              	=> $request->email,
-                    'created_at'         	=> date('Y-m-d H:i:s'),
-                    'updated_at'         	=> date('Y-m-d H:i:s'),
-                    'password'           	=> bcrypt($request->password),
-                    'remember_token'     	=> str_random(100),
-                    'level_sistems_id'   	=> $request->level_sistems_id,
-                    'user_statuses_id'		=> 2,
+                    'email'                 => $request->email,
+                    'created_at'            => date('Y-m-d H:i:s'),
+                    'updated_at'            => date('Y-m-d H:i:s'),
+                    'password'              => bcrypt($request->password),
+                    'remember_token'        => str_random(100),
+                    'level_sistems_id'      => $request->level_sistems_id,
+                    'user_statuses_id'      => 2,
                     'tipe_users_id'         => 1,
                     'no_telp'               => '',
                     'alamat'                => '',
                 ];
             }
             \App\Models\User::insert($data);
-    	    
-    	    $simpan         	      = $request->simpan;
-    	    $simpan_kembali 		  = $request->simpan_kembali;
-    	    if($simpan)
-    	    {
-    	        $setelah_simpan = [
-    	            'alert'  => 'sukses',
-    	            'text'   => 'Data berhasil ditambahkan',
-    	        ];
-    	    	return redirect()->back()->with('setelah_simpan', $setelah_simpan);
-    	    }
-    	    if($simpan_kembali)
-    	    {
-    	    	if(request()->session()->get('halaman') != '')
+            
+            $simpan                   = $request->simpan;
+            $simpan_kembali           = $request->simpan_kembali;
+            if($simpan)
+            {
+                $setelah_simpan = [
+                    'alert'  => 'sukses',
+                    'text'   => 'Data berhasil ditambahkan',
+                ];
+                return redirect()->back()->with('setelah_simpan', $setelah_simpan);
+            }
+            if($simpan_kembali)
+            {
+                if(request()->session()->get('halaman') != '')
                     $redirect_halaman  = request()->session()->get('halaman');
                 else
                     $redirect_halaman  = 'dashboard/admin';
 
                 return redirect($redirect_halaman);
-    	    }
+            }
         }
         else
             return redirect('dashboard/admin');
@@ -187,19 +187,19 @@ class AdminController extends Controller
     public function baca($id_admins=0)
     {
         $link_admin = 'admin';
-        if(Yeah::hakAkses($link_admin,'baca') == 'true')
+        if(Nesiatix::hakAkses($link_admin,'baca') == 'true')
         {
             $cek_admins = \App\Models\User::where('id',$id_admins)->first();
             if(!empty($cek_admins))
             {
-            	$ambil_admin 					= \App\Models\User::join('master_level_sistems','level_sistems_id','=','master_level_sistems.id_level_sistems')
+                $ambil_admin                    = \App\Models\User::join('master_level_sistems','level_sistems_id','=','master_level_sistems.id_level_sistems')
                                                                     ->where('id',$id_admins)
-        		                                                    ->first();
-            	$data['baca_level_sistems']		= \App\Models\Master_level_sistem::where('id_level_sistems',$ambil_admin->id_level_sistems)->first();
-            	$data['baca_menus']             = \App\Models\Master_menu::where('sub_menus_id',0)
+                                                                    ->first();
+                $data['baca_level_sistems']     = \App\Models\Master_level_sistem::where('id_level_sistems',$ambil_admin->id_level_sistems)->first();
+                $data['baca_menus']             = \App\Models\Master_menu::where('sub_menus_id',0)
                                                                 ->orderBy('order_menus')
                                                                 ->get();
-                $data['baca_admins']    		= $ambil_admin;
+                $data['baca_admins']            = $ambil_admin;
                 return view('dashboard.admin.baca',$data);
             }
             else
@@ -211,16 +211,16 @@ class AdminController extends Controller
 
     public function edit($id_admins=0)
     {
-    	$link_admin = 'admin';
-        if(Yeah::hakAkses($link_admin,'edit') == 'true')
+        $link_admin = 'admin';
+        if(Nesiatix::hakAkses($link_admin,'edit') == 'true')
         {
             $cek_admins = \App\Models\User::where('id',$id_admins)->count();
             if($cek_admins != 0)
             {
                 $data['edit_level_sistems']     = \App\Models\Master_level_sistem::orderBy('nama_level_sistems')
-                                                          					->get();
-                $data['edit_admins']			= \App\Models\User::where('id',$id_admins)
-                													->first();
+                                                                            ->get();
+                $data['edit_admins']            = \App\Models\User::where('id',$id_admins)
+                                                                    ->first();
                 return view('dashboard.admin.edit',$data);
             }
             else
@@ -232,13 +232,13 @@ class AdminController extends Controller
 
     public function prosesedit($id_admins=0, Request $request)
     {
-    	$link_admin = 'admin';
-        if(Yeah::hakAkses($link_admin,'edit') == 'true')
+        $link_admin = 'admin';
+        if(Nesiatix::hakAkses($link_admin,'edit') == 'true')
         {
             $cek_admins = \App\Models\User::where('id',$id_admins)->first();
             if(!empty($cek_admins))
             {
-            	if($request->password != '')
+                if($request->password != '')
                 {
                     $ambil_foto_user = $request->userfile_foto_user;
                     if($ambil_foto_user != '')
@@ -267,13 +267,13 @@ class AdminController extends Controller
                             unlink($foto_user_lama);
 
                         $nama_foto_user = date('Ymd').date('His').str_replace(')','',str_replace('(','',str_replace(' ','-',$request->file('userfile_foto_user')->getClientOriginalName())));
-                        $path_foto_user = './uploads/foto_user/';
+                        $path_foto_user = './public/uploads/foto_user/';
                         $request->file('userfile_foto_user')->move(
                             base_path() . '/public/uploads/foto_user/', $nama_foto_user
                         );
 
                         $data = [
-                            'foto_user'             => $path_foto_user.$nama_foto_user,
+                            'profile_photo_path'    => $path_foto_user.$nama_foto_user,
                             'name'                  => $request->name,
                             'username'              => $request->username, 
                             'email'                 => $request->email,
@@ -301,18 +301,18 @@ class AdminController extends Controller
                         ];
                         $this->validate($request, $aturan, $error_pesan);
 
-                	    $data = [
-                	        'name' 			        => $request->name,
+                        $data = [
+                            'name'                  => $request->name,
                             'username'              => $request->username,
-                	        'email'			        => $request->email,
-                	        'updated_at'	        => date('Y-m-d H:i:s'),
-                	        'password' 		        => bcrypt($request->password),
+                            'email'                 => $request->email,
+                            'updated_at'            => date('Y-m-d H:i:s'),
+                            'password'              => bcrypt($request->password),
                             'level_sistems_id'      => $request->level_sistems_id,
-                	    ];
+                        ];
                     }
-            	}
-            	else
-            	{
+                }
+                else
+                {
                     $ambil_foto_user = $request->userfile_foto_user;
                     if($ambil_foto_user != '')
                     {
@@ -338,7 +338,7 @@ class AdminController extends Controller
                             unlink($foto_user_lama);
 
                         $nama_foto_user = date('Ymd').date('His').str_replace(')','',str_replace('(','',str_replace(' ','-',$request->file('userfile_foto_user')->getClientOriginalName())));
-                        $path_foto_user = './uploads/foto_user/';
+                        $path_foto_user = './public/uploads/foto_user/';
                         $request->file('userfile_foto_user')->move(
                             base_path() . '/public/uploads/foto_user/', $nama_foto_user
                         );
@@ -349,7 +349,7 @@ class AdminController extends Controller
                             'email'                 => $request->email,
                             'updated_at'            => date('Y-m-d H:i:s'),
                             'level_sistems_id'      => $request->level_sistems_id,
-                            'foto_user'             => $path_foto_user.$nama_foto_user,
+                            'profile_photo_path'    => $path_foto_user.$nama_foto_user,
                         ];
                     }
                     else
@@ -369,26 +369,26 @@ class AdminController extends Controller
                         ];
                         $this->validate($request, $aturan, $error_pesan);
                         
-                	    $data = [
+                        $data = [
                             'username'              => $request->username,
-                	        'name' 			     	=> $request->name,
-                	        'email'			     	=> $request->email,
-                	        'updated_at'	     	=> date('Y-m-d H:i:s'),
-                            'level_sistems_id'    	=> $request->level_sistems_id,
-                	    ];
+                            'name'                  => $request->name,
+                            'email'                 => $request->email,
+                            'updated_at'            => date('Y-m-d H:i:s'),
+                            'level_sistems_id'      => $request->level_sistems_id,
+                        ];
                     }
-            	}
-            	\App\Models\User::where('id', $id_admins)->update($data);
+                }
+                \App\Models\User::where('id', $id_admins)->update($data);
 
-	            if(request()->session()->get('halaman') != '')
-	                $redirect_halaman    = request()->session()->get('halaman');
-	            else
-	                $redirect_halaman  = 'dashboard/admin';
-	            
-	            return redirect($redirect_halaman);
-	        }
-	        else
-	        	return redirect('dashboard/admin');
+                if(request()->session()->get('halaman') != '')
+                    $redirect_halaman    = request()->session()->get('halaman');
+                else
+                    $redirect_halaman  = 'dashboard/admin';
+                
+                return redirect($redirect_halaman);
+            }
+            else
+                return redirect('dashboard/admin');
         }
         else
             return redirect('dashboard/admin');
@@ -396,14 +396,14 @@ class AdminController extends Controller
 
     public function hapus($id_admins=0)
     {
-    	$link_admin = 'admin';
-        if(Yeah::hakAkses($link_admin,'hapus') == 'true')
+        $link_admin = 'admin';
+        if(Nesiatix::hakAkses($link_admin,'hapus') == 'true')
         {
             $cek_admins = \App\Models\User::where('id',$id_admins)->first();
             if(!empty($cek_admins))
             {
                 $delete_users_data = [
-                    'user_statuses_id'   	 => 3,
+                    'user_statuses_id'       => 3,
                     'updated_at'         => date('Y-m-d H:i:s'),
                 ];
                 \App\Models\User::where('id',$id_admins)->update($delete_users_data);

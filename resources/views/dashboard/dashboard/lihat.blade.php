@@ -56,7 +56,7 @@
 					            <div class="card-body pb-0">
 					                <div class="btn-group float-right">
 					                    <svg class="c-icon">
-					                        <use xlink:href="{{URL::asset('template/back/assets/icons/coreui/free.svg#cil-badge')}}"></use>
+					                        <use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-badge')}}"></use>
 					                    </svg>
 					                </div>
 					                <div class="text-value-lg">{{Yeah::konversiNilai(0)}} <span>{{Yeah::konversiNilaiString(0)}}</span></div>
@@ -72,7 +72,7 @@
 					            <div class="card-body pb-0">
 					                <div class="btn-group float-right">
 					                    <svg class="c-icon">
-					                        <use xlink:href="{{URL::asset('template/back/assets/icons/coreui/free.svg#cil-user')}}"></use>
+					                        <use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-user')}}"></use>
 					                    </svg>
 					                </div>
 					                <div class="text-value-lg">{{Yeah::konversiNilai(0)}} <span>{{Yeah::konversiNilaiString(0)}}</span></div>
@@ -88,7 +88,7 @@
 					            <div class="card-body pb-0">
 					                <div class="btn-group float-right">
 					                    <svg class="c-icon">
-					                        <use xlink:href="{{URL::asset('template/back/assets/icons/coreui/free.svg#cil-user-follow')}}"></use>
+					                        <use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-user-follow')}}"></use>
 					                    </svg>
 					                </div>
 					                <div class="text-value-lg">{{Yeah::konversiNilai(0)}} <span>{{Yeah::konversiNilaiString(0)}}</span></div>
@@ -104,7 +104,7 @@
 					            <div class="card-body pb-0">
 					                <div class="btn-group float-right">
 					                    <svg class="c-icon">
-					                        <use xlink:href="{{URL::asset('template/back/assets/icons/coreui/free.svg#cil-user')}}"></use>
+					                        <use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-user')}}"></use>
 					                    </svg>
 					                </div>
 					                <div class="text-value-lg">{{Yeah::konversiNilai(0)}} <span>{{Yeah::konversiNilaiString(0)}}</span></div>
@@ -153,7 +153,7 @@
 		    		<div class="card-header">
 		    			<strong>
 		    				<svg class="c-sidebar-nav-icon" style="width: 50px">
-							  	<use xlink:href="{{URL::asset('template/back/assets/icons/coreui/free.svg#'.$menus->icon_menus)}}"></use>
+							  	<use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#'.$menus->icon_menus)}}"></use>
 							</svg>{{$menus->nama_menus}}
 		    			</strong>
 		    		</div>
@@ -165,7 +165,7 @@
 				    					<div class="card-custom">
 					        				<div class="card-body p-2 d-flex align-items-center">
 										        <svg class="c-sidebar-nav-icon">
-											      	<use xlink:href="{{URL::asset('template/back/assets/icons/coreui/free.svg#'.$sub_menus->icon_menus)}}"></use>
+											      	<use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#'.$sub_menus->icon_menus)}}"></use>
 											    </svg>
 					                      		<div>
 					                        		<div class="text-muted text-uppercase font-weight-bold small">{{$sub_menus->nama_menus}}</div>

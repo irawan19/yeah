@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
-use Yeah;
+use Nesiatix;
 use Auth;
 use DB;
 
@@ -11,16 +11,16 @@ class LevelSistemController extends Controller
     public function index(Request $request)
     {
         $link_level_sistem = 'level_sistem';
-        if(Yeah::hakAkses($link_level_sistem,'lihat') == 'true')
+        if(Nesiatix::hakAkses($link_level_sistem,'lihat') == 'true')
         {
             $data['link_level_sistem']      = $link_level_sistem;
             $url_sekarang                   = $request->fullUrl();
             $data['hasil_kata']             = '';
-        	$data['lihat_level_sistems']    = \App\Models\Master_level_sistem::get();
+            $data['lihat_level_sistems']    = \App\Models\Master_level_sistem::get();
             session()->forget('halaman');
             session()->forget('hasil_kata');
             session(['halaman'                          => $url_sekarang]);
-        	return view('dashboard.level_sistem.lihat', $data);
+            return view('dashboard.level_sistem.lihat', $data);
         }
         else
             return redirect('dashboard');
@@ -29,7 +29,7 @@ class LevelSistemController extends Controller
     public function cari(Request $request)
     {
         $link_level_sistem = 'level_sistem';
-        if(Yeah::hakAkses($link_level_sistem,'lihat') == 'true')
+        if(Nesiatix::hakAkses($link_level_sistem,'lihat') == 'true')
         {
             $data['link_level_sistem']          = $link_level_sistem;
             $url_sekarang                       = $request->fullUrl();
@@ -48,7 +48,7 @@ class LevelSistemController extends Controller
     public function tambah()
     {
         $link_level_sistem = 'level_sistem';
-        if(Yeah::hakAkses($link_level_sistem,'tambah') == 'true')
+        if(Nesiatix::hakAkses($link_level_sistem,'tambah') == 'true')
         {
             $data['tambah_menus']  = \App\Models\Master_menu::where('sub_menus_id',0)
                                                     ->orderBy('order_menus')
@@ -62,7 +62,7 @@ class LevelSistemController extends Controller
     public function prosestambah(Request $request)
     {
         $link_level_sistem = 'level_sistem';
-        if(Yeah::hakAkses($link_level_sistem,'tambah') == 'true')
+        if(Nesiatix::hakAkses($link_level_sistem,'tambah') == 'true')
         {
             $aturan = [
                 'nama_level_sistems'           => 'required',
@@ -72,9 +72,9 @@ class LevelSistemController extends Controller
             ];
             $this->validate($request, $aturan, $error_pesan);
 
-            $id_level_sistems = Yeah::autoIncrementKey('master_level_sistems','id_level_sistems');
+            $id_level_sistems = Nesiatix::autoIncrementKey('master_level_sistems','id_level_sistems');
             $data = [
-            	'id_level_sistems'      => $id_level_sistems,
+                'id_level_sistems'      => $id_level_sistems,
                 'nama_level_sistems'    => $request->nama_level_sistems,
                 'created_at'            => date('Y-m-d H:i:s'),
                 'updated_at'            => date('Y-m-d H:i:s')
@@ -84,7 +84,7 @@ class LevelSistemController extends Controller
             foreach ($request->fiturs_id as $fiturs_id)
             {
                 $akses_data = [
-                    'id_akses'              => Yeah::autoIncrementKey('master_akses','id_akses'),
+                    'id_akses'              => Nesiatix::autoIncrementKey('master_akses','id_akses'),
                     'level_sistems_id'      => $id_level_sistems,
                     'fiturs_id'             => $fiturs_id
                 ];
@@ -118,16 +118,16 @@ class LevelSistemController extends Controller
     public function baca($id_level_sistems=0)
     {
         $link_level_sistem = 'level_sistem';
-        if(Yeah::hakAkses($link_level_sistem,'baca') == 'true')
+        if(Nesiatix::hakAkses($link_level_sistem,'baca') == 'true')
         {
             if (!is_numeric($id_level_sistems))
                 $id_level_sistems = 0;
             $cek_level_sistems = \App\Models\Master_level_sistem::where('id_level_sistems',$id_level_sistems)->count();
             if($cek_level_sistems != 0)
             {
-            	$data['baca_admins']			= \App\Models\User::where('level_sistems_id',$id_level_sistems)
-		                												->where('user_statuses_id','!=',3)
-		                												->get();
+                $data['baca_admins']            = \App\Models\User::where('level_sistems_id',$id_level_sistems)
+                                                                        ->where('user_statuses_id','!=',3)
+                                                                        ->get();
                 $data['baca_menus']             = \App\Models\Master_menu::where('sub_menus_id',0)
                                                                 ->orderBy('order_menus')
                                                                 ->get();
@@ -145,7 +145,7 @@ class LevelSistemController extends Controller
     public function edit($id_level_sistems=0)
     {
         $link_level_sistem = 'level_sistem';
-        if(Yeah::hakAkses($link_level_sistem,'edit') == 'true')
+        if(Nesiatix::hakAkses($link_level_sistem,'edit') == 'true')
         {
             if (!is_numeric($id_level_sistems))
                 $id_level_sistems = 0;
@@ -169,7 +169,7 @@ class LevelSistemController extends Controller
     public function prosesedit($id_level_sistems=0, Request $request)
     {
         $link_level_sistem = 'level_sistem';
-        if(Yeah::hakAkses($link_level_sistem,'edit') == 'true')
+        if(Nesiatix::hakAkses($link_level_sistem,'edit') == 'true')
         {
             if (!is_numeric($id_level_sistems))
                 $id_level_sistems = 0;
@@ -195,7 +195,7 @@ class LevelSistemController extends Controller
                 foreach ($request->fiturs_id as $fiturs_id)
                 {
                     $akses_data = [
-                        'id_akses'              => Yeah::autoIncrementKey('master_akses','id_akses'),
+                        'id_akses'              => Nesiatix::autoIncrementKey('master_akses','id_akses'),
                         'level_sistems_id'      => $id_level_sistems,
                         'fiturs_id'             => $fiturs_id
                     ];
@@ -219,7 +219,7 @@ class LevelSistemController extends Controller
     public function hapus($id_level_sistems=0)
     {
         $link_level_sistem = 'level_sistem';
-        if(Yeah::hakAkses($link_level_sistem,'hapus') == 'true')
+        if(Nesiatix::hakAkses($link_level_sistem,'hapus') == 'true')
         {
             if (!is_numeric($id_level_sistems))
                 $id_level_sistems = 0;

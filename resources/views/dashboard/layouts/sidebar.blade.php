@@ -13,7 +13,7 @@
 		<li class="c-sidebar-nav-item">
 			<a class="c-sidebar-nav-link" href="{{URL('dashboard')}}">
 	    		<svg class="c-sidebar-nav-icon"  data-toggle="tooltip" data-placement="right" title="" data-original-title="Dashboard">
-	      			<use xlink:href="{{URL::asset('template/back/assets/icons/coreui/free.svg#cil-speedometer')}}"></use>
+	      			<use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-speedometer')}}"></use>
 	    		</svg> Dashboard
 	    	</a>
 	  	</li>
@@ -52,7 +52,7 @@
 			  	<li class="c-sidebar-nav-dropdown {{$open_menus}}">
 				  	<a class="c-sidebar-nav-dropdown-toggle" href="#">
 				        <svg class="c-sidebar-nav-icon"  data-toggle="tooltip" data-placement="right" title="" data-original-title="{{$menus->nama_menus}}">
-				          	<use xlink:href="{{URL::asset('template/back/assets/icons/coreui/free.svg#'.$menus->icon_menus)}}"></use>
+				          	<use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#'.$menus->icon_menus)}}"></use>
 				        </svg> {{$menus->nama_menus}}
 				    </a>
 				  	<ul class="c-sidebar-nav-dropdown-items">
@@ -64,7 +64,7 @@
 				  				<li class="c-sidebar-nav-item">
 				  					<a class="c-sidebar-nav-link {{$active_submenus}}" href="{{URL('dashboard/'.$sub_menus->link_menus)}}">
 				  						<svg class="c-sidebar-nav-icon {{$active_submenus}}" data-toggle="tooltip" data-placement="right" title="" data-original-title="{{$sub_menus->nama_menus}}">
-								          	<use xlink:href="{{URL::asset('template/back/assets/icons/coreui/free.svg#'.$sub_menus->icon_menus)}}"></use>
+								          	<use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#'.$sub_menus->icon_menus)}}"></use>
 								        </svg> {{$sub_menus->nama_menus}}
 				  					</a>
 				  				</li>
@@ -78,7 +78,7 @@
       		@csrf
 				<a class="c-sidebar-nav-link" href="{{ URL('dashboard/logout') }}">
 		    		<svg class="c-sidebar-nav-icon"  data-toggle="tooltip" data-placement="right" title="" data-original-title="Logout">
-		      			<use xlink:href="{{URL::asset('template/back/assets/icons/coreui/free.svg#cil-account-logout')}}"></use>
+		      			<use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-account-logout')}}"></use>
 		    		</svg> Logout
 		    	</a>
 	    	</form>

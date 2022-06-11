@@ -121,7 +121,7 @@
 			        <div class="card-footer right-align">
 			            <button class="btn btn-sm btn-primary" type="submit">
 				        	<svg class="c-icon" style="margin-right:5px;">
-	                          	<use xlink:href="{{URL::asset('template/back/assets/icons/coreui/free.svg#cil-pencil')}}"></use>
+	                          	<use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-pencil')}}"></use>
 	                        </svg> Perbarui
 	                    </button>
 			          	@if(request()->session()->get('halaman2') != '')
@@ -131,7 +131,7 @@
 	                    @endif
 		                <a class="btn btn-sm btn-danger" href="{{ $ambil_kembali }}">
 		                	<svg class="c-icon" style="margin-right:5px;">
-	                          	<use xlink:href="{{URL::asset('template/back/assets/icons/coreui/free.svg#cil-ban')}}"></use>
+	                          	<use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-ban')}}"></use>
 	                        </svg> Batal
 	                    </a>
 			        </div>

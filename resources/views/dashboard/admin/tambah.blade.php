@@ -66,12 +66,12 @@
 			        <div class="card-footer right-align">
 			        	<button class="btn btn-sm btn-success" type="submit" name="simpan" value="simpan">
 			            	<svg class="c-icon" style="margin-right:5px;">
-	                          	<use xlink:href="{{URL::asset('template/back/assets/icons/coreui/free.svg#cil-plus')}}"></use>
+	                          	<use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-plus')}}"></use>
 	                        </svg> Simpan
 			            </button>
 			            <button class="btn btn-sm btn-success active" type="submit" name="simpan_kembali" value="simpan_kembali">
 			            	<svg class="c-icon" style="margin-right:5px;">
-	                          	<use xlink:href="{{URL::asset('template/back/assets/icons/coreui/free.svg#cil-reload')}}"></use>
+	                          	<use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-reload')}}"></use>
 	                        </svg> Simpan Kembali
 			            </button>
 			          	@if(request()->session()->get('halaman') != '')
@@ -81,7 +81,7 @@
 	                    @endif
 		                <a class="btn btn-sm btn-danger" href="{{ $ambil_kembali }}">
 		                	<svg class="c-icon" style="margin-right:5px;">
-	                          	<use xlink:href="{{URL::asset('template/back/assets/icons/coreui/free.svg#cil-ban')}}"></use>
+	                          	<use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-ban')}}"></use>
 	                        </svg> Batal
 	                    </a>
 			        </div>

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
-use Yeah;
+use Nesiatix;
 use Auth;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
@@ -13,7 +13,7 @@ class KonfigurasiAplikasiController extends Controller
     public function index()
     {
         $link_konfigurasi_aplikasi = 'konfigurasi_aplikasi';
-        if(Yeah::hakAkses($link_konfigurasi_aplikasi, 'lihat') == 'true')
+        if(Nesiatix::hakAkses($link_konfigurasi_aplikasi, 'lihat') == 'true')
         {
             $data['lihat_konfigurasi_aplikasis']       = \App\Models\Master_konfigurasi_aplikasi::first();
             session()->forget('halaman');
@@ -26,7 +26,7 @@ class KonfigurasiAplikasiController extends Controller
     public function prosesedit(Request $request)
     {
         $link_konfigurasi_aplikasi = 'konfigurasi_aplikasi';
-        if (Yeah::hakAkses($link_konfigurasi_aplikasi, 'lihat') == 'true')
+        if (Nesiatix::hakAkses($link_konfigurasi_aplikasi, 'lihat') == 'true')
         {
             $aturan = [
                 'nama_konfigurasi_aplikasis'                => 'required',
@@ -61,7 +61,7 @@ class KonfigurasiAplikasiController extends Controller
     public function proseseditlogo(Request $request)
     {
         $link_konfigurasi_aplikasi = 'konfigurasi_aplikasi';
-        if(Yeah::hakAkses($link_konfigurasi_aplikasi, 'lihat') == 'true')
+        if(Nesiatix::hakAkses($link_konfigurasi_aplikasi, 'lihat') == 'true')
         {
             $aturan = [
                 'userfile_logo'     => 'required|mimes:png,jpg,jpeg,svg',
@@ -71,28 +71,21 @@ class KonfigurasiAplikasiController extends Controller
             ];
             $this->validate($request, $aturan, $error_pesan);
 
-            $id_konfigurasi_aplikasi        = 1;
-            $client_cdn                     = new Client(['http_errors' => false]);
-            $request_cdn                    = $client_cdn->request(
-                                                                      'POST',
-                                                                      Yeah::urlcdn().'api/v1/upload/logo',
-                                                                      [
-                                                                          'multipart' => [
-                                                                              [
-                                                                                  'name'          => 'id_konfigurasi_aplikasi',
-                                                                                  'contents'      => $id_konfigurasi_aplikasi,
-                                                                              ],
-                                                                              [
-                                                                                  'name'          => 'file_logo',
-                                                                                  'filename'      => $request->file('userfile_logo')->getClientOriginalName(),
-                                                                                  'Mime-Type'     => $request->file('userfile_logo')->getmimeType(),
-                                                                                  'contents'      => fopen($request->file('userfile_logo')->path(), 'r'),
-                                                                              ],
-                                                                          ],
-                                                                      ]
-                                                                  );
+            $ambil_konfigurasi_aplikasis = \App\Models\Master_konfigurasi_aplikasi::first();
+
+            $foto_logo_lama        = $ambil_konfigurasi_aplikasis->logo_konfigurasi_aplikasis;
+            if (file_exists($foto_logo_lama))
+                unlink($foto_logo_lama);
+
+            $nama_logo = date('Ymd').date('His').str_replace(')','',str_replace('(','',str_replace(' ','-',$request->file('userfile_logo')->getClientOriginalName())));
+            $path_logo = './public/uploads/logo/';
+            $request->file('userfile_logo')->move(
+                base_path() . '/public/uploads/logo/', $nama_logo
+            );
+
             $data = [
-                'updated_at'                 => date('Y-m-d H:i:s'),
+                'logo_konfigurasi_aplikasis'    => $path_logo.$nama_logo,
+                'updated_at'                    => date('Y-m-d H:i:s'),
             ];
 
             \App\Models\Master_konfigurasi_aplikasi::query()->update($data);
@@ -110,7 +103,7 @@ class KonfigurasiAplikasiController extends Controller
     public function prosesediticon(Request $request)
     {
         $link_konfigurasi_aplikasi = 'konfigurasi_aplikasi';
-        if(Yeah::hakAkses($link_konfigurasi_aplikasi, 'lihat') == 'true')
+        if(Nesiatix::hakAkses($link_konfigurasi_aplikasi, 'lihat') == 'true')
         {
             $aturan = [
                 'userfile_icon'             => 'required|mimes:png,jpg,jpeg,svg',
@@ -120,28 +113,18 @@ class KonfigurasiAplikasiController extends Controller
             ];
             $this->validate($request, $aturan, $error_pesan);
 
-            $id_konfigurasi_aplikasi        = 1;
-            $client_cdn                     = new Client(['http_errors' => false]);
-            $request_cdn                    = $client_cdn->request(
-                                                                      'POST',
-                                                                      Yeah::urlcdn().'api/v1/upload/icon',
-                                                                      [
-                                                                          'multipart' => [
-                                                                              [
-                                                                                  'name'          => 'id_konfigurasi_aplikasi',
-                                                                                  'contents'      => $id_konfigurasi_aplikasi,
-                                                                              ],
-                                                                              [
-                                                                                  'name'          => 'file_icon',
-                                                                                  'filename'      => $request->file('userfile_icon')->getClientOriginalName(),
-                                                                                  'Mime-Type'     => $request->file('userfile_icon')->getmimeType(),
-                                                                                  'contents'      => fopen($request->file('userfile_icon')->path(), 'r'),
-                                                                              ],
-                                                                          ],
-                                                                      ]
-                                                                  );
+            $foto_icon_lama        = $ambil_konfigurasi_aplikasis->icon_konfigurasi_aplikasis;
+            if (file_exists($foto_icon_lama))
+                unlink($foto_icon_lama);
+
+            $nama_icon = date('Ymd').date('His').str_replace(')','',str_replace('(','',str_replace(' ','-',$request->file('userfile_icon')->getClientOriginalName())));
+            $path_icon = './public/uploads/logo/';
+            $request->file('userfile_icon')->move(
+                base_path() . '/public/uploads/logo/', $nama_icon
+            );
 
             $data = [
+                'icon_konfigurasi_aplikasis'    => $path_icon.$nama_icon,
                 'updated_at'                    => date('Y-m-d H:i:s'),
             ];
 
@@ -160,7 +143,7 @@ class KonfigurasiAplikasiController extends Controller
     public function proseseditlogotext(Request $request)
     {
         $link_konfigurasi_aplikasi = 'konfigurasi_aplikasi';
-        if(Yeah::hakAkses($link_konfigurasi_aplikasi, 'lihat') == 'true')
+        if(Nesiatix::hakAkses($link_konfigurasi_aplikasi, 'lihat') == 'true')
         {
             $aturan = [
                 'userfile_logo_text'            => 'required|mimes:png,jpg,jpeg,svg',
@@ -170,28 +153,18 @@ class KonfigurasiAplikasiController extends Controller
             ];
             $this->validate($request, $aturan, $error_pesan);
 
-            $id_konfigurasi_aplikasi        = 1;
-            $client_cdn                     = new Client(['http_errors' => false]);
-            $request_cdn                    = $client_cdn->request(
-                                                                      'POST',
-                                                                      Yeah::urlcdn().'api/v1/upload/logotext',
-                                                                      [
-                                                                          'multipart' => [
-                                                                              [
-                                                                                  'name'          => 'id_konfigurasi_aplikasi',
-                                                                                  'contents'      => $id_konfigurasi_aplikasi,
-                                                                              ],
-                                                                              [
-                                                                                  'name'          => 'file_icon',
-                                                                                  'filename'      => $request->file('userfile_logo_text')->getClientOriginalName(),
-                                                                                  'Mime-Type'     => $request->file('userfile_logo_text')->getmimeType(),
-                                                                                  'contents'      => fopen($request->file('userfile_logo_text')->path(), 'r'),
-                                                                              ],
-                                                                          ],
-                                                                      ]
-                                                                  );
+            $foto_logo_text_lama        = $ambil_konfigurasi_aplikasis->logo_text_konfigurasi_aplikasis;
+            if (file_exists($foto_logo_text_lama))
+                unlink($foto_logo_text_lama);
+
+            $nama_logo_text = date('Ymd').date('His').str_replace(')','',str_replace('(','',str_replace(' ','-',$request->file('userfile_logo_text')->getClientOriginalName())));
+            $path_logo_text = './public/uploads/logo/';
+            $request->file('userfile_logo_text')->move(
+                base_path() . '/public/uploads/logo/', $nama_logo_text
+            );
 
             $data = [
+                'logo_text_konfigurasi_aplikasis'   => $path_logo_text.$nama_logo_text,
                 'updated_at'                        => date('Y-m-d H:i:s'),
             ];
 

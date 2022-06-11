@@ -30,7 +30,7 @@
 									<td>{{ $baca_menus->nama_menus }}</td>
 									<td>
 										<svg class="c-sidebar-nav-icon">
-										  	<use xlink:href="{{URL::asset('template/back/assets/icons/coreui/free.svg#'.$baca_menus->icon_menus)}}"></use>
+										  	<use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#'.$baca_menus->icon_menus)}}"></use>
 										</svg>
 									</td>
 									<td></td>
@@ -41,7 +41,7 @@
 										<td></td>
 										<td>
 											<svg class="c-sidebar-nav-icon">
-									          	<use xlink:href="{{URL::asset('template/back/assets/icons/coreui/free.svg#'.$sub_menus->icon_menus)}}"></use>
+									          	<use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#'.$sub_menus->icon_menus)}}"></use>
 									        </svg>
 										</td>
 										<td>{{ $no++ }} {{ $sub_menus->nama_menus }}</td>
@@ -63,7 +63,7 @@
 									<td>{{ $baca_menus->nama_menus }}</td>
 									<td>
 										<svg class="c-sidebar-nav-icon">
-										  	<use xlink:href="{{URL::asset('template/back/assets/icons/coreui/free.svg#'.$baca_menus->icon_menus)}}"></use>
+										  	<use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#'.$baca_menus->icon_menus)}}"></use>
 										</svg>
 									</td>
 									<td></td>
@@ -80,7 +80,7 @@
 	               	@endif
 		           	<a class="btn btn-sm btn-danger" href="{{ $ambil_kembali }}">
 		           		<svg class="c-icon" style="margin-right:5px;">
-	               	      	<use xlink:href="{{URL::asset('template/back/assets/icons/coreui/free.svg#cil-ban')}}"></use>
+	               	      	<use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-ban')}}"></use>
 	               	    </svg> Kembali
 	               	</a>
 				</div>

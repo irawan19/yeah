@@ -11,26 +11,26 @@
 	<meta name="author" content="Trisakti">
 	<meta name="keyword" content="{{$ambil_konfigurasi_aplikasis->keywords_konfigurasi_aplikasis}}">
 	<title>{{$ambil_konfigurasi_aplikasis->nama_konfigurasi_aplikasis}}</title>
-	<link href="{{URL::asset('template/back/vendors/flag-icon-css/css/flag-icon.min.css')}}" rel="stylesheet">
-	<link href="{{URL::asset('template/back/css/style.css')}}" rel="stylesheet">
-	<link href="{{URL::asset('template/back/vendors/pace-progress/css/pace.min.css')}}" rel="stylesheet">
-	<link href="{{URL::asset('template/back/vendors/@coreui/coreui-chartjs/css/coreui-chartjs.css')}}" rel="stylesheet">
+	<link href="{{URL::asset('public/template/back/vendors/flag-icon-css/css/flag-icon.min.css')}}" rel="stylesheet">
+	<link href="{{URL::asset('public/template/back/css/style.css')}}" rel="stylesheet">
+	<link href="{{URL::asset('public/template/back/vendors/pace-progress/css/pace.min.css')}}" rel="stylesheet">
+	<link href="{{URL::asset('public/template/back/vendors/@coreui/coreui-chartjs/css/coreui-chartjs.css')}}" rel="stylesheet">
 	<link rel="icon" type="image/png" href="{{URL::asset($ambil_konfigurasi_aplikasis->icon_konfigurasi_aplikasis)}}" sizes="any" />
-	<link rel="stylesheet" href="{{URL::asset('template/back/vendors/fancybox/jquery.fancybox.min.css')}}" />
-	<link rel="stylesheet" href="{{URL::asset('template/back/vendors/sweetalert2/dist/sweetalert2.min.css')}}" />
-	<link type="text/css" media="screen" rel="stylesheet" href="{{ URL::asset('template/back/vendors/jqueryui/jquery-ui.css')}}" />
-	<link type="text/css" media="screen" rel="stylesheet" href="{{{ URL::asset('template/back/vendors/daterangepicker/daterangepicker.css')}}}" />
-	<link type="text/css" media="screen" rel="stylesheet" src="{{ URL::asset('template/back/vendors/datetimepicker/bootstrap-datetimepicker.min.css') }}"></link>
-	<link type="text/css" media="screen" rel="stylesheet" href="{{{ URL::asset('template/back/vendors/select2/dist/css/select2.min.css')}}}" />
-	<link type="text/css" media="screen" rel="stylesheet" href="{{ URL::asset('template/back/vendors/datatables.net-bs4/css/dataTables.bootstrap4.css') }}" />
-	<link href="{{URL::asset('template/back/vendors/@coreui/icons/css/free.min.css')}}" rel="stylesheet">
-	<link href="{{URL::asset('template/back/vendors/@coreui/icons/css/coreui-icons.min.css')}}" rel="stylesheet">
-	<link href="{{URL::asset('template/back/vendors/flag-icon-css/css/flag-icon.min.css')}}" rel="stylesheet">
-	<link href="{{URL::asset('template/back/vendors/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
-	<link href="{{URL::asset('template/back/vendors/simple-line-icons/css/simple-line-icons.css')}}" rel="stylesheet">
+	<link rel="stylesheet" href="{{URL::asset('public/template/back/vendors/fancybox/jquery.fancybox.min.css')}}" />
+	<link rel="stylesheet" href="{{URL::asset('public/template/back/vendors/sweetalert2/dist/sweetalert2.min.css')}}" />
+	<link type="text/css" media="screen" rel="stylesheet" href="{{ URL::asset('public/template/back/vendors/jqueryui/jquery-ui.css')}}" />
+	<link type="text/css" media="screen" rel="stylesheet" href="{{{ URL::asset('public/template/back/vendors/daterangepicker/daterangepicker.css')}}}" />
+	<link type="text/css" media="screen" rel="stylesheet" src="{{ URL::asset('public/template/back/vendors/datetimepicker/bootstrap-datetimepicker.min.css') }}"></link>
+	<link type="text/css" media="screen" rel="stylesheet" href="{{{ URL::asset('public/template/back/vendors/select2/dist/css/select2.min.css')}}}" />
+	<link type="text/css" media="screen" rel="stylesheet" href="{{ URL::asset('public/template/back/vendors/datatables.net-bs4/css/dataTables.bootstrap4.css') }}" />
+	<link href="{{URL::asset('public/template/back/vendors/@coreui/icons/css/free.min.css')}}" rel="stylesheet">
+	<link href="{{URL::asset('public/template/back/vendors/@coreui/icons/css/coreui-icons.min.css')}}" rel="stylesheet">
+	<link href="{{URL::asset('public/template/back/vendors/flag-icon-css/css/flag-icon.min.css')}}" rel="stylesheet">
+	<link href="{{URL::asset('public/template/back/vendors/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
+	<link href="{{URL::asset('public/template/back/vendors/simple-line-icons/css/simple-line-icons.css')}}" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.1.6/css/fixedHeader.dataTables.min.css" />
 	<meta name="_token" content="{{ csrf_token() }}">
-	<script src="{{URL::asset('template/back/vendors/jquery/js/jquery.min.js')}}"></script>
+	<script src="{{URL::asset('public/template/back/vendors/jquery/js/jquery.min.js')}}"></script>
 	<style type="text/css">
 		.namalogin{
 			color: #000
@@ -220,24 +220,24 @@
 			</main>
 		</div>@include('dashboard.layouts.footer')
 	</div>
-	<script src="{{ URL::asset('template/back/vendors/jqueryui/jquery-ui.js') }}"></script>
-	<script src="{{URL::asset('template/back/vendors/pace-progress/js/pace.min.js')}}"></script>
-	<script src="{{URL::asset('template/back/vendors/@coreui/coreui-pro/js/coreui.bundle.min.js')}}"></script>
-	<script src="{{URL::asset('template/back/vendors/fancybox/jquery.fancybox.min.js')}}"></script>
-	<script src="{{URL::asset('template/back/vendors/sweetalert2/dist/sweetalert2.min.js')}}"></script>
-	<script src="{{URL::asset('template/back/vendors/sweetalert2/sweet-alert.init.js')}}"></script>
-	<script src="{{ URL::asset('template/back/vendors/price/jquery.price.js') }}"></script>
-	<script type="text/javascript" src="{{{ URL::asset('template/back/vendors/daterangepicker/moment.js')}}}"></script>
-	<script type="text/javascript" src="{{{ URL::asset('template/back/vendors/daterangepicker/daterangepicker.js')}}}"></script>
-	<script type="text/javascript" src="{{ URL::asset('template/back/vendors/datetimepicker/bootstrap-datetimepicker.min.js') }}"></script>
-	<script type="text/javascript" src="{{ URL::asset('template/back/vendors/select2/dist/js/select2.full.min.js') }}"></script>
-	<script type="text/javascript" src="{{ URL::asset('template/back/vendors/templateEditor/ckeditor/ckeditor.js') }} "></script>
-	<script type="text/javascript" src="{{ URL::asset('template/back/vendors/datatables.net/js/jquery.dataTables.js') }}"></script>
-	<script type="text/javascript" src="{{ URL::asset('template/back/vendors/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-	<script src="{{URL::asset('template/back/js/tooltips.js')}}"></script>
-	<script src="{{URL::asset('template/back/js/datatables.js')}}"></script>
-	<script type="text/javascript" src="{{ URL::asset('template/back/vendors/chained/jquery.chained.js') }}"></script>
-	<script type="text/javascript" src="{{ URL::asset('template/back/vendors/mousewheel/jquery.mousewheel.min.js') }}"></script>
+	<script src="{{ URL::asset('public/template/back/vendors/jqueryui/jquery-ui.js') }}"></script>
+	<script src="{{URL::asset('public/template/back/vendors/pace-progress/js/pace.min.js')}}"></script>
+	<script src="{{URL::asset('public/template/back/vendors/@coreui/coreui-pro/js/coreui.bundle.min.js')}}"></script>
+	<script src="{{URL::asset('public/template/back/vendors/fancybox/jquery.fancybox.min.js')}}"></script>
+	<script src="{{URL::asset('public/template/back/vendors/sweetalert2/dist/sweetalert2.min.js')}}"></script>
+	<script src="{{URL::asset('public/template/back/vendors/sweetalert2/sweet-alert.init.js')}}"></script>
+	<script src="{{ URL::asset('public/template/back/vendors/price/jquery.price.js') }}"></script>
+	<script type="text/javascript" src="{{{ URL::asset('public/template/back/vendors/daterangepicker/moment.js')}}}"></script>
+	<script type="text/javascript" src="{{{ URL::asset('public/template/back/vendors/daterangepicker/daterangepicker.js')}}}"></script>
+	<script type="text/javascript" src="{{ URL::asset('public/template/back/vendors/datetimepicker/bootstrap-datetimepicker.min.js') }}"></script>
+	<script type="text/javascript" src="{{ URL::asset('public/template/back/vendors/select2/dist/js/select2.full.min.js') }}"></script>
+	<script type="text/javascript" src="{{ URL::asset('public/template/back/vendors/templateEditor/ckeditor/ckeditor.js') }} "></script>
+	<script type="text/javascript" src="{{ URL::asset('public/template/back/vendors/datatables.net/js/jquery.dataTables.js') }}"></script>
+	<script type="text/javascript" src="{{ URL::asset('public/template/back/vendors/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+	<script src="{{URL::asset('public/template/back/js/tooltips.js')}}"></script>
+	<script src="{{URL::asset('public/template/back/js/datatables.js')}}"></script>
+	<script type="text/javascript" src="{{ URL::asset('public/template/back/vendors/chained/jquery.chained.js') }}"></script>
+	<script type="text/javascript" src="{{ URL::asset('public/template/back/vendors/mousewheel/jquery.mousewheel.min.js') }}"></script>
 	<script src="https://cdn.datatables.net/fixedheader/3.1.6/js/dataTables.fixedHeader.min.js"></script>
 	<script type="text/javascript">
 		$(function() {
