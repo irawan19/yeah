@@ -469,7 +469,7 @@
 	                    $.ajaxSetup({
 	                        headers: { 'X-CSRF-Token': $('meta[name=_token]').attr('content') }
 	                    });
-	                    $.post("{{URL('menu/prosesurutan')}}", { type: "urutanHalaman", namaHalaman: $('#urutan_halaman').sortable('serialize') });
+	                    $.post("{{URL('dashboard/menu/prosesurutan')}}", { type: "urutanHalaman", namaHalaman: $('#urutan_halaman').sortable('serialize') });
 	                }
 	            });
 
@@ -512,7 +512,7 @@
 	            }
 
 	        //Fitur Sub Menu
-	        @if (Request:: segment(2) == 'tambah_submenu' || Request:: segment(2) == 'edit_submenu')
+	        @if (Request:: segment(3) == 'tambah_submenu' || Request:: segment(3) == 'edit_submenu')
 		        checkCheckedSubMenu();
 		        $("#fitur_lihat").click(function () {
 		            checkCheckedSubMenu();

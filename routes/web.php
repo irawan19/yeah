@@ -1,10 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+//Dashboard
 use App\Http\Controllers\Dashboard\DashboardController as DashboardController;
 use App\Http\Controllers\Dashboard\KonfigurasiProfilController as DashboardKonfigurasiProfilController;
 use App\Http\Controllers\Dashboard\KonfigurasiAkunController as DashboardKonfigurasiAkunController;
 
+//Event
+use App\Http\Controllers\Dashboard\EventController as DashboardEventController;
+use App\Http\Controllers\Dashboard\RegistrasiEventController as DashboardRegistrasiEventController;
+
+//Konfigurasi Aplikasi
 use App\Http\Controllers\Dashboard\MenuController as DashboardMenuController;
 use App\Http\Controllers\Dashboard\LevelSistemController as DashboardLevelSistemController;
 use App\Http\Controllers\Dashboard\AdminController as DashboardAdminController;
@@ -42,6 +48,32 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth:sanctum', config('
             Route::get('/', [DashboardKonfigurasiAkunController::class, 'index']);
             Route::post('/prosesedit', [DashboardKonfigurasiAkunController::class, 'prosesedit']);
         });
+
+    //Event
+        //Event
+            Route::group(['prefix' => 'event'], function() {
+                Route::get('/', [DashboardEventController::class, 'index']);
+                Route::get('/cari', [DashboardEventController::class, 'cari']);
+                Route::get('/tambah', [DashboardEventController::class, 'tambah']);
+                Route::post('/prosestambah', [DashboardEventController::class, 'prosestambah']);
+                Route::get('/baca/{id}', [DashboardEventController::class, 'baca']);
+                Route::get('/edit/{id}', [DashboardEventController::class, 'edit']);
+                Route::post('/prosesedit/{id}', [DashboardEventController::class, 'prosesedit']);
+                Route::get('/hapus/{id}', [DashboardEventController::class, 'hapus']);
+            });
+
+        //Registrasi Event
+            Route::group(['prefix' => 'registrasi_event'], function() {
+                Route::get('/', [DashboardRegistrasiEventController::class, 'index']);
+                Route::get('/cari', [DashboardRegistrasiEventController::class, 'cari']);
+                Route::get('/tambah', [DashboardRegistrasiEventController::class, 'tambah']);
+                Route::post('/prosestambah', [DashboardRegistrasiEventController::class, 'prosestambah']);
+                Route::get('/baca/{id}', [DashboardRegistrasiEventController::class, 'baca']);
+                Route::get('/edit/{id}', [DashboardRegistrasiEventController::class, 'edit']);
+                Route::post('/prosesedit/{id}', [DashboardRegistrasiEventController::class, 'prosesedit']);
+                Route::get('/hapus/{id}', [DashboardRegistrasiEventController::class, 'hapus']);
+                Route::get('/cetakexcel', [DashboardRegistrasiEventController::class, 'cetakexcel']);
+            });
     
     //Konfigurasi Dashboard
         //Menu
