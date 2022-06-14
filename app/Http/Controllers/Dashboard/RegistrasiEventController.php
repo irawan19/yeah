@@ -70,18 +70,80 @@ class RegistrasiEventController extends Controller
             return redirect('dashboard');
     }
 
-    public function hapus($id_registrasi_events=0)
+    public function tambah()
+    {
+        $link_registrasi_event = 'registrasi_event';
+        if(Yeah::hakAkses($link_registrasi_event,'tambah') == 'true')
+        {
+            $data['tambah_pembayarans']         = \App\Models\Master_pembayaran::where('status_hapus_pembayarans',0)
+                                                                                ->orderBy('nama_pembayarans','desc')
+                                                                                ->get();
+            $data['tambah_status_pembayarans']  = \App\Models\Master_status_pembayaran::get();
+            $data['tambah_tickets']             = \App\Models\Master_ticket::join('master_events','events_id','=','master_events.id_events')
+                                                                            ->where('mulai_registrasi_tickets','<=',date('Y-m-d H:i:s'))
+                                                                            ->where('selesai_registrasi_tickets','>=',date('Y-m-d H:i:s'))
+                                                                            ->where('sisa_kuota_tickets','>',0)
+                                                                            ->get();
+            $data['tambah_jenis_kelamins']      = \App\Models\Master_jenis_kelamin::get();
+            return view('dashboard.registrasi_event.tambah',$data);
+        }
+        else
+            return redirect('dashboard');
+    }
+
+    public function prosestambah(Request $request)
+    {
+        $link_registrasi_event = 'registrasi_event';
+        if(Yeah::hakAkses($link_registrasi_event,'tambah') == 'true')
+        {
+            $aturan = [
+                'tickets_id'                    => 'required',
+            ];
+            $error_pesan = [
+                'tickets_id.required'           => 'Form Ticket Harus Diisi.',
+            ];
+            $this->validate($request, $aturan, $error_pesan);
+        }
+        else
+            return redirect('dashboard');
+    }
+
+    public function edit($id_registrasi_event_details=0)
+    {
+        $link_registrasi_event = 'registrasi_event';
+        if(Yeah::hakAkses($link_registrasi_event,'edit') == 'true')
+        {
+
+        }
+        else
+            return redirect('dashboard');
+    }
+
+    public function prosesedit(Request $request, $id_registrasi_event_details=0)
+    {
+        $link_registrasi_event = 'registrasi_event';
+        if(Yeah::hakAkses($link_registrasi_event,'edit') == 'true')
+        {
+
+        }
+        else
+            return redirect('dashboard');
+    }
+
+    public function hapus($id_registrasi_event_details=0)
     {
         $link_registrasi_event = 'registrasi_event';
         if(Yeah::hakAkses($link_registrasi_event,'hapus') == 'true')
         {
-            if (!is_numeric($id_registrasi_events))
-                $id_registrasi_events = 0;
-            $cek_registrasi_events = \App\Models\Master_registrasi_event::where('id_registrasi_events',$id_registrasi_events)->count();
-            if($cek_registrasi_events != 0)
+            if (!is_numeric($id_registrasi_event_details))
+                $id_registrasi_event_details = 0;
+            $cek_registrasi_event_details = \App\Models\Master_registrasi_event_detail::where('id_registrasi_event_details',$id_registrasi_event_details)->count();
+            if($cek_registrasi_event_details != 0)
             {
-            	\App\Models\Master_registrasi_event::where('id_registrasi_events',$id_registrasi_events)
+            	\App\Models\Master_registrasi_event::where('id_registrasi_events',$cek_registrasi_event_details->registrasi_events_id)
             								->delete();
+                \App\Models\Master_registrasi_event_detail::where('id_registrasi_event_details',$id_registrasi_event_details)
+                                                            ->delete();
             	return response()->json(["sukses" => "sukses"], 200);
             }
             else

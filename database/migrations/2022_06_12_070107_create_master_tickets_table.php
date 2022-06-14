@@ -17,12 +17,15 @@ return new class extends Migration
             $table->id('id_tickets');
             $table->bigInteger('users_id')->default(0)->index();
             $table->bigInteger('events_id')->default(0)->index();
+            $table->datetime('mulai_registrasi_tickets');
+            $table->datetime('selesai_registrasi_tickets');
             $table->string('kode_tickets');
             $table->string('nama_tickets');
             $table->longtext('deskripsi_tickets');
             $table->longtext('informasi_tickets');
             $table->longtext('disclaimer_tickets');
             $table->double('kuota_tickets');
+            $table->double('sisa_kuota_tickets');
             $table->double('harga_tickets');
             $table->boolean('status_hapus_tickets')->default(0);
             $table->timestamps();

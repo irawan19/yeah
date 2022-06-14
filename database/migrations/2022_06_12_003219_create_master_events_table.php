@@ -17,8 +17,6 @@ return new class extends Migration
             $table->id('id_events');
             $table->string('kode_events');
             $table->datetime('tanggal_events');
-            $table->datetime('mulai_registrasi_events');
-            $table->datetime('selesai_registrasi_events');
             $table->string('gambar_events');
             $table->string('nama_events');
             $table->longtext('deskripsi_events');
