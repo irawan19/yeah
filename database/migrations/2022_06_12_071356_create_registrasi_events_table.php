@@ -19,7 +19,8 @@ return new class extends Migration
             $table->bigInteger('pembayarans_id')->default(0)->index();
             $table->bigInteger('status_pembayarans_id')->default(0)->index();
             $table->string('no_registrasi_events');
-            $table->double('total_registrasi_events');
+            $table->double('jumlah_registrasi_events');
+            $table->double('harga_registrasi_events');
             $table->double('total_harga_registrasi_events');
             $table->string('bukti_pembayaran_registrasi_events')->nullable();
             $table->timestamps();

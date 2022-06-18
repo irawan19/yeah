@@ -57,38 +57,17 @@ class Yeah
 	//Hak Akses
 
 	//Generate No Registrasi
-	public static function noRegistrasi($id_tickets=0)
+	public static function noRegistrasi()
 	{
-		$ambil_tickets 				= \App\Models\Master_ticket::join('master_events','events_id','=','master_events.id_events')
-																->where('id_tickets',$id_tickets)
-																->first();
-		if(!empty($ambil_tickets))
-			$kode_tickets 	= $ambil_tickets->kode_tickets.$ambil_tickets->kode_events;
-		else
-			$kode_tickets 	= 'N/A';
+		$unique = str_random(6);
 
-		$ambil_registrasi_events 	= \App\Models\Registrasi_event::select('no_registrasi_events')
-																	->whereRaw('MONTH(created_at) = "'.date('m').'"')
-																	->whereRaw('YEAR(created_at) = "'.date('Y').'"')
-																	->orderByRaw('CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(no_registrasi_events,"-",2),"-",-1) AS SIGNED) desc')
-																	->first();
-		if(!empty($ambil_registrasi_events))
-		{
-			$no_registrasi_events 				= $ambil_registrasi_events->no_registrasi_events;
-			$explode_no 						= explode('-', $no_registrasi_events);
-			if(!empty($explode_no[1]))
-			{
-				$no_registrasi_events_new 			= (int)$explode_no[1] + 1;
-				$format_no_registrasi_events_new 	= sprintf('%04d', $no_registrasi_events_new);
-				$format_registrasi_events_new 		= $kode_tickets.'-'.$format_no_registrasi_events_new.'-'.date('m').'-'.date('Y');
-			}
-			else
-				$format_registrasi_events_new 	= $kode_tickets.'-0001-'.date('m').'-'.date('Y');
-		}
-		else
-			$format_registrasi_events_new 	= $kode_tickets.'-0001-'.date('m').'-'.date('Y');
+        $check = \App\Models\Registrasi_event::where('no_registrasi_events', $unique)->first();
 
-		return $format_registrasi_events_new;
+        if ($check) {
+            return $this->reference();
+        }
+
+        return $unique;
 	}
 	//Generate No Registrasi
 

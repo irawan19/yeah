@@ -66,9 +66,9 @@
 											    </td>
 									    	@endif
 								    		<td class="nowrap">{{$no}}</td>
-								    		<td class="nowrap">{{$registrasi_events->tanggal_registrasi_event_details}}</td>
-								    		<td class="nowrap">{{$registrasi_events->nama_events}}</td>
+								    		<td class="nowrap">{{Yeah::ubahDBKeTanggalwaktu($registrasi_events->tanggal_registrasi_event_details)}}</td>
 								    		<td class="nowrap">{{$registrasi_events->no_registrasi_events}}</td>
+								    		<td class="nowrap">{{$registrasi_events->nama_events}}</td>
 								    		<td class="nowrap">{{$registrasi_events->nama_tickets}}</td>
 								    		<td class="nowrap">
 												<a href="mailto={{$registrasi_events->email_registrasi_event_details}}">

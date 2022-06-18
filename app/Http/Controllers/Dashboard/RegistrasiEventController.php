@@ -97,12 +97,84 @@ class RegistrasiEventController extends Controller
         if(Yeah::hakAkses($link_registrasi_event,'tambah') == 'true')
         {
             $aturan = [
-                'tickets_id'                    => 'required',
+                'tickets_id'                        => 'required',
+                'pembayarans_id'                    => 'required',
+                'status_pembayarans_id'             => 'required',
             ];
             $error_pesan = [
-                'tickets_id.required'           => 'Form Ticket Harus Diisi.',
+                'tickets_id.required'               => 'Form Ticket Harus Diisi.',
+                'pembayarans_id.required'           => 'Form Pembayaran Harus Diisi.',
+                'status_pembayarans_id.required'    => 'Form Status Pembayaran Harus Diisi.',
             ];
             $this->validate($request, $aturan, $error_pesan);
+
+            $id_registrasi_events       = Yeah::autoIncrementKey('registrasi_events','id_registrasi_events');
+            $harga_registrasi_events    = Yeah::ubahHargaKeDB($request->harga_tickets);
+
+            $registrasi_events_data = [
+                'id_registrasi_events'                  => $id_registrasi_events,
+                'tickets_id'                            => $request->tickets_id,
+                'pembayarans_id'                        => $request->pembayarans_id,
+                'status_pembayarans_id'                 => $request->status_pembayarans_id,
+                'jumlah_registrasi_events'              => 0,
+                'harga_registrasi_events'               => $harga_registrasi_events,
+                'total_harga_registrasi_events'         => 0,
+                'bukti_pembayaran_registrasi_events'    => null,
+                'created_at'                            => date('Y-m-d H:i:s'),
+                'updated_at'                            => date('Y-m-d H:i:s'),
+                'no_registrasi_events'                  => Yeah::noRegistrasi(),
+            ];
+            \App\Models\Registrasi_event::insert($registrasi_events_data);
+
+            $jumlah_registrasi_event_details = 0;
+            foreach($request->jenis_kelamins_id as $key => $jenis_kelamins)
+            {
+                if(!empty($request->nama_registrasi_event_details))
+                {
+                    $registrasi_event_details_data = [
+                        'id_registrasi_event_details'       => Yeah::autoIncrementKey('registrasi_event_details','id_registrasi_event_details'),
+                        'registrasi_events_id'              => $id_registrasi_events,
+                        'jenis_kelamins_id'                 => $jenis_kelamins,
+                        'nama_registrasi_event_details'     => $request->nama_registrasi_event_details[$key],
+                        'umur_registrasi_event_details'     => $request->umur_registrasi_event_details[$key],
+                        'email_registrasi_event_details'    => $request->email_registrasi_event_details[$key],
+                        'telepon_registrasi_event_details'  => $request->telepon_registrasi_event_details[$key],
+                        'created_at'                        => date('Y-m-d H:i:s'),
+                        'updated_at'                        => date('Y-m-d H:i:s'),
+                    ];
+                    \App\Models\Registrasi_event_detail::insert($registrasi_event_details_data);
+                    
+                    $jumlah_registrasi_event_details + 1;
+                }
+            }
+
+            $update_registrasi_events = [
+                'jumlah_registrasi_events'          => $jumlah_registrasi_event_details,
+                'total_harga_registrasi_events'     => $harga_registrasi_events * $jumlah_registrasi_event_details,
+                'updated_at'                        => date('Y-m-d H:i:s'),
+            ];
+            \App\Models\Registrasi_event::where('id_registrasi_events',$id_registrasi_events)
+                                        ->update($update_registrasi_events);
+
+            $simpan                   = $request->simpan;
+            $simpan_kembali           = $request->simpan_kembali;
+            if($simpan)
+            {
+                $setelah_simpan = [
+                    'alert'  => 'sukses',
+                    'text'   => 'Data berhasil ditambahkan',
+                ];
+                return redirect()->back()->with('setelah_simpan', $setelah_simpan);
+            }
+            if($simpan_kembali)
+            {
+                if(request()->session()->get('halaman') != '')
+                    $redirect_halaman  = request()->session()->get('halaman');
+                else
+                    $redirect_halaman  = 'dashboard/registrasi_event';
+            
+                return redirect($redirect_halaman);
+            }
         }
         else
             return redirect('dashboard');

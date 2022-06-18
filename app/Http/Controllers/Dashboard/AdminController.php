@@ -108,6 +108,7 @@ class AdminController extends Controller
                 );
 
                 $data = [
+                    'id'                    => Yeah::autoIncrementKey('users','id'),
                     'profile_photo_path'    => $path_foto_user.$nama_foto_user,
                     'name'                  => $request->name,
                     'username'              => $request->username,
@@ -143,6 +144,7 @@ class AdminController extends Controller
                 $this->validate($request, $aturan, $error_pesan);
 
                 $data = [
+                    'id'                    => Yeah::autoIncrementKey('users','id'),
                     'profile_photo_path'    => null,
                     'name'                  => $request->name,
                     'username'              => $request->username,

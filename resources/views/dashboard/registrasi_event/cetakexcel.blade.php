@@ -52,9 +52,9 @@
 			@foreach($lihat_registrasi_events as $registrasi_events)
 		    	<tr>
 		    		<td>{{$no}}</td>
-		    		<td>{{$registrasi_events->tanggal_registrasi_event_details}}</td>
-		    		<td>{{$registrasi_events->nama_events}}</td>
+		    		<td>{{Yeah::ubahDBKeTanggalwaktu($registrasi_events->tanggal_registrasi_event_details)}}</td>
 		    		<td>{{$registrasi_events->no_registrasi_events}}</td>
+		    		<td>{{$registrasi_events->nama_events}}</td>
 		    		<td>{{$registrasi_events->nama_tickets}}</td>
 		    		<td>
 						<a href="mailto={{$registrasi_events->email_registrasi_event_details}}">

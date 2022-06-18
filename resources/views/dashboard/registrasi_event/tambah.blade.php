@@ -7,7 +7,7 @@
 				<form class="form-horizontal m-t-40" action="{{ URL('dashboard/registrasi_event/prosestambah') }}" method="POST">
 					{{ csrf_field() }}
 					<div class="card-header">
-						<strong>Tambah Event</strong>
+						<strong>Tambah Registrasi Event</strong>
 					</div>
 					<div class="card-body">
                         <div class="row">
@@ -20,6 +20,28 @@
                                     <select class="form-control select2" id="tickets_id" name="tickets_id">
                                         @foreach($tambah_tickets as $tickets)
                                             <option value="{{$tickets->id_tickets}}" {{ Request::old('tickets_id') == $tickets->id_tickets ? $select='selected' : $select='' }}>{{$tickets->nama_events.' - '.$tickets->nama_tickets.' ('.$tickets->sisa_kuota_tickets.')'}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+								<div class="form-group">
+									<label class="form-col-form-label" for="harga_tickets">Harga <b style="color:red">*</b></label>
+									<input class="form-control {{ Yeah::validForm($errors->first('harga_tickets')) }}" id="harga_tickets" type="text" name="harga_tickets" value="{{Yeah::ubahDBKeHarga(0)}}" readonly>
+									{{Yeah::pesanErorForm($errors->first('harga_tickets'))}}
+								</div>
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="pembayarans_id">Pembayaran<b style="color:red">*</b></label>
+                                    <select class="form-control select2" id="pembayarans_id" name="pembayarans_id">
+                                        @foreach($tambah_pembayarans as $pembayarans)
+                                            <option value="{{$pembayarans->id_pembayarans}}" {{ Request::old('pembayarans_id') == $pembayarans->id_pembayarans ? $select='selected' : $select='' }}>{{$pembayarans->nama_pembayarans}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="status_pembayarans_id">Status Pembayaran<b style="color:red">*</b></label>
+                                    <select class="form-control select2" id="status_pembayarans_id" name="status_pembayarans_id">
+                                        @foreach($tambah_status_pembayarans as $status_pembayarans)
+                                            <option value="{{$status_pembayarans->id_status_pembayarans}}" {{ Request::old('status_pembayarans_id') == $status_pembayarans->id_status_pembayarans ? $select='selected' : $select='' }}>{{$status_pembayarans->nama_status_pembayarans}}</option>
                                         @endforeach
                                     </select>
                                 </div>
