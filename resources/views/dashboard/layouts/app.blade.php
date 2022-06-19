@@ -369,6 +369,17 @@
 	            	changeMonth: true,
 	            	changeYear: true,
 	            });
+	            $('.getDateTime').datetimepicker({
+	                dayNames: ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'],
+	            	dayNamesMin: ['Mi', 'Sn', 'Sl', 'Rb', 'Km', 'Jm', 'Sb'],
+	            	dayNamesShort: ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'],
+	            	monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Ags', 'Sep', 'Okt', 'Nov', 'Des'],
+	            	dateFormat: "dd M yy",
+					timeFormat: "HH:mm:ss",
+	            	changeMonth: true,
+	            	changeYear: true,
+					enableTime: true,
+	            });
 
 	        //Month Year
 	        	$('.getDateMonthYear').datepicker({

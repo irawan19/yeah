@@ -16,7 +16,8 @@ class LevelSistemController extends Controller
             $data['link_level_sistem']      = $link_level_sistem;
             $url_sekarang                   = $request->fullUrl();
             $data['hasil_kata']             = '';
-            $data['lihat_level_sistems']    = \App\Models\Master_level_sistem::get();
+            $data['lihat_level_sistems']    = \App\Models\Master_level_sistem::orderBy('nama_level_sistems')
+                                                                                ->get();
             session()->forget('halaman');
             session()->forget('hasil_kata');
             session(['halaman'                          => $url_sekarang]);
@@ -35,7 +36,8 @@ class LevelSistemController extends Controller
             $url_sekarang                       = $request->fullUrl();
             $hasil_kata                         = $request->cari_kata;
             $data['hasil_kata']                 = $hasil_kata;
-            $data['lihat_level_sistems']        = \App\Models\Master_level_sistem::where('nama_level_sistems', 'LIKE', '%'.$hasil_kata.'%')
+            $data['lihat_level_sistems']        = \App\Models\Master_level_sistem::orderBy('nama_level_sistems')
+                                                                            ->where('nama_level_sistems', 'LIKE', '%'.$hasil_kata.'%')
                                                                             ->get();
             session(['halaman'                  => $url_sekarang]);
             session(['hasil_kata'               => $hasil_kata]);

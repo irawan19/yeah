@@ -17,9 +17,6 @@ return new class extends Migration
             $table->id('id_tickets');
             $table->bigInteger('users_id')->default(0)->index();
             $table->bigInteger('events_id')->default(0)->index();
-            $table->datetime('mulai_registrasi_tickets');
-            $table->datetime('selesai_registrasi_tickets');
-            $table->string('kode_tickets');
             $table->string('nama_tickets');
             $table->longtext('deskripsi_tickets');
             $table->longtext('informasi_tickets');

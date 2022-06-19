@@ -80,8 +80,8 @@ class RegistrasiEventController extends Controller
                                                                                 ->get();
             $data['tambah_status_pembayarans']  = \App\Models\Master_status_pembayaran::get();
             $data['tambah_tickets']             = \App\Models\Master_ticket::join('master_events','events_id','=','master_events.id_events')
-                                                                            ->where('mulai_registrasi_tickets','<=',date('Y-m-d H:i:s'))
-                                                                            ->where('selesai_registrasi_tickets','>=',date('Y-m-d H:i:s'))
+                                                                            ->where('mulai_registrasi_events','<=',date('Y-m-d H:i:s'))
+                                                                            ->where('selesai_registrasi_events','>=',date('Y-m-d H:i:s'))
                                                                             ->where('sisa_kuota_tickets','>',0)
                                                                             ->get();
             $data['tambah_jenis_kelamins']      = \App\Models\Master_jenis_kelamin::get();
@@ -185,7 +185,11 @@ class RegistrasiEventController extends Controller
         $link_registrasi_event = 'registrasi_event';
         if(Yeah::hakAkses($link_registrasi_event,'edit') == 'true')
         {
-
+            $data['lihat_registrasi_event_details'] = \App\Models\Registrasi_event_detail::join('registrasi_events','registrasi_events_id','=','registrasi_events.id_registrasi_events')
+                                                                                        ->join('master_jenis_kelamins','jenis_kelamins_id','=','master_jenis_kelamins.id_jenis_kelamins')
+                                                                                        ->where('id_registrasi_event_details',$id_registrasi_event_details)
+                                                                                        ->first();
+            return view('dashboard.event.edit',$data);
         }
         else
             return redirect('dashboard');
