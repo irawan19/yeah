@@ -8,6 +8,8 @@ use App\Http\Controllers\Dashboard\KonfigurasiAkunController as DashboardKonfigu
 
 //Event
 use App\Http\Controllers\Dashboard\EventController as DashboardEventController;
+use App\Http\Controllers\Dashboard\TicketController as DashboardTicketController;
+use App\Http\Controllers\Dashboard\PromoController as DashboardPromoController;
 use App\Http\Controllers\Dashboard\RegistrasiEventController as DashboardRegistrasiEventController;
 
 //Konfigurasi Aplikasi
@@ -61,6 +63,31 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth:sanctum', config('
                 Route::post('/prosesedit/{id}', [DashboardEventController::class, 'prosesedit']);
                 Route::get('/hapus/{id}', [DashboardEventController::class, 'hapus']);
             });
+        
+        //Ticket
+            Route::group(['prefix' => 'ticket'], function() {
+                Route::get('/', [DashboardTicketController::class, 'index']);
+                Route::get('/cari', [DashboardTicketController::class, 'cari']);
+                Route::get('/tambah', [DashboardTicketController::class, 'tambah']);
+                Route::post('/prosestambah', [DashboardTicketController::class, 'prosestambah']);
+                Route::get('/baca/{id}', [DashboardTicketController::class, 'baca']);
+                Route::get('/edit/{id}', [DashboardTicketController::class, 'edit']);
+                Route::post('/prosesedit/{id}', [DashboardTicketController::class, 'prosesedit']);
+                Route::get('/hapus/{id}', [DashboardTicketController::class, 'hapus']);
+            });
+        
+        //Promo
+            Route::group(['prefix' => 'promo'], function() {
+                Route::get('/', [DashboardPromoController::class, 'index']);
+                Route::get('/cari', [DashboardTicketController::class, 'cari']);
+                Route::get('/tambah', [DashboardTicketController::class, 'tambah']);
+                Route::post('/prosestambah', [DashboardTicketController::class, 'prosestambah']);
+                Route::get('/baca/{id}', [DashboardTicketController::class, 'baca']);
+                Route::get('/edit/{id}', [DashboardTicketController::class, 'edit']);
+                Route::post('/prosesedit/{id}', [DashboardTicketController::class, 'prosesedit']);
+                Route::get('/hapus/{id}', [DashboardTicketController::class, 'hapus']);
+            });
+
 
         //Registrasi Event
             Route::group(['prefix' => 'registrasi_event'], function() {

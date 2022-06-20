@@ -38,6 +38,7 @@ class EventController extends Controller
             $hasil_kata                   	= $request->cari_kata;
             $data['hasil_kata']           	= $hasil_kata;
             $data['lihat_events']           = \App\Models\Master_event::where('nama_events', 'LIKE', '%'.$hasil_kata.'%')
+                                                                        ->where('status_hapus_events',0)
                                                                         ->orWhere('lokasi_events', 'LIKE', '%'.$hasil_kata.'%')
                                                                         ->where('status_hapus_events',0)
                                                                         ->orderBy('tanggal_events','desc')

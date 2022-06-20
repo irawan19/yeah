@@ -19,7 +19,7 @@ return new class extends Migration
             $table->bigInteger('events_id')->default(0)->index();
             $table->string('nama_tickets');
             $table->longtext('deskripsi_tickets');
-            $table->longtext('informasi_tickets');
+            $table->longtext('informasi_registrasi_tickets');
             $table->longtext('disclaimer_tickets');
             $table->double('kuota_tickets');
             $table->double('sisa_kuota_tickets');
