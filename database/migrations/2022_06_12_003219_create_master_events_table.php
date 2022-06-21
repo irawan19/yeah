@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('master_events', function (Blueprint $table) {
             $table->id('id_events');
+            $table->bigInteger('users_id')->default(0)->index();
             $table->datetime('tanggal_events');
             $table->datetime('mulai_registrasi_events');
             $table->datetime('selesai_registrasi_events');

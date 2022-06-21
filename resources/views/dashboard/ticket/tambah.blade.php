@@ -41,13 +41,6 @@
                                     {{Yeah::pesanErorForm($errors->first('kuota_tickets'))}}
                                 </div>
                             </div>
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label class="form-col-form-label" for="informasi_registrasi_tickets">Informasi Registrasi <b style="color:red">*</b></label>
-                                    <textarea class="form-control {{ Yeah::validForm($errors->first('informasi_registrasi_tickets')) }}" id="informasi_registrasi_tickets" name="informasi_registrasi_tickets" rows="3">{{Request::old('informasi_registrasi_tickets')}}</textarea>
-                                    {{Yeah::pesanErorForm($errors->first('informasi_registrasi_tickets'))}}
-                                </div>
-                            </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="form-col-form-label" for="deskripsi_tickets">Deskripsi <b style="color:red">*</b></label>

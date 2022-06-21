@@ -48,7 +48,7 @@ class EventController extends Controller
             return view('dashboard.event.lihat', $data);
         }
         else
-            return redirect('dashboard');
+            return redirect('dashboard/event');
     }
 
     public function tambah()
@@ -57,7 +57,7 @@ class EventController extends Controller
         if(Yeah::hakAkses($link_event,'tambah') == 'true')
             return view('dashboard.event.tambah');
         else
-            return redirect('event');
+            return redirect('dashboard/event');
     }
 
     public function prosestambah(Request $request)
@@ -98,6 +98,7 @@ class EventController extends Controller
             $id_events = Yeah::autoIncrementKey('master_events','id_events');
             $data = [
             	'id_events'      	        => $id_events,
+                'users_id'                  => Auth::user()->id,
                 'nama_events'    	        => $request->nama_events,
                 'tanggal_events'            => Yeah::ubahTanggalKeDB($request->tanggal_events),
                 'gambar_events'             => $path_gambar_event.$nama_gambar_event,
@@ -127,13 +128,13 @@ class EventController extends Controller
                 if(request()->session()->get('halaman') != '')
                     $redirect_halaman  = request()->session()->get('halaman');
                 else
-                    $redirect_halaman  = 'event';
+                    $redirect_halaman  = 'dashboard/event';
 
                 return redirect($redirect_halaman);
             }
         }
         else
-            return redirect('event');
+            return redirect('dashboard/event');
     }
 
     public function baca($id_events=0)
@@ -143,10 +144,12 @@ class EventController extends Controller
         {
             if (!is_numeric($id_events))
                 $id_events = 0;
-            $cek_events = \App\Models\Master_event::where('id_events',$id_events)->first();
-            if(!empty($cek_events))
+            $cek_events = \App\Models\Master_event::where('id_events',$id_events)->count();
+            if($cek_events != 0)
             {
-                $data['baca_events']    = $cek_events;
+                $data['baca_events']    = \App\Models\Master_event::join('users','users_id','=','users.id')
+                                                                    ->where('id_events',$id_events)
+                                                                    ->first();
                 return view('dashboard.event.baca',$data);
             }
             else
@@ -170,10 +173,10 @@ class EventController extends Controller
                 return view('dashboard.event.edit',$data);
             }
             else
-                return redirect('event');
+                return redirect('dashboard/event');
         }
         else
-            return redirect('event');
+            return redirect('dashboard/event');
     }
 
     public function prosesedit($id_events=0, Request $request)
@@ -224,6 +227,7 @@ class EventController extends Controller
         
                     $data = [
                         'nama_events'    	        => $request->nama_events,
+                        'users_id'                  => Auth::user()->id,
                         'tanggal_events'            => Yeah::ubahTanggalKeDB($request->tanggal_events),
                         'gambar_events'             => $path_gambar_event.$nama_gambar_event,
                         'deskripsi_events'          => $request->deskripsi_events,
@@ -260,6 +264,7 @@ class EventController extends Controller
         
                     $data = [
                         'nama_events'    	        => $request->nama_events,
+                        'users_id'                  => Auth::user()->id,
                         'tanggal_events'            => Yeah::ubahTanggalKeDB($request->tanggal_events),
                         'deskripsi_events'          => $request->deskripsi_events,
                         'disclaimer_events'         => $request->disclaimer_events,
@@ -275,15 +280,15 @@ class EventController extends Controller
                 if(request()->session()->get('halaman') != '')
                     $redirect_halaman    = request()->session()->get('halaman');
                 else
-                    $redirect_halaman  = 'event';
+                    $redirect_halaman  = 'dashboard/event';
                 
                 return redirect($redirect_halaman);
             }
             else
-                return redirect('event');
+                return redirect('dashboard/event');
         }
         else
-            return redirect('event');
+            return redirect('dashboard/event');
     }
 
     public function hapus($id_events=0)
@@ -297,6 +302,7 @@ class EventController extends Controller
             if($cek_events != 0)
             {
             	$events_data = [
+                    'users_id'              => Auth::user()->id,
             		'status_hapus_events'	=> 1
             	];
             	\App\Models\Master_event::where('id_events',$id_events)
@@ -304,9 +310,9 @@ class EventController extends Controller
             	return response()->json(["sukses" => "sukses"], 200);
             }
             else
-                return redirect('event');
+                return redirect('dashboard/event');
         }
         else
-            return redirect('event');
+            return redirect('dashboard/event');
     }
 }

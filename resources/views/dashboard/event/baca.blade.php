@@ -46,6 +46,11 @@
 							<td>{!! $baca_events->disclaimer_events !!}</td>
 						</tr>
 						<tr>
+							<th>Oleh</th>
+							<th>:</th>
+							<td>{{$baca_events->name}}</td>
+						</tr>
+						<tr>
 							<th>Dibuat</th>
 							<th>:</th>
 							<td>{{Yeah::ubahDBKeTanggalwaktu($baca_events->created_at)}}</td>

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->bigInteger('events_id')->default(0)->index();
             $table->bigInteger('users_id')->default(0)->index();
             $table->string('nama_promos');
+            $table->string('gambar_promos');
             $table->longtext('deskripsi_promos');
             $table->timestamps();
         });

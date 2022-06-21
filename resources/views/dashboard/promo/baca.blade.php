@@ -5,59 +5,45 @@
 		<div class="col-sm-12">
 			<div class="card">
 				<div class="card-header">
-					<strong>Baca Ticket</strong>
+					<strong>Baca Promo</strong>
 				</div>
 				<div class="card-body">
+                    <div class="center-align">
+                        <a data-fancybox="gallery" href="{{URL::asset($baca_promos->gambar_promos)}}">
+							<img src="{{ URL::asset($baca_promos->gambar_promos) }}" width="108">
+						</a>
+                    </div>
+                    <hr/>
 					<table class="table table-responsive-sm table-striped table-sm">
 						<tr>
 							<th width="150px">Event</th>
 							<th width="1px">:</th>
-							<td>{{$baca_tickets->nama_events}}</td>
+							<td>{{$baca_promos->nama_events}}</td>
 						</tr>
 						<tr>
 							<th>Nama</th>
 							<th>:</th>
-							<td>{{$baca_tickets->nama_tickets}}</td>
-						</tr>
-						<tr>
-							<th>Harga</th>
-							<th>:</th>
-							<td>{{Yeah::ubahDBKeHarga($baca_tickets->harga_tickets)}}</td>
-						</tr>
-						<tr>
-							<th>Kuota</th>
-							<th>:</th>
-							<td>{{$baca_tickets->kuota_tickets}}</td>
-						</tr>
-						<tr>
-							<th>Sisa Kuota</th>
-							<th>:</th>
-							<td>{{$baca_tickets->sisa_kuota_tickets}}</td>
+							<td>{{$baca_promos->nama_promos}}</td>
 						</tr>
 						<tr>
 							<th>Deskripsi</th>
 							<th>:</th>
-							<td>{!! $baca_tickets->deskripsi_tickets !!}</td>
-						</tr>
-						<tr>
-							<th>Disclaimer</th>
-							<th>:</th>
-							<td>{!! $baca_tickets->disclaimer_tickets !!}</td>
+							<td>{!! $baca_promos->deskripsi_promos !!}</td>
 						</tr>
 						<tr>
 							<th>Oleh</th>
 							<th>:</th>
-							<td>{{$baca_tickets->name}}</td>
+							<td>{{$baca_promos->name}}</td>
 						</tr>
 						<tr>
 							<th>Dibuat</th>
 							<th>:</th>
-							<td>{{Yeah::ubahDBKeTanggalwaktu($baca_tickets->created_at)}}</td>
+							<td>{{Yeah::ubahDBKeTanggalwaktu($baca_promos->created_at)}}</td>
 						</tr>
 						<tr>
 							<th>Diperbarui</th>
 							<th>:</th>
-							<td>{{Yeah::ubahDBKeTanggalwaktu($baca_tickets->updated_at)}}</td>
+							<td>{{Yeah::ubahDBKeTanggalwaktu($baca_promos->updated_at)}}</td>
 						</tr>
 					</table>
 				</div>
@@ -65,7 +51,7 @@
 					@if(request()->session()->get('halaman') != '')
 						@php($ambil_kembali = request()->session()->get('halaman'))
 					@else
-						@php($ambil_kembali = URL('dashboard/ticket'))
+						@php($ambil_kembali = URL('dashboard/promo'))
 					@endif
 					<a class="btn btn-sm btn-danger" href="{{ $ambil_kembali }}">
 						<svg class="c-icon" style="margin-right:5px;">

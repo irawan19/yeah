@@ -97,14 +97,16 @@ class RegistrasiEventController extends Controller
         if(Yeah::hakAkses($link_registrasi_event,'tambah') == 'true')
         {
             $aturan = [
-                'tickets_id'                        => 'required',
-                'pembayarans_id'                    => 'required',
-                'status_pembayarans_id'             => 'required',
+                'tickets_id'                                => 'required',
+                'pembayarans_id'                            => 'required',
+                'status_pembayarans_id'                     => 'required',
+                'bukti_pembayaran_registrasi_event_details' => 'required',
             ];
             $error_pesan = [
-                'tickets_id.required'               => 'Form Ticket Harus Diisi.',
-                'pembayarans_id.required'           => 'Form Pembayaran Harus Diisi.',
-                'status_pembayarans_id.required'    => 'Form Status Pembayaran Harus Diisi.',
+                'tickets_id.required'                       => 'Form Ticket Harus Diisi.',
+                'pembayarans_id.required'                   => 'Form Pembayaran Harus Diisi.',
+                'status_pembayarans_id.required'            => 'Form Status Pembayaran Harus Diisi.',
+                'bukti_pembayaran_registrasi_event_details' => 'Form Bukti Pembayaran Harus Diisi.',
             ];
             $this->validate($request, $aturan, $error_pesan);
 
@@ -119,7 +121,7 @@ class RegistrasiEventController extends Controller
                 'jumlah_registrasi_events'              => 0,
                 'harga_registrasi_events'               => $harga_registrasi_events,
                 'total_harga_registrasi_events'         => 0,
-                'bukti_pembayaran_registrasi_events'    => null,
+                'bukti_pembayaran_registrasi_events'    => $request->bukti_pembayaran_registrasi_event_details,
                 'created_at'                            => date('Y-m-d H:i:s'),
                 'updated_at'                            => date('Y-m-d H:i:s'),
                 'no_registrasi_events'                  => Yeah::noRegistrasi(),

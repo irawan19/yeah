@@ -14,7 +14,7 @@
                             @if (Session::get('setelah_simpan.alert') == 'sukses')
                                 {{ Yeah::pesanSuksesForm(Session::get('setelah_simpan.text')) }}
                             @endif
-                            <div class="col-sm-12">
+                            <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="form-col-form-label" for="tickets_id">Ticket Event <b style="color:red">*</b></label>
                                     <select class="form-control select2" id="tickets_id" name="tickets_id">
@@ -23,12 +23,13 @@
                                         @endforeach
                                     </select>
                                 </div>
-
 								<div class="form-group">
 									<label class="form-col-form-label" for="harga_tickets">Harga <b style="color:red">*</b></label>
 									<input class="form-control {{ Yeah::validForm($errors->first('harga_tickets')) }}" id="harga_tickets" type="text" name="harga_tickets" value="{{Yeah::ubahDBKeHarga(0)}}" readonly>
 									{{Yeah::pesanErorForm($errors->first('harga_tickets'))}}
 								</div>
+                            </div>
+                            <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="form-col-form-label" for="pembayarans_id">Pembayaran<b style="color:red">*</b></label>
                                     <select class="form-control select2" id="pembayarans_id" name="pembayarans_id">
@@ -44,6 +45,13 @@
                                             <option value="{{$status_pembayarans->id_status_pembayarans}}" {{ Request::old('status_pembayarans_id') == $status_pembayarans->id_status_pembayarans ? $select='selected' : $select='' }}>{{$status_pembayarans->nama_status_pembayarans}}</option>
                                         @endforeach
                                     </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="bukti_pembayaran_registrasi_event_details">Bukti Pembayaran <b style="color:red">*</b></label>
+                                    <input class="form-control {{ Yeah::validForm($errors->first('bukti_pembayaran_registrasi_event_details')) }}" id="bukti_pembayaran_registrasi_event_details" type="text" name="bukti_pembayaran_registrasi_event_details" value="{{Request::old('bukti_pembayaran_registrasi_event_details')}}">
+                                    {{Yeah::pesanErorForm($errors->first('bukti_pembayaran_registrasi_event_details'))}}
                                 </div>
                             </div>
                         </div>

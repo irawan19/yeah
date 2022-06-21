@@ -79,15 +79,14 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth:sanctum', config('
         //Promo
             Route::group(['prefix' => 'promo'], function() {
                 Route::get('/', [DashboardPromoController::class, 'index']);
-                Route::get('/cari', [DashboardTicketController::class, 'cari']);
-                Route::get('/tambah', [DashboardTicketController::class, 'tambah']);
-                Route::post('/prosestambah', [DashboardTicketController::class, 'prosestambah']);
-                Route::get('/baca/{id}', [DashboardTicketController::class, 'baca']);
-                Route::get('/edit/{id}', [DashboardTicketController::class, 'edit']);
-                Route::post('/prosesedit/{id}', [DashboardTicketController::class, 'prosesedit']);
-                Route::get('/hapus/{id}', [DashboardTicketController::class, 'hapus']);
+                Route::get('/cari', [DashboardPromoController::class, 'cari']);
+                Route::get('/tambah', [DashboardPromoController::class, 'tambah']);
+                Route::post('/prosestambah', [DashboardPromoController::class, 'prosestambah']);
+                Route::get('/baca/{id}', [DashboardPromoController::class, 'baca']);
+                Route::get('/edit/{id}', [DashboardPromoController::class, 'edit']);
+                Route::post('/prosesedit/{id}', [DashboardPromoController::class, 'prosesedit']);
+                Route::get('/hapus/{id}', [DashboardPromoController::class, 'hapus']);
             });
-
 
         //Registrasi Event
             Route::group(['prefix' => 'registrasi_event'], function() {

@@ -10,7 +10,7 @@
 						<strong>Edit Event</strong>
 					</div>
 					<div class="card-body">
-                    <div class="row">
+                    	<div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group">
 									<label class="form-col-form-label" for="userfile_gambar_event">Gambar <b style="color:red">*</b></label>

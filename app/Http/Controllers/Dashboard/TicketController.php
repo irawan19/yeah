@@ -51,7 +51,7 @@ class TicketController extends Controller
             return view('dashboard.ticket.lihat', $data);
         }
         else
-            return redirect('dashboard');
+            return redirect('dashboard/ticket');
     }
 
     public function tambah()
@@ -67,7 +67,7 @@ class TicketController extends Controller
             return view('dashboard.ticket.tambah',$data);
         }
         else
-            return redirect('ticket');
+            return redirect('dashboard/ticket');
     }
 
     public function prosestambah(Request $request)
@@ -80,7 +80,6 @@ class TicketController extends Controller
                 'nama_tickets'                       => 'required',
                 'harga_tickets'                     => 'required',
                 'kuota_tickets'                     => 'required',
-                'informasi_registrasi_tickets'      => 'required',
                 'deskripsi_tickets'                 => 'required',
                 'disclaimer_tickets'                => 'required',
             ];
@@ -94,13 +93,18 @@ class TicketController extends Controller
             ];
             $this->validate($request, $aturan, $error_pesan);
 
+            $id_tickets = Yeah::autoIncrementKey('master_tickets','id_tickets');
             $data = [
+                'id_tickets'                    => $id_tickets,
                 'events_id'                     => $request->events_id,
+                'users_id'                      => Auth::user()->id,
                 'nama_tickets'    	            => $request->nama_tickets,
                 'harga_tickets'                 => Yeah::ubahHargaKeDB($request->harga_tickets),
                 'kuota_tickets'                 => $request->kuota_tickets,
+                'sisa_kuota_tickets'            => $request->kuota_tickets,
                 'deskripsi_tickets'             => $request->deskripsi_tickets,
                 'disclaimer_tickets'            => $request->disclaimer_tickets,
+                'status_hapus_tickets'          => 0,
                 'created_at'                    => date('Y-m-d H:i:s'),
                 'updated_at'                    => date('Y-m-d H:i:s')
             ];
@@ -121,13 +125,13 @@ class TicketController extends Controller
                 if(request()->session()->get('halaman') != '')
                     $redirect_halaman  = request()->session()->get('halaman');
                 else
-                    $redirect_halaman  = 'ticket';
+                    $redirect_halaman  = 'dashboard/ticket';
 
                 return redirect($redirect_halaman);
             }
         }
         else
-            return redirect('ticket');
+            return redirect('dashboard/ticket');
     }
 
     public function baca($id_tickets=0)
@@ -140,7 +144,8 @@ class TicketController extends Controller
             $cek_tickets = \App\Models\Master_ticket::where('id_tickets',$id_tickets)->count();
             if($cek_tickets != 0)
             {
-                $data['baca_tickets']    = \App\Models\Master_ticket::join('master_events','events_id','=','master_events.id_events')
+                $data['baca_tickets']    = \App\Models\Master_ticket::join('users','users_id','=','users.id')
+                                                                    ->join('master_events','events_id','=','master_events.id_events')
                                                                     ->where('id_tickets',$id_tickets)
                                                                     ->first();
                 return view('dashboard.ticket.baca',$data);
@@ -159,8 +164,8 @@ class TicketController extends Controller
         {
             if (!is_numeric($id_tickets))
                 $id_tickets = 0;
-            $cek_tickets = \App\Models\Master_ticket::where('id_tickets',$id_tickets)->count();
-            if($cek_tickets != 0)
+            $cek_tickets = \App\Models\Master_ticket::where('id_tickets',$id_tickets)->first();
+            if(!empty($cek_tickets))
             {
                 $data['edit_events']    = \App\Models\Master_event::where('mulai_registrasi_events','<=',date('Y-m-d H:i:s'))
                                                                     ->where('selesai_registrasi_events','>=',date('Y-m-d H:i:s'))
@@ -171,10 +176,10 @@ class TicketController extends Controller
                 return view('dashboard.ticket.edit',$data);
             }
             else
-                return redirect('ticket');
+                return redirect('dashboard/ticket');
         }
         else
-            return redirect('ticket');
+            return redirect('dashboard/ticket');
     }
 
     public function prosesedit($id_tickets=0, Request $request)
@@ -184,8 +189,8 @@ class TicketController extends Controller
         {
             if (!is_numeric($id_tickets))
                 $id_tickets = 0;
-            $cek_tickets = \App\Models\Master_ticket::where('id_tickets',$id_tickets)->first();
-            if(!empty($cek_tickets))
+            $cek_tickets = \App\Models\Master_ticket::where('id_tickets',$id_tickets)->count();
+            if($cek_tickets != 0)
             {
                 if(!empty($request->userfile_gambar_ticket))
                 {
@@ -194,7 +199,6 @@ class TicketController extends Controller
                         'nama_tickets'                       => 'required',
                         'harga_tickets'                     => 'required',
                         'kuota_tickets'                     => 'required',
-                        'informasi_registrasi_tickets'      => 'required',
                         'deskripsi_tickets'                 => 'required',
                         'disclaimer_tickets'                => 'required',
                     ];
@@ -210,9 +214,11 @@ class TicketController extends Controller
         
                     $data = [
                         'events_id'                     => $request->events_id,
+                        'users_id'                      => Auth::user()->id,
                         'nama_tickets'    	            => $request->nama_tickets,
                         'harga_tickets'                 => Yeah::ubahHargaKeDB($request->harga_tickets),
                         'kuota_tickets'                 => $request->kuota_tickets,
+                        'sisa_kuota_tickets'            => $request->kuota_tickets,
                         'deskripsi_tickets'             => $request->deskripsi_tickets,
                         'disclaimer_tickets'            => $request->disclaimer_tickets,
                         'updated_at'                    => date('Y-m-d H:i:s')
@@ -225,7 +231,6 @@ class TicketController extends Controller
                         'nama_tickets'                      => 'required',
                         'harga_tickets'                     => 'required',
                         'kuota_tickets'                     => 'required',
-                        'informasi_registrasi_tickets'      => 'required',
                         'deskripsi_tickets'                 => 'required',
                         'disclaimer_tickets'                => 'required',
                     ];
@@ -241,9 +246,11 @@ class TicketController extends Controller
         
                     $data = [
                         'events_id'                     => $request->events_id,
+                        'users_id'                      => Auth::user()->id,
                         'nama_tickets'    	            => $request->nama_tickets,
                         'harga_tickets'                 => Yeah::ubahHargaKeDB($request->harga_tickets),
                         'kuota_tickets'                 => $request->kuota_tickets,
+                        'sisa_kuota_tickets'            => $request->kuota_tickets,
                         'deskripsi_tickets'             => $request->deskripsi_tickets,
                         'disclaimer_tickets'            => $request->disclaimer_tickets,
                         'updated_at'                    => date('Y-m-d H:i:s')
@@ -255,15 +262,15 @@ class TicketController extends Controller
                 if(request()->session()->get('halaman') != '')
                     $redirect_halaman    = request()->session()->get('halaman');
                 else
-                    $redirect_halaman  = 'ticket';
+                    $redirect_halaman  = 'dashboard/ticket';
                 
                 return redirect($redirect_halaman);
             }
             else
-                return redirect('ticket');
+                return redirect('dashboard/ticket');
         }
         else
-            return redirect('ticket');
+            return redirect('dashboard/ticket');
     }
 
     public function hapus($id_tickets=0)
@@ -277,6 +284,7 @@ class TicketController extends Controller
             if($cek_tickets != 0)
             {
             	$tickets_data = [
+                    'users_id'              => Auth::user()->id,
             		'status_hapus_tickets'	=> 1
             	];
             	\App\Models\Master_ticket::where('id_tickets',$id_tickets)
@@ -284,9 +292,9 @@ class TicketController extends Controller
             	return response()->json(["sukses" => "sukses"], 200);
             }
             else
-                return redirect('ticket');
+                return redirect('dashboard/ticket');
         }
         else
-            return redirect('ticket');
+            return redirect('dashboard/ticket');
     }
 }
