@@ -19,7 +19,7 @@
                                     <label class="form-col-form-label" for="tickets_id">Ticket Event <b style="color:red">*</b></label>
                                     <select class="form-control select2" id="tickets_id" name="tickets_id">
                                         @foreach($tambah_tickets as $tickets)
-                                            <option value="{{$tickets->id_tickets}}" {{ Request::old('tickets_id') == $tickets->id_tickets ? $select='selected' : $select='' }}>{{$tickets->nama_events.' - '.$tickets->nama_tickets.' ('.$tickets->sisa_kuota_tickets.')'}}</option>
+                                            <option value="{{$tickets->id_tickets}}" data-harga="{{Yeah::ubahDBKeHarga($tickets->harga_tickets)}}" {{ Request::old('tickets_id') == $tickets->id_tickets ? $select='selected' : $select='' }}>{{$tickets->nama_events.' - '.$tickets->nama_tickets.' ('.$tickets->sisa_kuota_tickets.')'}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -87,9 +87,9 @@
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="form-group">
-                                                    <label class="form-col-form-label" for="umur_registrasi_event_details0">Umur <b style="color:red">*</b></label>
-                                                    <input class="form-control {{ Yeah::validForm($errors->first('umur_registrasi_event_details.0')) }}" id="umur_registrasi_event_details0" type="number" name="umur_registrasi_event_details[]" value="{{Request::old('umur_registrasi_event_details.0')}}">
-                                                    {{Yeah::pesanErorForm($errors->first('umur_registrasi_event_details.0'))}}
+                                                    <label class="form-col-form-label" for="tanggal_lahir_registrasi_event_details0">Tanggal Lahir <b style="color:red">*</b></label>
+                                                    <input class="form-control {{ Yeah::validForm($errors->first('tanggal_lahir_registrasi_event_details.0')) }}" id="tanggal_lahir_registrasi_event_details0" type="date" name="tanggal_lahir_registrasi_event_details[]" value="{{Request::old('tanggal_lahir_registrasi_event_details.0')}}">
+                                                    {{Yeah::pesanErorForm($errors->first('tanggal_lahir_registrasi_event_details.0'))}}
                                                 </div>
                                             </div>
                                         </div>
@@ -144,9 +144,9 @@
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label class="form-col-form-label" for="umur_registrasi_event_details{{$total_form}}">Umur <b style="color:red">*</b></label>
-                                                        <input class="form-control {{ Yeah::validForm($errors->first('umur_registrasi_event_details.'.$total_form)) }}" id="umur_registrasi_event_details{{$total_form}}" type="number" name="umur_registrasi_event_details[]" value="{{Request::old('umur_registrasi_event_details.'.$total_form)}}">
-                                                        {{Yeah::pesanErorForm($errors->first('umur_registrasi_event_details.'.$total_form))}}
+                                                        <label class="form-col-form-label" for="tanggal_lahir_registrasi_event_details{{$total_form}}">Tanggal Lahir <b style="color:red">*</b></label>
+                                                        <input class="form-control {{ Yeah::validForm($errors->first('tanggal_lahir_registrasi_event_details.'.$total_form)) }}" id="tanggal_lahir_registrasi_event_details{{$total_form}}" type="date" name="tanggal_lahir_registrasi_event_details[]" value="{{Request::old('tanggal_lahir_registrasi_event_details.'.$total_form)}}">
+                                                        {{Yeah::pesanErorForm($errors->first('tanggal_lahir_registrasi_event_details.'.$total_form))}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -207,7 +207,7 @@
 	</div>
 
     <script type="text/javascript">
-        function hapusForm(no_form) 
+        function hapusForm(no_form)
         {
             var gettotalform 	= $('.formregistrasi').length;
             if(gettotalform != 1)
@@ -270,8 +270,8 @@
                                                 '</div>'+
                                                 '<div class="col-sm-6">'+
                                                     '<div class="form-group">'+
-                                                        '<label class="form-col-form-label" for="umur_registrasi_event_details'+no_form_plus+'">Umur <b style="color:red">*</b></label>'+
-                                                        '<input class="form-control {{ Yeah::validForm($errors->first("umur_registrasi_event_details.'+no_form_plus+'")) }}" id="umur_registrasi_event_details'+no_form_plus+'" type="number" name="umur_registrasi_event_details[]" value="{{Request::old("umur_registrasi_event_details.'+no_form_plus+'")}}">'+
+                                                        '<label class="form-col-form-label" for="tanggal_lahir_registrasi_event_details'+no_form_plus+'">Tanggal Lahir <b style="color:red">*</b></label>'+
+                                                        '<input class="form-control {{ Yeah::validForm($errors->first("tanggal_lahir_registrasi_event_details.'+no_form_plus+'")) }}" id="tanggal_lahir_registrasi_event_details'+no_form_plus+'" type="date" name="tanggal_lahir_registrasi_event_details[]" value="{{Request::old("tanggal_lahir_registrasi_event_details.'+no_form_plus+'")}}">'+
                                                     '</div>'+
                                                 '</div>'+
                                             '</div>'+
@@ -296,6 +296,13 @@
             $('#buttontambahform'+no_form).hide();
             $('#buttonhapusform'+no_form).show();
         }
+
+        $('#harga_tickets').val($('#tickets_id :selected').data('harga'));
+        jQuery(document).ready(function () {
+            $('#tickets_id').on('change',function(){
+                $('#harga_tickets').val($('#tickets_id :selected').data('harga'));
+            });
+        });
     </script>
 
 @endsection

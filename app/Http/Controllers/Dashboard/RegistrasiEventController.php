@@ -58,7 +58,7 @@ class RegistrasiEventController extends Controller
                                                                                         ->orWhere('telepon_registrasi_event_details', 'LIKE', '%'.$hasil_kata.'%')
                                                                                         ->orWhere('nama_registrasi_event_details', 'LIKE', '%'.$hasil_kata.'%')
                                                                                         ->orWhere('nama_jenis_kelamins', 'LIKE', '%'.$hasil_kata.'%')
-                                                                                        ->orWhere('umur_registrasi_event_details', 'LIKE', '%'.$hasil_kata.'%')
+                                                                                        ->orWhere('tanggal_lahir_registrasi_event_details', 'LIKE', '%'.$hasil_kata.'%')
                                                                                         ->orWhere('nama_status_pembayarans', 'LIKE', '%'.$hasil_kata.'%')
                                                                                         ->orderBy('registrasi_events.created_at','desc')
                                                                                         ->paginate(25);
@@ -134,15 +134,15 @@ class RegistrasiEventController extends Controller
                 if(!empty($request->nama_registrasi_event_details))
                 {
                     $registrasi_event_details_data = [
-                        'id_registrasi_event_details'       => Yeah::autoIncrementKey('registrasi_event_details','id_registrasi_event_details'),
-                        'registrasi_events_id'              => $id_registrasi_events,
-                        'jenis_kelamins_id'                 => $jenis_kelamins,
-                        'nama_registrasi_event_details'     => $request->nama_registrasi_event_details[$key],
-                        'umur_registrasi_event_details'     => $request->umur_registrasi_event_details[$key],
-                        'email_registrasi_event_details'    => $request->email_registrasi_event_details[$key],
-                        'telepon_registrasi_event_details'  => $request->telepon_registrasi_event_details[$key],
-                        'created_at'                        => date('Y-m-d H:i:s'),
-                        'updated_at'                        => date('Y-m-d H:i:s'),
+                        'id_registrasi_event_details'                   => Yeah::autoIncrementKey('registrasi_event_details','id_registrasi_event_details'),
+                        'registrasi_events_id'                          => $id_registrasi_events,
+                        'jenis_kelamins_id'                             => $jenis_kelamins,
+                        'nama_registrasi_event_details'                 => $request->nama_registrasi_event_details[$key],
+                        'tanggal_lahir_registrasi_event_details'        => date('Y-m-d', strtotime($request->tanggal_lahir_registrasi_event_details[$key])),
+                        'email_registrasi_event_details'                => $request->email_registrasi_event_details[$key],
+                        'telepon_registrasi_event_details'              => $request->telepon_registrasi_event_details[$key],
+                        'created_at'                                    => date('Y-m-d H:i:s'),
+                        'updated_at'                                    => date('Y-m-d H:i:s'),
                     ];
                     \App\Models\Registrasi_event_detail::insert($registrasi_event_details_data);
                     

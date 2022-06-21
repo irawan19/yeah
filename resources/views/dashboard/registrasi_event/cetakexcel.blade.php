@@ -42,7 +42,7 @@
 			<th>Telp</th>
 			<th>Nama</th>
 			<th>Jenis Kelamin</th>
-			<th>Umur</th>
+			<th>Tanggal Lahir</th>
 			<th>Status</th>
 		</tr>
 	</thead>
@@ -68,7 +68,7 @@
 					</td>
 		    		<td>{{$registrasi_events->nama_registrasi_event_details}}</td>
 		    		<td>{{$registrasi_events->nama_jenis_kelamins}}</td>
-		    		<td>{{$registrasi_events->umur_registrasi_event_details}}</td>
+		    		<td>{{Yeah::ubahDBKeTanggal($registrasi_events->tanggal_lahir_registrasi_event_details)}}</td>
 		    		<td>{{$registrasi_events->nama_status_pembayarans}}</td>
 		    	</tr>
 		    	@php($no++)

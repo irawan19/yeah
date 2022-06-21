@@ -44,7 +44,7 @@
 				    				<th class="nowrap">Telp</th>
 				    				<th class="nowrap">Nama</th>
 				    				<th class="nowrap">Jenis Kelamin</th>
-				    				<th class="nowrap">Umur</th>
+				    				<th class="nowrap">Tanggal Lahir</th>
 				    				<th class="nowrap">Status</th>
 				    			</tr>
 				    		</thead>
@@ -82,7 +82,7 @@
 											</td>
 								    		<td class="nowrap">{{$registrasi_events->nama_registrasi_event_details}}</td>
 								    		<td class="nowrap">{{$registrasi_events->nama_jenis_kelamins}}</td>
-								    		<td class="nowrap">{{$registrasi_events->umur_registrasi_event_details}}</td>
+								    		<td class="nowrap">{{Yeah::ubahDBKeTanggal($registrasi_events->tanggal_lahir_registrasi_event_details)}}</td>
 								    		<td class="nowrap">{{$registrasi_events->nama_status_pembayarans}}</td>
 								    	</tr>
 								    	@php($no++)
