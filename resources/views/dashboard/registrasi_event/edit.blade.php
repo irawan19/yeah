@@ -4,16 +4,13 @@
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="card">
-				<form class="form-horizontal m-t-40" action="{{ URL('dashboard/registrasi_event/prosesedit') }}" method="POST">
+				<form class="form-horizontal m-t-40" action="{{ URL('dashboard/registrasi_event/prosesedit/'.$edit_registrasi_events->id_registrasi_events) }}" method="POST">
 					{{ csrf_field() }}
 					<div class="card-header">
 						<strong>Edit Registrasi Event</strong>
 					</div>
 					<div class="card-body">
                         <div class="row">
-                            @if (Session::get('setelah_simpan.alert') == 'sukses')
-                                {{ Yeah::pesanSuksesForm(Session::get('setelah_simpan.text')) }}
-                            @endif
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="form-col-form-label" for="tickets_id">Ticket Event <b style="color:red">*</b></label>
@@ -86,60 +83,81 @@
                             </div>
                         </div>
                         @if(empty(Request::old('nama_registrasi_event_details')))
-                            <div id="dynamicform0" class="formregistrasi">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <h4>1.<hr/></h4>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label class="form-col-form-label" for="nama_registrasi_event_details0">Nama <b style="color:red">*</b></label>
-                                            <input class="form-control {{ Yeah::validForm($errors->first('nama_registrasi_event_details.0')) }}" id="nama_registrasi_event_details0" type="text" name="nama_registrasi_event_details[]" value="{{Request::old('nama_registrasi_event_details.0')}}">
-                                            {{Yeah::pesanErorForm($errors->first('nama_registrasi_event_details.0'))}}
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-col-form-label" for="email_registrasi_event_details0">Email <b style="color:red">*</b></label>
-                                            <input class="form-control {{ Yeah::validForm($errors->first('email_registrasi_event_details.0')) }}" id="email_registrasi_event_details0" type="email" name="email_registrasi_event_details[]" value="{{Request::old('email_registrasi_event_details.0')}}">
-                                            {{Yeah::pesanErorForm($errors->first('email_registrasi_event_details.0'))}}
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
+                            @php($total_form = 0)
+							@if(!$edit_registrasi_event_details->isEmpty())
+								@foreach($edit_registrasi_event_details as $registrasi_event_details)
+                                    <div id="dynamicform{{$total_form}}" class="formregistrasi">
                                         <div class="row">
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <label class="form-col-form-label" for="jenis_kelamins_id0">Jenis Kelamin <b style="color:red">*</b></label>
-                                                    <select class="form-control select2" id="jenis_kelamins_id0" name="jenis_kelamins_id[]">
-                                                        @foreach($edit_jenis_kelamins as $jenis_kelamins)
-                                                            <option value="{{$jenis_kelamins->id_jenis_kelamins}}" {{ Request::old('jenis_kelamins_id.0') == $jenis_kelamins->id_jenis_kelamins ? $select='selected' : $select='' }}>{{$jenis_kelamins->nama_jenis_kelamins}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
+                                            <div class="col-sm-12">
+                                                <h4>{{$total_form+1}}<hr/></h4>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="form-group">
-                                                    <label class="form-col-form-label" for="tanggal_lahir_registrasi_event_details0">Tanggal Lahir <b style="color:red">*</b></label>
-                                                    <input class="form-control {{ Yeah::validForm($errors->first('tanggal_lahir_registrasi_event_details.0')) }}" id="tanggal_lahir_registrasi_event_details0" type="date" name="tanggal_lahir_registrasi_event_details[]" value="{{Request::old('tanggal_lahir_registrasi_event_details.0')}}">
-                                                    {{Yeah::pesanErorForm($errors->first('tanggal_lahir_registrasi_event_details.0'))}}
+                                                    <label class="form-col-form-label" for="nama_registrasi_event_details{{$total_form}}">Nama <b style="color:red">*</b></label>
+                                                    <input class="form-control {{ Yeah::validForm($errors->first('nama_registrasi_event_details.'.$total_form)) }}" id="nama_registrasi_event_details{{$total_form}}" type="text" name="nama_registrasi_event_details[]" value="{{Request::old('nama_registrasi_event_details.'.$total_form) == '' ? $registrasi_event_details->nama_registrasi_event_details : Request::old('nama_registrasi_event_details.'.$total_form)}}">
+                                                    {{Yeah::pesanErorForm($errors->first('nama_registrasi_event_details.'.$total_form))}}
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="form-col-form-label" for="email_registrasi_event_details0">Email <b style="color:red">*</b></label>
+                                                    <input class="form-control {{ Yeah::validForm($errors->first('email_registrasi_event_details.'.$total_form)) }}" id="email_registrasi_event_details{{$total_form}}" type="email" name="email_registrasi_event_details[]" value="{{Request::old('email_registrasi_event_details.'.$total_form) == '' ? $registrasi_event_details->email_registrasi_event_details : Request::old('email_registrasi_event_details.'.$total_form)}}">
+                                                    {{Yeah::pesanErorForm($errors->first('email_registrasi_event_details.'.$total_form))}}
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-col-form-label" for="telepon_registrasi_event_details0">Telepon <b style="color:red">*</b></label>
-                                            <input class="form-control {{ Yeah::validForm($errors->first('telepon_registrasi_event_details.0')) }}" id="telepon_registrasi_event_details0" type="number" name="telepon_registrasi_event_details[]" value="{{Request::old('telepon_registrasi_event_details.0')}}">
-                                            {{Yeah::pesanErorForm($errors->first('telepon_registrasi_event_details.0'))}}
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="form-col-form-label" for="jenis_kelamins_id{{$total_form}}">Jenis Kelamin <b style="color:red">*</b></label>
+                                                            <select class="form-control select2" id="jenis_kelamins_id{{$total_form}}" name="jenis_kelamins_id[]">
+                                                                @foreach($edit_jenis_kelamins as $jenis_kelamins)
+                                                                    @php($selected = '')
+                                                                    @if(Request::old('jenis_kelamins_id') == '')
+                                                                        @if($jenis_kelamins->id_jenis_kelamins == $registrasi_event_details->jenis_kelamins_id)
+                                                                            @php($selected = 'selected')
+                                                                        @endif
+                                                                    @else
+                                                                        @if($jenis_kelamins->id_jenis_kelamins == Request::old('jenis_kelamins_id'))
+                                                                            @php($selected = 'selected')
+                                                                        @endif
+                                                                    @endif
+                                                                    <option value="{{$jenis_kelamins->id_jenis_kelamins}}" {{ $selected }}>{{$jenis_kelamins->nama_jenis_kelamins}}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="form-col-form-label" for="tanggal_lahir_registrasi_event_details{{$total_form}}">Tanggal Lahir <b style="color:red">*</b></label>
+                                                            <input class="form-control {{ Yeah::validForm($errors->first('tanggal_lahir_registrasi_event_details.'.$total_form)) }}" id="tanggal_lahir_registrasi_event_details{{$total_form}}" type="date" name="tanggal_lahir_registrasi_event_details[]" value="{{Request::old('tanggal_lahir_registrasi_event_details.'.$total_form) == '' ? $registrasi_event_details->tanggal_lahir_registrasi_event_details : Request::old('tanggal_lahir_registrasi_event_details.'.$total_form)}}">
+                                                            {{Yeah::pesanErorForm($errors->first('tanggal_lahir_registrasi_event_details.'.$total_form))}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="form-col-form-label" for="telepon_registrasi_event_details{{$total_form}}">Telepon <b style="color:red">*</b></label>
+                                                    <input class="form-control {{ Yeah::validForm($errors->first('telepon_registrasi_event_details.'.$total_form)) }}" id="telepon_registrasi_event_details{{$total_form}}" type="number" name="telepon_registrasi_event_details[]" value="{{Request::old('telepon_registrasi_event_details.'.$total_form) == '' ? $registrasi_event_details->telepon_registrasi_event_details : Request::old('telepon_registrasi_event_details.'.$total_form)}}">
+                                                    {{Yeah::pesanErorForm($errors->first('telepon_registrasi_event_details.'.$total_form))}}
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <h4><hr/></h4>
+                                            </div>
+                                            <div class="col-12 col-center text-center">
+												<div class="form-group" style="margin-top: 35px;">
+													@if($total_form == (count($edit_registrasi_event_details) - 1))
+												    	<button type="button" onclick="tambahForm({{$total_form}})" class="btn btn-primary btn-md buttontambah" id="buttontambahform{{$total_form}}">Tambah</button>
+												    @else
+												    	<button type="button" onclick="tambahForm({{$total_form}})" class="btn btn-primary btn-md buttontambah" id="buttontambahform{{$total_form}}" style="display: none">Tambah</button>
+												    @endif
+
+												    <button type="button" onclick="hapusForm({{$total_form}})" class="btn btn-danger btn-md buttonhapus" id="buttonhapusform{{$total_form}}">Hapus</button>
+												</div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-12">
-                                        <h4><hr/></h4>
-                                    </div>
-                                    <div class="col-12 col-center text-center">
-                                        <div class="form-group" style="margin-top: 35px;">
-                                            <button type="button" onclick="editForm(0)" class="btn btn-primary btn-md buttonedit" id="buttoneditform0">Edit</button>
-                                            <button type="button" onclick="hapusForm(0)" class="btn btn-danger btn-md buttonhapus" id="buttonhapusform0" style="display: none; margin-left:20px">Hapus</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                    @php($total_form++)
+                                @endforeach
+                            @endif
                         @else
                             @php($get_total_form = count(Request::old('nama_registrasi_event_details')))
 				            @for($total_form = 0; $total_form < $get_total_form; $total_form++)
@@ -192,9 +210,9 @@
                                         <div class="col-12 col-center text-center">
                                             <div class="form-group" style="margin-top: 35px;">
 												@if($total_form == $get_total_form - 1)
-											    	<button type="button" onclick="editForm({{$total_form}})" class="btn btn-primary btn-sm buttonedit" id="buttoneditform{{$total_form}}">Edit</button>
+											    	<button type="button" onclick="tambahForm({{$total_form}})" class="btn btn-primary btn-sm buttontambah" id="buttontambahform{{$total_form}}">Tambah</button>
 											    @else
-											    	<button type="button" onclick="editForm({{$total_form}})" class="btn btn-primary btn-sm buttonedit" id="buttoneditform{{$total_form}}" style="display: none;">Edit</button>
+											    	<button type="button" onclick="tambahForm({{$total_form}})" class="btn btn-primary btn-sm buttontambah" id="buttontambahform{{$total_form}}" style="display: none;">Tambah</button>
 											    @endif
 
 											    @if($get_total_form == 1)
@@ -210,16 +228,11 @@
                         @endif
 					</div>
 			        <div class="card-footer right-align">
-			        	<button class="btn btn-sm btn-success" type="submit" name="simpan" value="simpan">
-			            	<svg class="c-icon" style="margin-right:5px;">
-	                          	<use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-plus')}}"></use>
-	                        </svg> Simpan
-			            </button>
-			            <button class="btn btn-sm btn-success active" type="submit" name="simpan_kembali" value="simpan_kembali">
-			            	<svg class="c-icon" style="margin-right:5px;">
-	                          	<use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-reload')}}"></use>
-	                        </svg> Simpan Kembali
-			            </button>
+			            <button class="btn btn-sm btn-primary" type="submit">
+				        	<svg class="c-icon" style="margin-right:5px;">
+	                          	<use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-pencil')}}"></use>
+	                        </svg> Perbarui
+	                    </button>
 			          	@if(request()->session()->get('halaman') != '')
 		            		@php($ambil_kembali = request()->session()->get('halaman'))
 	                    @else
@@ -245,12 +258,12 @@
                 no_form_minus = no_form - 1;
                 if(no_form_minus != 0)
                 {
-                    attr = $('#buttoneditform'+no_form).attr('style');
+                    attr = $('#buttontambahform'+no_form).attr('style');
                     if (typeof attr !== typeof undefined && attr !== '') {
-                        $('#buttoneditform'+no_form_minus).hide();
+                        $('#buttontambahform'+no_form_minus).hide();
                     }
                     else
-                        $('#buttoneditform'+no_form_minus).show();
+                        $('#buttontambahform'+no_form_minus).show();
                 }
             }
 
@@ -264,11 +277,11 @@
             else
             {
                 var gettotaledit = $('.buttonedit').length;
-                $('#buttoneditform'+(gettotaledit - 1)).show();
+                $('#buttontambahform'+(gettotaledit - 1)).show();
             }
         }
 
-        function editForm(no_form){
+        function tambahForm(no_form){
             noform          = no_form + 2;
             no_form_plus 	= no_form + 1;
             var component_item = $('<div id="dynamicform'+no_form_plus+'" class="formregistrasi">'+
@@ -315,7 +328,7 @@
                                         '</div>'+
                                         '<div class="col-12 col-center text-center">'+
                                             '<div class="form-group" style="margin-top: 35px;">'+
-                                                '<button type="button" onclick="editForm('+no_form_plus+')" class="btn btn-primary btn-md buttonedit" id="buttoneditform'+no_form_plus+'">Edit</button>'+
+                                                '<button type="button" onclick="tambahForm('+no_form_plus+')" class="btn btn-primary btn-md buttontambah" id="buttontambahform'+no_form_plus+'">Tambah</button>'+
                                                 '<button type="button" onclick="hapusForm('+no_form_plus+')" class="btn btn-danger btn-md buttonhapus" id="buttonhapusform'+no_form_plus+'" style="margin-left:20px">Hapus</button>'+
                                             '</div>'+
                                         '</div>'+
@@ -323,7 +336,7 @@
                                 '</div>');
             component_item.find(".select2").select2({width:'100%'});
             component_item.insertAfter("#dynamicform"+no_form);
-            $('#buttoneditform'+no_form).hide();
+            $('#buttontambahform'+no_form).hide();
             $('#buttonhapusform'+no_form).show();
         }
 

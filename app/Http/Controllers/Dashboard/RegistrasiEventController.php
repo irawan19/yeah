@@ -204,7 +204,7 @@ class RegistrasiEventController extends Controller
                 $data['edit_jenis_kelamins']            = \App\Models\Master_jenis_kelamin::get();
                 $data['edit_registrasi_event_details']  = \App\Models\Registrasi_event_detail::join('master_jenis_kelamins','jenis_kelamins_id','=','master_jenis_kelamins.id_jenis_kelamins')
                                                                                             ->where('registrasi_events_id',$id_registrasi_events)
-                                                                                            ->first();
+                                                                                            ->get();
                 $data['edit_registrasi_events']         = \App\Models\Registrasi_event::where('id_registrasi_events',$id_registrasi_events)
                                                                                         ->first();
                 return view('dashboard.registrasi_event.edit',$data);
@@ -216,12 +216,86 @@ class RegistrasiEventController extends Controller
             return redirect('dashboard/registrasi_event');
     }
 
-    public function prosesedit(Request $request, $id_registrasi_event_details=0)
+    public function prosesedit(Request $request, $id_registrasi_events=0)
     {
         $link_registrasi_event = 'registrasi_event';
         if(Yeah::hakAkses($link_registrasi_event,'edit') == 'true')
         {
+            if (!is_numeric($id_registrasi_events))
+                $id_registrasi_events = 0;
+            $cek_registrasi_events = \App\Models\Registrasi_event::where('id_registrasi_events',$id_registrasi_events)->count();
+            if($cek_registrasi_events != 0)
+            {
+                $aturan = [
+                    'tickets_id'                                => 'required',
+                    'pembayarans_id'                            => 'required',
+                    'status_pembayarans_id'                     => 'required',
+                    'bukti_pembayaran_registrasi_events'        => 'required',
+                ];
+                $error_pesan = [
+                    'tickets_id.required'                       => 'Form Ticket Harus Diisi.',
+                    'pembayarans_id.required'                   => 'Form Pembayaran Harus Diisi.',
+                    'status_pembayarans_id.required'            => 'Form Status Pembayaran Harus Diisi.',
+                    'bukti_pembayaran_registrasi_events'        => 'Form Bukti Pembayaran Harus Diisi.',
+                ];
+                $this->validate($request, $aturan, $error_pesan);
 
+                $harga_registrasi_events    = Yeah::ubahHargaKeDB($request->harga_tickets);
+
+                $registrasi_events_data = [
+                    'tickets_id'                            => $request->tickets_id,
+                    'pembayarans_id'                        => $request->pembayarans_id,
+                    'status_pembayarans_id'                 => $request->status_pembayarans_id,
+                    'jumlah_registrasi_events'              => 0,
+                    'harga_registrasi_events'               => $harga_registrasi_events,
+                    'bukti_pembayaran_registrasi_events'    => $request->bukti_pembayaran_registrasi_events,
+                    'updated_at'                            => date('Y-m-d H:i:s'),
+                ];
+                \App\Models\Registrasi_event::where('id_registrasi_events',$id_registrasi_events)
+                                            ->update($registrasi_events_data);
+
+                \App\Models\Registrasi_event_detail::where('registrasi_events_id',$id_registrasi_events)
+                                                    ->delete();
+
+                $jumlah_registrasi_event_details = 0;
+                foreach($request->jenis_kelamins_id as $key => $jenis_kelamins)
+                {
+                    if(!empty($request->nama_registrasi_event_details))
+                    {
+                        $registrasi_event_details_data = [
+                            'id_registrasi_event_details'                   => Yeah::autoIncrementKey('registrasi_event_details','id_registrasi_event_details'),
+                            'registrasi_events_id'                          => $id_registrasi_events,
+                            'jenis_kelamins_id'                             => $jenis_kelamins,
+                            'nama_registrasi_event_details'                 => $request->nama_registrasi_event_details[$key],
+                            'tanggal_lahir_registrasi_event_details'        => date('Y-m-d', strtotime($request->tanggal_lahir_registrasi_event_details[$key])),
+                            'email_registrasi_event_details'                => $request->email_registrasi_event_details[$key],
+                            'telepon_registrasi_event_details'              => $request->telepon_registrasi_event_details[$key],
+                            'created_at'                                    => date('Y-m-d H:i:s'),
+                            'updated_at'                                    => date('Y-m-d H:i:s'),
+                        ];
+                        \App\Models\Registrasi_event_detail::insert($registrasi_event_details_data);
+                        
+                        $jumlah_registrasi_event_details += 1;
+                    }
+                }
+
+                $update_registrasi_events = [
+                    'jumlah_registrasi_events'          => $jumlah_registrasi_event_details,
+                    'total_harga_registrasi_events'     => $harga_registrasi_events * $jumlah_registrasi_event_details,
+                    'updated_at'                        => date('Y-m-d H:i:s'),
+                ];
+                \App\Models\Registrasi_event::where('id_registrasi_events',$id_registrasi_events)
+                                            ->update($update_registrasi_events);
+
+                if(request()->session()->get('halaman') != '')
+                    $redirect_halaman    = request()->session()->get('halaman');
+                else
+                    $redirect_halaman  = 'dashboard/registrasi_event';
+                
+                return redirect($redirect_halaman);
+            }
+            else
+                return redirect('registrasi_event');
         }
         else
             return redirect('dashboard/registrasi_event');
@@ -237,10 +311,10 @@ class RegistrasiEventController extends Controller
             $cek_registrasi_events = \App\Models\Registrasi_event::where('id_registrasi_events',$id_registrasi_events)->count();
             if($cek_registrasi_events != 0)
             {
-            	\App\Models\Registrasi_event::where('id_registrasi_events',$id_registrasi_events)
-            								        ->delete();
-                \App\Models\Registrasi_event_detail::where('registrasi_event_details',$id_registrasi_events)
+                \App\Models\Registrasi_event_detail::where('registrasi_events_id',$id_registrasi_events)
                                                             ->delete();
+                \App\Models\Registrasi_event::where('id_registrasi_events',$id_registrasi_events)
+                                                    ->delete();
             	return response()->json(["sukses" => "sukses"], 200);
             }
             else
