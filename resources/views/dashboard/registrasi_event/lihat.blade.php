@@ -58,9 +58,9 @@
 											      	<div class="dropdown">
 										            	<button class="btn btn-sm btn-success dropdown-toggle" id="dropdownMenu2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
 										            	<div class="dropdown-menu" aria-labelledby="dropdownMenu2" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 34px, 0px); top: 0px; left: 0px; will-change: transform;">
-										            		{{Yeah::edit($link_registrasi_event,'registrasi_event/edit/'.$registrasi_events->id_registrasi_events)}}
+										            		{{Yeah::edit($link_registrasi_event,'dashboard/registrasi_event/edit/'.$registrasi_events->id_registrasi_events)}}
 										            		<div class="dropdown-divider"></div>
-										            		{{Yeah::hapus($link_registrasi_event,'registrasi_event/hapus/'.$registrasi_events->id_registrasi_event_details, $registrasi_events->nama_registrasi_event_details)}}
+										            		{{Yeah::hapus($link_registrasi_event,'dashboard/registrasi_event/hapus/'.$registrasi_events->id_registrasi_event_details, $registrasi_events->nama_registrasi_event_details)}}
 										            	</div>
 										            </div>
 											    </td>

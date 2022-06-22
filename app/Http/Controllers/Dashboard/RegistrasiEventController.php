@@ -67,7 +67,7 @@ class RegistrasiEventController extends Controller
             return view('dashboard.registrasi_event.lihat', $data);
         }
         else
-            return redirect('dashboard');
+            return redirect('dashboard/registrasi_event');
     }
 
     public function tambah()
@@ -88,7 +88,7 @@ class RegistrasiEventController extends Controller
             return view('dashboard.registrasi_event.tambah',$data);
         }
         else
-            return redirect('dashboard');
+            return redirect('dashboard/registrasi_event');
     }
 
     public function prosestambah(Request $request)
@@ -100,13 +100,13 @@ class RegistrasiEventController extends Controller
                 'tickets_id'                                => 'required',
                 'pembayarans_id'                            => 'required',
                 'status_pembayarans_id'                     => 'required',
-                'bukti_pembayaran_registrasi_event_details' => 'required',
+                'bukti_pembayaran_registrasi_events'        => 'required',
             ];
             $error_pesan = [
                 'tickets_id.required'                       => 'Form Ticket Harus Diisi.',
                 'pembayarans_id.required'                   => 'Form Pembayaran Harus Diisi.',
                 'status_pembayarans_id.required'            => 'Form Status Pembayaran Harus Diisi.',
-                'bukti_pembayaran_registrasi_event_details' => 'Form Bukti Pembayaran Harus Diisi.',
+                'bukti_pembayaran_registrasi_events'        => 'Form Bukti Pembayaran Harus Diisi.',
             ];
             $this->validate($request, $aturan, $error_pesan);
 
@@ -121,7 +121,7 @@ class RegistrasiEventController extends Controller
                 'jumlah_registrasi_events'              => 0,
                 'harga_registrasi_events'               => $harga_registrasi_events,
                 'total_harga_registrasi_events'         => 0,
-                'bukti_pembayaran_registrasi_events'    => $request->bukti_pembayaran_registrasi_event_details,
+                'bukti_pembayaran_registrasi_events'    => $request->bukti_pembayaran_registrasi_events,
                 'created_at'                            => date('Y-m-d H:i:s'),
                 'updated_at'                            => date('Y-m-d H:i:s'),
                 'no_registrasi_events'                  => Yeah::noRegistrasi(),
@@ -179,22 +179,41 @@ class RegistrasiEventController extends Controller
             }
         }
         else
-            return redirect('dashboard');
+            return redirect('dashboard/registrasi_event');
     }
 
-    public function edit($id_registrasi_event_details=0)
+    public function edit($id_registrasi_events=0)
     {
         $link_registrasi_event = 'registrasi_event';
         if(Yeah::hakAkses($link_registrasi_event,'edit') == 'true')
         {
-            $data['lihat_registrasi_event_details'] = \App\Models\Registrasi_event_detail::join('registrasi_events','registrasi_events_id','=','registrasi_events.id_registrasi_events')
-                                                                                        ->join('master_jenis_kelamins','jenis_kelamins_id','=','master_jenis_kelamins.id_jenis_kelamins')
-                                                                                        ->where('id_registrasi_event_details',$id_registrasi_event_details)
+            if (!is_numeric($id_registrasi_events))
+                $id_registrasi_events = 0;
+            $cek_registrasi_events = \App\Models\Registrasi_event::where('id_registrasi_events',$id_registrasi_events)->count();
+            if(!empty($cek_registrasi_events))
+            {
+                $data['edit_pembayarans']               = \App\Models\Master_pembayaran::where('status_hapus_pembayarans',0)
+                                                                                    ->orderBy('nama_pembayarans','desc')
+                                                                                    ->get();
+                $data['edit_status_pembayarans']        = \App\Models\Master_status_pembayaran::get();
+                $data['edit_tickets']                   = \App\Models\Master_ticket::join('master_events','events_id','=','master_events.id_events')
+                                                                                ->where('mulai_registrasi_events','<=',date('Y-m-d H:i:s'))
+                                                                                ->where('selesai_registrasi_events','>=',date('Y-m-d H:i:s'))
+                                                                                ->where('sisa_kuota_tickets','>',0)
+                                                                                ->get();
+                $data['edit_jenis_kelamins']            = \App\Models\Master_jenis_kelamin::get();
+                $data['edit_registrasi_event_details']  = \App\Models\Registrasi_event_detail::join('master_jenis_kelamins','jenis_kelamins_id','=','master_jenis_kelamins.id_jenis_kelamins')
+                                                                                            ->where('registrasi_events_id',$id_registrasi_events)
+                                                                                            ->first();
+                $data['edit_registrasi_events']         = \App\Models\Registrasi_event::where('id_registrasi_events',$id_registrasi_events)
                                                                                         ->first();
-            return view('dashboard.event.edit',$data);
+                return view('dashboard.registrasi_event.edit',$data);
+            }
+            else
+                return redirect('dashboard/registrasi_event');
         }
         else
-            return redirect('dashboard');
+            return redirect('dashboard/registrasi_event');
     }
 
     public function prosesedit(Request $request, $id_registrasi_event_details=0)
@@ -205,22 +224,22 @@ class RegistrasiEventController extends Controller
 
         }
         else
-            return redirect('dashboard');
+            return redirect('dashboard/registrasi_event');
     }
 
-    public function hapus($id_registrasi_event_details=0)
+    public function hapus($id_registrasi_events=0)
     {
         $link_registrasi_event = 'registrasi_event';
         if(Yeah::hakAkses($link_registrasi_event,'hapus') == 'true')
         {
-            if (!is_numeric($id_registrasi_event_details))
-                $id_registrasi_event_details = 0;
-            $cek_registrasi_event_details = \App\Models\Master_registrasi_event_detail::where('id_registrasi_event_details',$id_registrasi_event_details)->count();
-            if($cek_registrasi_event_details != 0)
+            if (!is_numeric($id_registrasi_events))
+                $id_registrasi_events = 0;
+            $cek_registrasi_events = \App\Models\Registrasi_event::where('id_registrasi_events',$id_registrasi_events)->count();
+            if($cek_registrasi_events != 0)
             {
-            	\App\Models\Master_registrasi_event::where('id_registrasi_events',$cek_registrasi_event_details->registrasi_events_id)
-            								->delete();
-                \App\Models\Master_registrasi_event_detail::where('id_registrasi_event_details',$id_registrasi_event_details)
+            	\App\Models\Registrasi_event::where('id_registrasi_events',$id_registrasi_events)
+            								        ->delete();
+                \App\Models\Registrasi_event_detail::where('registrasi_event_details',$id_registrasi_events)
                                                             ->delete();
             	return response()->json(["sukses" => "sukses"], 200);
             }
@@ -228,7 +247,7 @@ class RegistrasiEventController extends Controller
                 return redirect('registrasi_event');
         }
         else
-            return redirect('registrasi_event');
+            return redirect('dashboard/registrasi_event');
     }
 
     public function cetakexcel()
