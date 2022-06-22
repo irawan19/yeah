@@ -42,7 +42,6 @@ window.onload = function() {
     operationsSorter: {!! isset($operationsSorter) ? '"' . $operationsSorter . '"' : 'null' !!},
     configUrl: {!! isset($configUrl) ? '"' . $configUrl . '"' : 'null' !!},
     validatorUrl: {!! isset($validatorUrl) ? '"' . $validatorUrl . '"' : 'null' !!},
-    oauth2RedirectUrl: "{{ route('l5-swagger.oauth2_callback') }}",
 
     requestInterceptor: function(req) {
       req.headers['X-CSRF-TOKEN'] = '{{ csrf_token() }}';
