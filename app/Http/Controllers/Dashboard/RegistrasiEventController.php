@@ -146,7 +146,7 @@ class RegistrasiEventController extends Controller
                     ];
                     \App\Models\Registrasi_event_detail::insert($registrasi_event_details_data);
                     
-                    $jumlah_registrasi_event_details + 1;
+                    $jumlah_registrasi_event_details += 1;
                 }
             }
 

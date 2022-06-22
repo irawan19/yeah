@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\V1\DataController;
+use App\Http\Controllers\Api\V1\EventController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +16,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['prefix' => 'v1'], function(){
+    Route::group(['prefix' => 'data'], function(){
+        Route::get('/jeniskelamin', [DataController::class, 'jeniskelamin']);
+        Route::get('/pembayaran', [DataController::class, 'pembayaran']);
+        Route::get('/statuspembayaran', [DataController::class, 'statuspembayaran']);
+    });
+
+    Route::group(['prefix' => 'event'], function() {
+        Route::get('/', [EventController::class, 'event']);
+        Route::get('/{id}', [EventController::class, 'eventdetail']);
+        Route::post('/registrasi', [EventController::class, 'registrasi']);
+        Route::post('/cekticket', [EventController::class, 'cekticket']);
+    });
 });
