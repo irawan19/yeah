@@ -8,7 +8,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 	<meta name="description" content="{{$ambil_konfigurasi_aplikasis->deskripsi_konfigurasi_aplikasis}}">
-	<meta name="author" content="Trisakti">
+	<meta name="author" content="{{$ambil_konfigurasi_aplikasis->nama_konfigurasi_aplikasis}}">
 	<meta name="keyword" content="{{$ambil_konfigurasi_aplikasis->keywords_konfigurasi_aplikasis}}">
 	<title>{{$ambil_konfigurasi_aplikasis->nama_konfigurasi_aplikasis}}</title>
 	<link href="{{URL::asset('public/template/back/vendors/flag-icon-css/css/flag-icon.min.css')}}" rel="stylesheet">

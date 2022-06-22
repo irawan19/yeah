@@ -62,7 +62,7 @@
 		  	    </svg> Akun
 		  	</a>
 		  	<div class="dropdown-divider"></div>
-			<a type="submit" class="dropdown-item" href="{{URL('logout')}}">
+			<a class="dropdown-item" href="{{URL('dashboard/logout')}}">
 			    <svg class="c-icon mr-2">
 			      <use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-task')}}"></use>
 			    </svg> Logout
