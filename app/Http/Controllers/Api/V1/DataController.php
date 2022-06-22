@@ -8,6 +8,47 @@ use Yeah;
 
 class DataController extends ApiController
 {
+    /**
+     * @OA\Get(path="/api/v1/data/konfigurasiaplikasi",
+     *   tags={"Data"},
+     *   summary="ambil data aplikasi",
+     *   description="ambil data aplikasi",
+     *   operationId="konfigurasiaplikasi",
+     *   @OA\Response(
+     *     response=200,
+     *     description="sukses ambil data konfigurasi aplikasi",
+     *     @OA\Schema(type="string"),
+     *   ),
+     *   @OA\Response(response=400, description="gagal mendapatkan data konfigurasi aplikasi"),
+     * )
+     */
+    public function konfigurasiaplikasi(Request $request)
+    {
+        $ambil_konfigurasi_aplikasi = \App\Models\Master_konfigurasi_aplikasi::first();
+
+        if(!empty($ambil_konfigurasi_aplikasi)){
+            $konfigurasi_aplikasis_data = [
+                'nama_konfigurasi_aplikasis'            => $ambil_konfigurasi_aplikasi->nama_konfigurasi_aplikasis,
+                'keywords_konfigurasi_aplikasis'        => $ambil_konfigurasi_aplikasi->keywords_konfigurasi_aplikasis,
+                'deskripsi_konfigurasi_aplikasis'       => $ambil_konfigurasi_aplikasi->deskripsi_konfigurasi_aplikasis,
+                'icon_konfigurasi_aplikasis'            => URL('/').'/'.$ambil_konfigurasi_aplikasi->icon_konfigurasi_aplikasis,
+                'logo_konfigurasi_aplikasis'            => URL('/').'/'.$ambil_konfigurasi_aplikasi->logo_konfigurasi_aplikasis,
+                'logo_text_konfigurasi_aplikasis'       => URL('/').'/'.$ambil_konfigurasi_aplikasi->logo_text_konfigurasi_aplikasis,
+                'whatsapp_konfigurasi_aplikasis'        => $ambil_konfigurasi_aplikasi->whatsapp_konfigurasi_aplikasis,
+            ];
+
+            return response()->json([
+                'status'    => 'sukses',
+                'message'   => $konfigurasi_aplikasis_data,
+            ],200);
+        }
+        else{
+            return response()->json([
+                'status'    => 'error',
+                'message'   => 'data kosong',
+            ],400);
+        }
+    }
 
     /**
      * @OA\Get(path="/api/v1/data/jeniskelamin",

@@ -5,6 +5,24 @@
         "version": "1.0"
     },
     "paths": {
+        "/api/v1/data/konfigurasiaplikasi": {
+            "get": {
+                "tags": [
+                    "Data"
+                ],
+                "summary": "ambil data aplikasi",
+                "description": "ambil data aplikasi",
+                "operationId": "konfigurasiaplikasi",
+                "responses": {
+                    "200": {
+                        "description": "sukses ambil data konfigurasi aplikasi"
+                    },
+                    "400": {
+                        "description": "gagal mendapatkan data konfigurasi aplikasi"
+                    }
+                }
+            }
+        },
         "/api/v1/data/jeniskelamin": {
             "get": {
                 "tags": [
@@ -116,7 +134,7 @@
                 "operationId": "cekticket",
                 "parameters": [
                     {
-                        "name": "code_booking",
+                        "name": "booking_code",
                         "in": "path",
                         "description": "input booking code",
                         "required": true,

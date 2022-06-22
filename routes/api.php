@@ -18,10 +18,10 @@ use App\Http\Controllers\Api\V1\EventController;
 
 Route::group(['prefix' => 'v1'], function(){
     Route::group(['prefix' => 'data'], function(){
+        Route::get('/konfigurasiaplikasi', [DataController::class, 'konfigurasiaplikasi']);
         Route::get('/jeniskelamin', [DataController::class, 'jeniskelamin']);
         Route::get('/pembayaran', [DataController::class, 'pembayaran']);
         Route::get('/statuspembayaran', [DataController::class, 'statuspembayaran']);
-        Route::get('/konfigurasiaplikasi', [DataController::class, 'konfigurasiaplikasi']);
     });
 
     Route::group(['prefix' => 'event'], function() {
