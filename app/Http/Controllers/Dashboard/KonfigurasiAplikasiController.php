@@ -32,11 +32,13 @@ class KonfigurasiAplikasiController extends Controller
                 'nama_konfigurasi_aplikasis'                => 'required',
                 'deskripsi_konfigurasi_aplikasis'           => 'required',
                 'keywords_konfigurasi_aplikasis'            => 'required',
+                'whatsapp_konfigurasi_aplikasis'            => 'required',
             ];
             $error_pesan = [
                 'nama_konfigurasi_aplikasis.required'       => 'Form Email Harus Diisi.',
                 'deskripsi_konfigurasi_aplikasis.required'  => 'Form Deskripsi Harus Diisi.',
                 'keywords_konfigurasi_aplikasis.required'   => 'Form Keywords Harus Diisi.',
+                'whatsapp_konfigurasi_aplikasis.required'   => 'Form Whatsapp Harus Diisi.',
             ];
             $this->validate($request, $aturan, $error_pesan);
 
@@ -44,6 +46,7 @@ class KonfigurasiAplikasiController extends Controller
                 'nama_konfigurasi_aplikasis'                    => $request->nama_konfigurasi_aplikasis,
                 'deskripsi_konfigurasi_aplikasis'               => $request->deskripsi_konfigurasi_aplikasis,
                 'keywords_konfigurasi_aplikasis'                => $request->keywords_konfigurasi_aplikasis,
+                'whatsapp_konfigurasi_aplikasis'                => $request->whatsapp_konfigurasi_aplikasis,
                 'updated_at'                                    => date('Y-m-d H:i:s'),
             ];
             \App\Models\Master_konfigurasi_aplikasi::query()->update($konfigurasi_aplikasi_data);

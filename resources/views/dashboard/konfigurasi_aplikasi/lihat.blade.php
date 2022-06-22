@@ -28,6 +28,11 @@
 							<input class="form-control {{ Yeah::validForm($errors->first('keywords_konfigurasi_aplikasis')) }}" id="keywords_konfigurasi_aplikasis" type="text" name="keywords_konfigurasi_aplikasis" value="{{Request::old('keywords_konfigurasi_aplikasis') == '' ? $lihat_konfigurasi_aplikasis->keywords_konfigurasi_aplikasis : Request::old('keywords_konfigurasi_aplikasis')}}">
 							{{Yeah::pesanErorForm($errors->first('keywords_konfigurasi_aplikasis'))}}
 						</div>
+						<div class="form-group">
+							<label class="form-col-form-label" for="whatsapp_konfigurasi_aplikasis">Whatsapp <b style="color:red">*</b></label>
+							<input class="form-control {{ Yeah::validForm($errors->first('whatsapp_konfigurasi_aplikasis')) }}" id="whatsapp_konfigurasi_aplikasis" type="text" name="whatsapp_konfigurasi_aplikasis" value="{{Request::old('whatsapp_konfigurasi_aplikasis') == '' ? $lihat_konfigurasi_aplikasis->whatsapp_konfigurasi_aplikasis : Request::old('whatsapp_konfigurasi_aplikasis')}}">
+							{{Yeah::pesanErorForm($errors->first('whatsapp_konfigurasi_aplikasis'))}}
+						</div>
 					</div>
 	                <div class="card-footer right-align">
 	                    <button class="btn btn-sm btn-primary" type="submit">
