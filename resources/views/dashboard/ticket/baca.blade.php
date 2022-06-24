@@ -40,9 +40,9 @@
 							<td>{!! $baca_tickets->deskripsi_tickets !!}</td>
 						</tr>
 						<tr>
-							<th>Disclaimer</th>
+							<th>Keterangan</th>
 							<th>:</th>
-							<td>{!! $baca_tickets->disclaimer_tickets !!}</td>
+							<td>{!! nl2br($baca_tickets->keterangan_tickets) !!}</td>
 						</tr>
 						<tr>
 							<th>Oleh</th>

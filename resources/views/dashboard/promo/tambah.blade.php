@@ -21,10 +21,18 @@
 			                        <input id="userfile_gambar_promo" type="file" name="userfile_gambar_promo">
 			                    </div>
                             </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-col-form-label" for="nama_promos">Nama <b style="color:red">*</b></label>
+                                    <input class="form-control {{ Yeah::validForm($errors->first('nama_promos')) }}" id="nama_promos" type="text" name="nama_promos" value="{{Request::old('nama_promos')}}">
+                                    {{Yeah::pesanErorForm($errors->first('nama_promos'))}}
+                                </div>
+                            </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label class="form-col-form-label" for="events_id">Event <b style="color:red">*</b></label>
+                                    <label class="form-col-form-label" for="events_id">Event</label>
                                     <select class="form-control select2" id="events_id" name="events_id">
+										<option value="0">Semua Event</option>
                                         @foreach($tambah_events as $events)
                                             <option value="{{$events->id_events}}" {{ Request::old('events_id') == $events->id_events ? $select='selected' : $select='' }}>{{$events->nama_events}}</option>
                                         @endforeach
@@ -33,9 +41,9 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label class="form-col-form-label" for="nama_promos">Nama <b style="color:red">*</b></label>
-                                    <input class="form-control {{ Yeah::validForm($errors->first('nama_promos')) }}" id="nama_promos" type="text" name="nama_promos" value="{{Request::old('nama_promos')}}">
-                                    {{Yeah::pesanErorForm($errors->first('nama_promos'))}}
+                                    <label class="form-col-form-label" for="tanggal_promos">Tanggal <b style="color:red">*</b></label>
+                                    <input readonly class="form-control getStartEndDateTime {{ Yeah::validForm($errors->first('tanggal_promos')) }}" id="tanggal_promos" type="text" name="tanggal_promos" value="{{Request::old('tanggal_promos') == '' ? Yeah::ubahDBKeTanggalWaktu(date('Y-m-d H:i:00')).' sampai '.Yeah::ubahDBKeTanggalWaktu(date('Y-m-d H:i:00', strtotime(date('Y-m-d H:i:00'). ' + 1 days'))) : Request::old('tanggal_promos')}}">
+                                    {{Yeah::pesanErorForm($errors->first('tanggal_promos'))}}
                                 </div>
                             </div>
                             <div class="col-sm-12">

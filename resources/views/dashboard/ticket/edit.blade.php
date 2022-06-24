@@ -50,16 +50,16 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label class="form-col-form-label" for="deskripsi_tickets">Deskripsi <b style="color:red">*</b></label>
-                                <textarea class="form-control {{ Yeah::validForm($errors->first('deskripsi_tickets')) }}" id="editor2" name="deskripsi_tickets" rows="5">{{Request::old('deskripsi_tickets') == '' ? $edit_tickets->deskripsi_tickets : Request::old('deskripsi_tickets')}}</textarea>
-                                {{Yeah::pesanErorForm($errors->first('deskripsi_tickets'))}}
+                                <label class="form-col-form-label" for="keterangan_tickets">Keterangan <b style="color:red">*</b></label>
+                                <textarea class="form-control {{ Yeah::validForm($errors->first('keterangan_tickets')) }}" id="keterangan_tickets" name="keterangan_tickets" rows="5">{{Request::old('keterangan_tickets') == '' ? $edit_tickets->keterangan_tickets : Request::old('keterangan_tickets')}}</textarea>
+                                {{Yeah::pesanErorForm($errors->first('keterangan_tickets'))}}
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label class="form-col-form-label" for="disclaimer_tickets">Disclaimer <b style="color:red">*</b></label>
-                                <textarea class="form-control {{ Yeah::validForm($errors->first('disclaimer_tickets')) }}" id="editor1" name="disclaimer_tickets" rows="5">{{Request::old('disclaimer_tickets') == '' ? $edit_tickets->disclaimer_tickets : Request::old('disclaimer_tickets')}}</textarea>
-                                {{Yeah::pesanErorForm($errors->first('disclaimer_tickets'))}}
+                                <label class="form-col-form-label" for="deskripsi_tickets">Deskripsi <b style="color:red">*</b></label>
+                                <textarea class="form-control {{ Yeah::validForm($errors->first('deskripsi_tickets')) }}" id="editor1" name="deskripsi_tickets" rows="5">{{Request::old('deskripsi_tickets') == '' ? $edit_tickets->deskripsi_tickets : Request::old('deskripsi_tickets')}}</textarea>
+                                {{Yeah::pesanErorForm($errors->first('deskripsi_tickets'))}}
                             </div>
                         </div>
 					</div>

@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id('id_promos');
             $table->bigInteger('events_id')->default(0)->index();
             $table->bigInteger('users_id')->default(0)->index();
+            $table->datetime('mulai_promos');
+            $table->datetime('selesai_promos');
             $table->string('nama_promos');
             $table->string('gambar_promos');
             $table->longtext('deskripsi_promos');

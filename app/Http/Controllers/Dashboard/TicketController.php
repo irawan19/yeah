@@ -77,11 +77,11 @@ class TicketController extends Controller
         {
             $aturan = [
                 'events_id'                         => 'required',
-                'nama_tickets'                       => 'required',
+                'nama_tickets'                      => 'required',
                 'harga_tickets'                     => 'required',
                 'kuota_tickets'                     => 'required',
                 'deskripsi_tickets'                 => 'required',
-                'disclaimer_tickets'                => 'required',
+                'keterangan_tickets'                => 'required',
             ];
             $error_pesan = [
                 'events_id.required'                => 'Form Event Harus Diisi.',
@@ -89,7 +89,7 @@ class TicketController extends Controller
                 'harga_tickets.required'            => 'Form Harga Harus Diisi.',
                 'kuota_tickets.required'            => 'Form Kuoat Harus Diisi.',
                 'deskripsi_tickets.required'        => 'Form Deskripsi Harus Diisi.',
-                'disclaimer_tickets.required'       => 'Form Disclaimer Harus Diisi.',
+                'keterangan_tickets.required'       => 'Form Keterangan Harus Diisi.',
             ];
             $this->validate($request, $aturan, $error_pesan);
 
@@ -103,7 +103,7 @@ class TicketController extends Controller
                 'kuota_tickets'                 => $request->kuota_tickets,
                 'sisa_kuota_tickets'            => $request->kuota_tickets,
                 'deskripsi_tickets'             => $request->deskripsi_tickets,
-                'disclaimer_tickets'            => $request->disclaimer_tickets,
+                'keterangan_tickets'            => $request->keterangan_tickets,
                 'status_hapus_tickets'          => 0,
                 'created_at'                    => date('Y-m-d H:i:s'),
                 'updated_at'                    => date('Y-m-d H:i:s')
@@ -192,70 +192,35 @@ class TicketController extends Controller
             $cek_tickets = \App\Models\Master_ticket::where('id_tickets',$id_tickets)->count();
             if($cek_tickets != 0)
             {
-                if(!empty($request->userfile_gambar_ticket))
-                {
-                    $aturan = [
-                        'events_id'                         => 'required',
-                        'nama_tickets'                       => 'required',
-                        'harga_tickets'                     => 'required',
-                        'kuota_tickets'                     => 'required',
-                        'deskripsi_tickets'                 => 'required',
-                        'disclaimer_tickets'                => 'required',
-                    ];
-                    $error_pesan = [
-                        'events_id.required'                => 'Form Event Harus Diisi.',
-                        'nama_tickets.required'             => 'Form Nama Harus Diisi.',
-                        'harga_tickets.required'            => 'Form Harga Harus Diisi.',
-                        'kuota_tickets.required'            => 'Form Kuoat Harus Diisi.',
-                        'deskripsi_tickets.required'        => 'Form Deskripsi Harus Diisi.',
-                        'disclaimer_tickets.required'       => 'Form Disclaimer Harus Diisi.',
-                    ];
-                    $this->validate($request, $aturan, $error_pesan);
+                $aturan = [
+                    'events_id'                         => 'required',
+                    'nama_tickets'                      => 'required',
+                    'harga_tickets'                     => 'required',
+                    'kuota_tickets'                     => 'required',
+                    'deskripsi_tickets'                 => 'required',
+                    'keterangan_tickets'                => 'required',
+                ];
+                $error_pesan = [
+                    'events_id.required'                => 'Form Event Harus Diisi.',
+                    'nama_tickets.required'             => 'Form Nama Harus Diisi.',
+                    'harga_tickets.required'            => 'Form Harga Harus Diisi.',
+                    'kuota_tickets.required'            => 'Form Kuoat Harus Diisi.',
+                    'deskripsi_tickets.required'        => 'Form Deskripsi Harus Diisi.',
+                    'keterangan_tickets.required'       => 'Form Keterangan Harus Diisi.',
+                ];
+                $this->validate($request, $aturan, $error_pesan);
         
-                    $data = [
-                        'events_id'                     => $request->events_id,
-                        'users_id'                      => Auth::user()->id,
-                        'nama_tickets'    	            => $request->nama_tickets,
-                        'harga_tickets'                 => Yeah::ubahHargaKeDB($request->harga_tickets),
-                        'kuota_tickets'                 => $request->kuota_tickets,
-                        'sisa_kuota_tickets'            => $request->kuota_tickets,
-                        'deskripsi_tickets'             => $request->deskripsi_tickets,
-                        'disclaimer_tickets'            => $request->disclaimer_tickets,
-                        'updated_at'                    => date('Y-m-d H:i:s')
-                    ];
-                }
-                else
-                {
-                    $aturan = [
-                        'events_id'                         => 'required',
-                        'nama_tickets'                      => 'required',
-                        'harga_tickets'                     => 'required',
-                        'kuota_tickets'                     => 'required',
-                        'deskripsi_tickets'                 => 'required',
-                        'disclaimer_tickets'                => 'required',
-                    ];
-                    $error_pesan = [
-                        'events_id.required'                => 'Form Event Harus Diisi.',
-                        'nama_tickets.required'             => 'Form Nama Harus Diisi.',
-                        'harga_tickets.required'            => 'Form Harga Harus Diisi.',
-                        'kuota_tickets.required'            => 'Form Kuoat Harus Diisi.',
-                        'deskripsi_tickets.required'        => 'Form Deskripsi Harus Diisi.',
-                        'disclaimer_tickets.required'       => 'Form Disclaimer Harus Diisi.',
-                    ];
-                    $this->validate($request, $aturan, $error_pesan);
-        
-                    $data = [
-                        'events_id'                     => $request->events_id,
-                        'users_id'                      => Auth::user()->id,
-                        'nama_tickets'    	            => $request->nama_tickets,
-                        'harga_tickets'                 => Yeah::ubahHargaKeDB($request->harga_tickets),
-                        'kuota_tickets'                 => $request->kuota_tickets,
-                        'sisa_kuota_tickets'            => $request->kuota_tickets,
-                        'deskripsi_tickets'             => $request->deskripsi_tickets,
-                        'disclaimer_tickets'            => $request->disclaimer_tickets,
-                        'updated_at'                    => date('Y-m-d H:i:s')
-                    ];
-                }
+                $data = [
+                    'events_id'                     => $request->events_id,
+                    'users_id'                      => Auth::user()->id,
+                    'nama_tickets'    	            => $request->nama_tickets,
+                    'harga_tickets'                 => Yeah::ubahHargaKeDB($request->harga_tickets),
+                    'kuota_tickets'                 => $request->kuota_tickets,
+                    'sisa_kuota_tickets'            => $request->kuota_tickets,
+                    'deskripsi_tickets'             => $request->deskripsi_tickets,
+                    'keterangan_tickets'            => $request->keterangan_tickets,
+                    'updated_at'                    => date('Y-m-d H:i:s')
+                ];
                 \App\Models\Master_ticket::where('id_tickets', $id_tickets)
                                         ->update($data);
 

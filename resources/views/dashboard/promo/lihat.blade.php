@@ -37,6 +37,8 @@
 				    				<th class="nowrap" width="50px">No</th>
 				    				<th class="nowrap">Event</th>
 				    				<th class="nowrap">Nama</th>
+				    				<th class="nowrap">Mulai</th>
+				    				<th class="nowrap">Selesai</th>
 				    			</tr>
 				    		</thead>
 				    		<tbody>
@@ -59,20 +61,32 @@
 											    </td>
 									    	@endif
 								    		<td class="nowrap">{{$no}}</td>
-								    		<td class="nowrap">{{$promos->nama_events}}</td>
+								    		<td class="nowrap">
+												@if($promos->events_id != 0)
+													{{$promos->nama_events}}
+												@else
+													Semua Event
+												@endif
+											</td>
 								    		<td class="nowrap">{{$promos->nama_promos}}</td>
+								    		<td class="nowrap">{{Yeah::ubahDBKeTanggalwaktu($promos->mulai_promos)}}</td>
+								    		<td class="nowrap">{{Yeah::ubahDBKeTanggalwaktu($promos->selesai_promos)}}</td>
 								    	</tr>
 								    	@php($no++)
 								    @endforeach
 								@else
 									<tr>
 										@if(Yeah::totalHakAkses($link_promo) != 0)
-											<td colspan="4" class="center-align">Tidak ada data ditampilkan</td>
+											<td colspan="6" class="center-align">Tidak ada data ditampilkan</td>
+											<td style="display:none"></td>
+											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 										@else
-											<td colspan="3" class="center-align">Tidak ada data ditampilkan</td>
+											<td colspan="5" class="center-align">Tidak ada data ditampilkan</td>
+											<td style="display:none"></td>
+											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 										@endif

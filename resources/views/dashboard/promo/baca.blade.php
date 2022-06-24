@@ -18,7 +18,23 @@
 						<tr>
 							<th width="150px">Event</th>
 							<th width="1px">:</th>
-							<td>{{$baca_promos->nama_events}}</td>
+							<td>
+								@if($baca_promos->events_id != 0)
+									{{$baca_promos->nama_events}}
+								@else
+									Semua Event
+								@endif
+							</td>
+						</tr>
+						<tr>
+							<th>Mulai</th>
+							<th>:</th>
+							<td>{{Yeah::ubahDBKeTanggalwaktu($baca_promos->mulai_promos)}}</td>
+						</tr>
+						<tr>
+							<th>Selesai</th>
+							<th>:</th>
+							<td>{{Yeah::ubahDBKeTanggalwaktu($baca_promos->selesai_promos)}}</td>
 						</tr>
 						<tr>
 							<th>Nama</th>
@@ -38,12 +54,12 @@
 						<tr>
 							<th>Dibuat</th>
 							<th>:</th>
-							<td>{{Yeah::ubahDBKeTanggalwaktu($baca_promos->created_at)}}</td>
+							<td>{{Yeah::ubahDBKeTanggalwaktu($baca_promos->tanggal_promos)}}</td>
 						</tr>
 						<tr>
 							<th>Diperbarui</th>
 							<th>:</th>
-							<td>{{Yeah::ubahDBKeTanggalwaktu($baca_promos->updated_at)}}</td>
+							<td>{{Yeah::ubahDBKeTanggalwaktu($baca_promos->update_promos)}}</td>
 						</tr>
 					</table>
 				</div>

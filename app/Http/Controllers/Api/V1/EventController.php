@@ -103,7 +103,7 @@ class EventController extends ApiController
                     $tickets_data[] = [
                         'nama_tickets'      => $tickets->nama_tickets,
                         'deskripsi_tickets' => $tickets->deskripsi_tickets,
-                        'disclaimer_tickets'=> $tickets->disclaimer_tickets,
+                        'keterangan_tickets'=> $tickets->keterangan_tickets,
                         'kuota_tickets'     => $tickets->kuota_tickets,
                         'harga_tickets'     => $tickets->harga_tickets,
                         'sisa_kuota_tickets'=> $tickets->sisa_kuota_tickets,
@@ -111,7 +111,8 @@ class EventController extends ApiController
                 }
             }
 
-            $ambil_promos = \App\Models\Master_promo::where('events_id',$id_events)
+            $ambil_promos = \App\Models\Master_promo::where('events_id',0)
+                                                    ->orWhere('events_id',$id_events)
                                                     ->orderBy('nama_promos','asc')
                                                     ->get();
             
@@ -121,6 +122,9 @@ class EventController extends ApiController
                 foreach($ambil_promos as $promos)
                 {
                     $promos_data[] = [
+                        'events_id'         => $ambil_event_details->id_events,
+                        'mulai_promos'      => $promos->mulai_promos,
+                        'selesai_promos'    => $promos->selesai_promos,
                         'nama_promos'       => $promos->nama_promos,
                         'deskripsi_promos'  => $promos->deskripsi_promos,
                         'gambar_promos'     => URL('/').'/'.$promos->gambar_promos,
@@ -291,7 +295,7 @@ class EventController extends ApiController
                 'id_tickets'                    => $ambil_registrasi_events->id_tickets,
                 'nama_tickets'                  => $ambil_registrasi_events->nama_tickets,
                 'deskripsi_tickets'             => $ambil_registrasi_events->deskripsi_tickets,
-                'disclaimer_tickets'            => $ambil_registrasi_events->disclaimer_tickets,
+                'keterangan_tickets'            => $ambil_registrasi_events->keterangan_tickets,
                 'tanggal_registrasi_events'     => $ambil_registrasi_events->tanggal_registrasi_events,
                 'jumlah_registrasi_events'      => $ambil_registrasi_events->jumlah_registrasi_events,
                 'harga_registrasi_events'       => $ambil_registrasi_events->harga_registrasi_events,

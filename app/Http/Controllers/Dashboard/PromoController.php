@@ -16,7 +16,7 @@ class PromoController extends Controller
             $data['link_promo']         = $link_promo;
             $url_sekarang              	= $request->fullUrl();
             $data['hasil_kata']        	= '';
-        	$data['lihat_promos']       = \App\Models\Master_promo::join('master_events','events_id','=','master_events.id_events')
+        	$data['lihat_promos']       = \App\Models\Master_promo::leftjoin('master_events','events_id','=','master_events.id_events')
                                                                     ->where('status_hapus_promos',0)
                                                                     ->orderBy('tanggal_events','desc')
                                                                     ->orderBy('nama_promos','asc')
@@ -39,7 +39,7 @@ class PromoController extends Controller
             $url_sekarang                 	= $request->fullUrl();
             $hasil_kata                   	= $request->cari_kata;
             $data['hasil_kata']           	= $hasil_kata;
-            $data['lihat_promos']           = \App\Models\Master_promo::join('master_events','events_id','=','master_events.id_events')
+            $data['lihat_promos']           = \App\Models\Master_promo::leftjoin('master_events','events_id','=','master_events.id_events')
                                                                         ->where('nama_events', 'LIKE', '%'.$hasil_kata.'%')
                                                                         ->where('status_hapus_promos',0)
                                                                         ->orWhere('nama_promos', 'LIKE', '%'.$hasil_kata.'%')
@@ -77,13 +77,13 @@ class PromoController extends Controller
         if(Yeah::hakAkses($link_promo,'tambah') == 'true')
         {
             $aturan = [
-                'events_id'                     => 'required',
+                'tanggal_promos'                => 'required',
                 'nama_promos'                   => 'required',
                 'userfile_gambar_promo'         => 'required|mimes:jpg,png,jpeg',
                 'deskripsi_promos'              => 'required',
             ];
             $error_pesan = [
-                'events_id.required'                => 'Form Event Harus Diisi.',
+                'tanggal_promos'                    => 'Form Tanggal Harus Diisi.',
                 'nama_promos.required'              => 'Form Nama Harus Diisi.',
                 'userfile_gambar_promo.required'    => 'Form Gambar Harus Diisi.',
                 'deskripsi_promos.required'         => 'Form Deskripsi Harus Diisi.',
@@ -96,11 +96,21 @@ class PromoController extends Controller
                 base_path() . '/public/uploads/promo/', $nama_gambar_promo
             );
 
+            $pecah_tanggal_promos               = explode(' sampai ',$request->tanggal_promos);
+            $mulai_promos                       = Yeah::ubahTanggalwaktuKeDB($pecah_tanggal_promos[0]);
+            $selesai_promos                     = Yeah::ubahTanggalwaktuKeDB($pecah_tanggal_promos[1]);
+
+            $events_id = 0;
+            if(!empty($request->events_id))
+                $events_id = $request->events_id;
+
             $id_promos = Yeah::autoIncrementKey('master_promos','id_promos');
             $data = [
             	'id_promos'      	        => $id_promos,
-                'events_id'                 => $request->events_id,
+                'events_id'                 => $events_id,
                 'users_id'                  => Auth::user()->id,
+                'mulai_promos'              => $mulai_promos,
+                'selesai_promos'            => $selesai_promos,
                 'nama_promos'    	        => $request->nama_promos,
                 'gambar_promos'             => $path_gambar_promo.$nama_gambar_promo,
                 'deskripsi_promos'          => $request->deskripsi_promos,
@@ -144,8 +154,11 @@ class PromoController extends Controller
             $cek_promos = \App\Models\Master_promo::where('id_promos',$id_promos)->count();
             if($cek_promos != 0)
             {
-                $data['baca_promos']    = \App\Models\Master_promo::join('users','users_id','=','users.id')
-                                                                    ->join('master_events','events_id','=','master_events.id_events')
+                $data['baca_promos']    = \App\Models\Master_promo::selectRaw('*,
+                                                                            master_promos.created_at as tanggal_promos,
+                                                                            master_promos.updated_at as update_promos')
+                                                                    ->join('users','users_id','=','users.id')
+                                                                    ->leftjoin('master_events','events_id','=','master_events.id_events')
                                                                     ->where('id_promos',$id_promos)
                                                                     ->first();
                 return view('dashboard.promo.baca',$data);
@@ -195,13 +208,13 @@ class PromoController extends Controller
                 if(!empty($request->userfile_gambar_promo))
                 {
                     $aturan = [
-                        'events_id'                     => 'required',
+                        'tanggal_promos'                => 'required',
                         'nama_promos'                   => 'required',
                         'userfile_gambar_promo'         => 'required|mimes:jpg,png,jpeg',
                         'deskripsi_promos'              => 'required',
                     ];
                     $error_pesan = [
-                        'events_id.required'                => 'Form Event Harus Diisi.',
+                        'tanggal_promos.required'           => 'Form Tanggal Harus Diisi.',
                         'nama_promos.required'              => 'Form Nama Harus Diisi.',
                         'userfile_gambar_promo.required'    => 'Form Gambar Harus Diisi.',
                         'deskripsi_promos.required'         => 'Form Deskripsi Harus Diisi.',
@@ -218,8 +231,18 @@ class PromoController extends Controller
                         base_path() . '/public/uploads/promo/', $nama_gambar_promo
                     );
 
+                    $pecah_tanggal_promos               = explode(' sampai ',$request->tanggal_promos);
+                    $mulai_promos                       = Yeah::ubahTanggalwaktuKeDB($pecah_tanggal_promos[0]);
+                    $selesai_promos                     = Yeah::ubahTanggalwaktuKeDB($pecah_tanggal_promos[1]);
+        
+                    $events_id = 0;
+                    if(!empty($request->events_id))
+                        $events_id = $request->events_id;
+
                     $data = [
-                        'events_id'                 => $request->events_id,
+                        'events_id'                 => $events_id,
+                        'mulai_promos'              => $mulai_promos,
+                        'selesai_promos'            => $selesai_promos,
                         'users_id'                  => Auth::user()->id,
                         'nama_promos'    	        => $request->nama_promos,
                         'gambar_promos'             => $path_gambar_promo.$nama_gambar_promo,
@@ -230,19 +253,29 @@ class PromoController extends Controller
                 else
                 {
                     $aturan = [
-                        'events_id'                     => 'required',
+                        'tanggal_promos'                => 'required',
                         'nama_promos'                   => 'required',
                         'deskripsi_promos'              => 'required',
                     ];
                     $error_pesan = [
-                        'events_id.required'                => 'Form Event Harus Diisi.',
+                        'tanggal_promos.required'           => 'Form Tanggal Harus Diisi.',
                         'nama_promos.required'              => 'Form Nama Harus Diisi.',
                         'deskripsi_promos.required'         => 'Form Deskripsi Harus Diisi.',
                     ];
                     $this->validate($request, $aturan, $error_pesan);
 
+                    $pecah_tanggal_promos               = explode(' sampai ',$request->tanggal_promos);
+                    $mulai_promos                       = Yeah::ubahTanggalwaktuKeDB($pecah_tanggal_promos[0]);
+                    $selesai_promos                     = Yeah::ubahTanggalwaktuKeDB($pecah_tanggal_promos[1]);
+        
+                    $events_id = 0;
+                    if(!empty($request->events_id))
+                        $events_id = $request->events_id;
+
                     $data = [
-                        'events_id'                 => $request->events_id,
+                        'events_id'                 => $events_id,
+                        'mulai_promos'              => $mulai_promos,
+                        'selesai_promos'            => $selesai_promos,
                         'users_id'                  => Auth::user()->id,
                         'nama_promos'    	        => $request->nama_promos,
                         'deskripsi_promos'    	    => $request->deskripsi_promos,
