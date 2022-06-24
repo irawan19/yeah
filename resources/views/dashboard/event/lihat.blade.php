@@ -40,6 +40,8 @@
 				    				<th class="nowrap">Lokasi</th>
 				    				<th class="nowrap">Mulai Registrasi</th>
 				    				<th class="nowrap">Selesai Registrasi</th>
+									<th class="nowrap">Ticket</th>
+									<th class="nowrap">Promo</th>
 				    			</tr>
 				    		</thead>
 				    		<tbody>
@@ -67,13 +69,25 @@
 								    		<td class="nowrap">{{$events->lokasi_events}}</td>
 								    		<td class="nowrap">{{Yeah::ubahDBKeTanggalwaktu($events->mulai_registrasi_events)}}</td>
 								    		<td class="nowrap">{{Yeah::ubahDBKeTanggalwaktu($events->selesai_registrasi_events)}}</td>
+								    		<td class="nowrap">
+												@php($ambil_total_tickets = \App\Models\Master_ticket::where('events_id',$events->id_events)->count())
+												<a href="{{URL('dashboard/ticket')}}">Ada {{$ambil_total_tickets}} Ticket</a>
+											</td>
+								    		<td class="nowrap">
+												@php($ambil_total_promos = \App\Models\Master_promo::where('events_id',$events->id_events)
+																									->orWhere('events_id',0)
+																									->count())
+												<a href="{{URL('dashboard/ticket')}}">Ada {{$ambil_total_promos}} Promo</a>
+											</td>
 								    	</tr>
 								    	@php($no++)
 								    @endforeach
 								@else
 									<tr>
 										@if(Yeah::totalHakAkses($link_event) != 0)
-											<td colspan="7" class="center-align">Tidak ada data ditampilkan</td>
+											<td colspan="9" class="center-align">Tidak ada data ditampilkan</td>
+											<td style="display:none"></td>
+											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
@@ -81,7 +95,9 @@
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 										@else
-											<td colspan="6" class="center-align">Tidak ada data ditampilkan</td>
+											<td colspan="8" class="center-align">Tidak ada data ditampilkan</td>
+											<td style="display:none"></td>
+											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
