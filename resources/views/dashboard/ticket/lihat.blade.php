@@ -17,7 +17,7 @@
 					</div>
 				</div>
 				<div class="card-body">
-					<form method="GET" action="{{ URL('ticket/cari') }}">
+					<form method="GET" action="{{ URL('dashboard/ticket/cari') }}">
 						@csrf
 	                	<div class="input-group">
 	                		<input class="form-control" id="input2-group2" type="text" name="cari_kata" placeholder="Cari" value="{{$hasil_kata}}">
