@@ -39,7 +39,8 @@ class TicketController extends Controller
             $url_sekarang                 	= $request->fullUrl();
             $hasil_kata                   	= $request->cari_kata;
             $data['hasil_kata']           	= $hasil_kata;
-            $data['lihat_tickets']          = \App\Models\Master_ticket::where('nama_tickets', 'LIKE', '%'.$hasil_kata.'%')
+            $data['lihat_tickets']          = \App\Models\Master_ticket::join('master_events','events_id','=','master_events.id_events')
+                                                                        ->where('nama_tickets', 'LIKE', '%'.$hasil_kata.'%')
                                                                         ->where('status_hapus_tickets',0)
                                                                         ->orWhere('nama_tickets', 'LIKE', '%'.$hasil_kata.'%')
                                                                         ->where('status_hapus_tickets',0)
