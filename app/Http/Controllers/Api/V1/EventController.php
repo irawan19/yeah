@@ -101,6 +101,7 @@ class EventController extends ApiController
                 foreach($ambil_tickets as $tickets)
                 {
                     $tickets_data[] = [
+                        'id_tickets'        => $tickets->id_tickets,
                         'nama_tickets'      => $tickets->nama_tickets,
                         'deskripsi_tickets' => $tickets->deskripsi_tickets,
                         'keterangan_tickets'=> $tickets->keterangan_tickets,
@@ -122,6 +123,7 @@ class EventController extends ApiController
                 foreach($ambil_promos as $promos)
                 {
                     $promos_data[] = [
+                        'id_promos'         => $promos->id_promos,
                         'events_id'         => $ambil_event_details->id_events,
                         'mulai_promos'      => $promos->mulai_promos,
                         'selesai_promos'    => $promos->selesai_promos,
