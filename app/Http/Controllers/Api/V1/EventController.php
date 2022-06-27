@@ -36,7 +36,7 @@ class EventController extends ApiController
             foreach($ambil_events as $events)
             {
                 $ambil_tickets = \App\Models\Master_ticket::where('events_id',$events->id_events)
-                                                        ->where('sisa_kuota_tickets'.'!=',0)
+                                                        ->where('sisa_kuota_tickets','!=',0)
                                                         ->orderBy('nama_tickets','asc')
                                                         ->get();
                 $tickets_data = [];
