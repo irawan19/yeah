@@ -44,6 +44,8 @@ class PromoController extends Controller
                                                                         ->where('status_hapus_promos',0)
                                                                         ->orWhere('nama_promos', 'LIKE', '%'.$hasil_kata.'%')
                                                                         ->where('status_hapus_promos',0)
+                                                                        ->orWhere('nama_events',null)
+                                                                        ->where('status_hapus_promos',0)
                                                                         ->orderBy('tanggal_events','desc')
                                                                         ->orderBy('nama_promos','asc')
                                                                         ->get();

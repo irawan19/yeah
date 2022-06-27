@@ -71,13 +71,13 @@
 								    		<td class="nowrap">{{Yeah::ubahDBKeTanggalwaktu($events->selesai_registrasi_events)}}</td>
 								    		<td class="nowrap">
 												@php($ambil_total_tickets = \App\Models\Master_ticket::where('events_id',$events->id_events)->count())
-												<a href="{{URL('dashboard/ticket')}}">Ada {{$ambil_total_tickets}} Ticket</a>
+												<a href="{{URL('dashboard/ticket/cari?cari_kata='.$events->nama_events)}}">Ada {{$ambil_total_tickets}} Ticket</a>
 											</td>
 								    		<td class="nowrap">
 												@php($ambil_total_promos = \App\Models\Master_promo::where('events_id',$events->id_events)
 																									->orWhere('events_id',0)
 																									->count())
-												<a href="{{URL('dashboard/ticket')}}">Ada {{$ambil_total_promos}} Promo</a>
+												<a href="{{URL('dashboard/promo/cari?cari_kata='.$events->nama_events)}}">Ada {{$ambil_total_promos}} Promo</a>
 											</td>
 								    	</tr>
 								    	@php($no++)
