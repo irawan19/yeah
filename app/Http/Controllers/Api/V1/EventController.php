@@ -270,7 +270,7 @@ class EventController extends ApiController
     }
 
     /**
-     * @OA\POST(path="/api/v1/event/cekticket",
+     * @OA\Post(path="/api/v1/event/cekticket",
      *   tags={"Event"},
      *   summary="ambil data ticket by booking code",
      *   description="ambil data ticket by booking code",
