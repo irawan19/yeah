@@ -278,7 +278,7 @@ class EventController extends ApiController
      *   @OA\Parameter(
      *     name="booking_code",
      *     required=true,
-     *     in="path",
+     *     in="query",
      *     @OA\Schema(
      *         type="string",
      *     ),
