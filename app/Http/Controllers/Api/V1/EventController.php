@@ -32,6 +32,27 @@ class EventController extends ApiController
                                                 ->get();
 
         if(!$ambil_events->isEmpty()){
+            $ambil_tickets = \App\Models\Master_ticket::where('events_id',$id_events)
+                                                        ->where('sisa_kuota_tickets'.'!=',0)
+                                                        ->orderBy('nama_tickets','asc')
+                                                        ->get();
+            $tickets_data = [];
+            if(!$ambil_tickets->isEmpty())
+            {
+                foreach($ambil_tickets as $tickets)
+                {
+                    $tickets_data[] = [
+                        'id_tickets'        => $tickets->id_tickets,
+                        'nama_tickets'      => $tickets->nama_tickets,
+                        'deskripsi_tickets' => $tickets->deskripsi_tickets,
+                        'keterangan_tickets'=> $tickets->keterangan_tickets,
+                        'kuota_tickets'     => $tickets->kuota_tickets,
+                        'harga_tickets'     => $tickets->harga_tickets,
+                        'sisa_kuota_tickets'=> $tickets->sisa_kuota_tickets,
+                    ];
+                }
+            }
+
             $events_data = [];
             foreach($ambil_events as $events)
             {
@@ -44,7 +65,8 @@ class EventController extends ApiController
                     'disclaimer_events'         => $events->disclaimer_events,
                     'lokasi_events'             => $events->lokasi_events,
                     'mulai_registrasi_events'   => $events->mulai_registrasi_events,
-                    'selesai_registrasi_events' => $events->selesai_registrasi_events
+                    'selesai_registrasi_events' => $events->selesai_registrasi_events,
+                    'tickets_data'              => $tickets_data
                 ];
             }
 
@@ -93,6 +115,7 @@ class EventController extends ApiController
         if(!$ambil_event_details->isEmpty)
         {
             $ambil_tickets = \App\Models\Master_ticket::where('events_id',$id_events)
+                                                        ->where('sisa_kuota_tickets'.'!=',0)
                                                         ->orderBy('nama_tickets','asc')
                                                         ->get();
             $tickets_data = [];
