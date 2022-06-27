@@ -115,7 +115,7 @@ class EventController extends ApiController
         if(!$ambil_event_details->isEmpty)
         {
             $ambil_tickets = \App\Models\Master_ticket::where('events_id',$id_events)
-                                                        ->where('sisa_kuota_tickets'.'!=',0)
+                                                        ->where('sisa_kuota_tickets','!=',0)
                                                         ->orderBy('nama_tickets','asc')
                                                         ->get();
             $tickets_data = [];
