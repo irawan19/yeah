@@ -125,7 +125,7 @@
             }
         },
         "/api/v1/event/cekticket": {
-            "get": {
+            "post": {
                 "tags": [
                     "Event"
                 ],
@@ -135,7 +135,7 @@
                 "parameters": [
                     {
                         "name": "booking_code",
-                        "in": "path",
+                        "in": "query",
                         "description": "input booking code",
                         "required": true,
                         "schema": {

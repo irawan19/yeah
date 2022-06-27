@@ -111,7 +111,7 @@ class EventController extends ApiController
      *   @OA\Response(response=400, description="gagal mendapatkan data event detail by id"),
      * )
      */
-    public function eventdetail(Request $request, int $id_events)
+    public function eventdetail(Request $request, $id_events)
     {
         $ambil_event_details = \App\Models\Master_event::where('id_events',$id_events)
                                                         ->where('status_hapus_events',0)
