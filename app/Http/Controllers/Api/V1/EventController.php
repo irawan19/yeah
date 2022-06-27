@@ -56,6 +56,10 @@ class EventController extends ApiController
                     }
                 }
 
+                $ambil_start_from = \App\Models\Master_ticket::where('events_id',$events->id_events)
+                                                            ->orderBy('harga_tickets','asc')
+                                                            ->first();
+
                 $events_data[] = [
                     'id_events'                 => $events->id_events,
                     'tanggal_events'            => $events->tanggal_events,
@@ -66,6 +70,7 @@ class EventController extends ApiController
                     'lokasi_events'             => $events->lokasi_events,
                     'mulai_registrasi_events'   => $events->mulai_registrasi_events,
                     'selesai_registrasi_events' => $events->selesai_registrasi_events,
+                    'start_from_ticket_events'  => $ambil_start_from->harga_tickets,
                     'tickets_data'              => $tickets_data
                 ];
             }
