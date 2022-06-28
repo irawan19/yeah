@@ -72,7 +72,7 @@
 					            <div class="card-body pb-0">
 					                <div class="btn-group float-right">
 					                    <svg class="c-icon">
-					                        <use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-user')}}"></use>
+					                        <use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-file')}}"></use>
 					                    </svg>
 					                </div>
 					                <div class="text-value-lg">{{Yeah::konversiNilai($total_ticket)}} <span>{{Yeah::konversiNilaiString($total_ticket)}}</span></div>
