@@ -51,7 +51,7 @@
 			<div class="col-sm-4">
 				<div class="row">
 					<div class="col-sm-6">
-					    <a href="{{URL('dashboard/jasa')}}" class="nonstyle">
+					    <a href="{{URL('dashboard/event')}}" class="nonstyle">
 					        <div class="card" style="height: 100px; background-color: #fff; color: #000;">
 					            <div class="card-body pb-0">
 					                <div class="btn-group float-right">
@@ -59,7 +59,7 @@
 					                        <use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-badge')}}"></use>
 					                    </svg>
 					                </div>
-					                <div class="text-value-lg">{{Yeah::konversiNilai(0)}} <span>{{Yeah::konversiNilaiString(0)}}</span></div>
+					                <div class="text-value-lg">{{Yeah::konversiNilai($total_event)}} <span>{{Yeah::konversiNilaiString($total_event)}}</span></div>
 					                <div>Event</div>
 					            </div>
 					            <div class="c-chart-wrapper mt-3 mx-3" style="height:70px;"></div>
@@ -67,7 +67,7 @@
 					    </a>
 					</div>
 					<div class="col-sm-6">
-					    <a href="{{URL('dashboard/member')}}" class="nonstyle">
+					    <a href="{{URL('dashboard/ticket')}}" class="nonstyle">
 					        <div class="card" style="height: 100px; background-color: #fff; color: #000;">
 					            <div class="card-body pb-0">
 					                <div class="btn-group float-right">
@@ -75,31 +75,31 @@
 					                        <use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-user')}}"></use>
 					                    </svg>
 					                </div>
-					                <div class="text-value-lg">{{Yeah::konversiNilai(0)}} <span>{{Yeah::konversiNilaiString(0)}}</span></div>
-					                <div>Member</div>
+					                <div class="text-value-lg">{{Yeah::konversiNilai($total_ticket)}} <span>{{Yeah::konversiNilaiString($total_ticket)}}</span></div>
+					                <div>Ticket</div>
 					            </div>
 					            <div class="c-chart-wrapper mt-3 mx-3" style="height:70px;"></div>
 					        </div>
 					    </a>
 					</div>
 					<div class="col-sm-6">
-					    <a href="{{URL('dashboard/user')}}" class="nonstyle">
+					    <a href="{{URL('dashboard/promo')}}" class="nonstyle">
 					        <div class="card" style="height: 100px; background-color: #fff; color: #000;">
 					            <div class="card-body pb-0">
 					                <div class="btn-group float-right">
 					                    <svg class="c-icon">
-					                        <use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-user-follow')}}"></use>
+					                        <use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-album')}}"></use>
 					                    </svg>
 					                </div>
-					                <div class="text-value-lg">{{Yeah::konversiNilai(0)}} <span>{{Yeah::konversiNilaiString(0)}}</span></div>
-					                <div>User</div>
+					                <div class="text-value-lg">{{Yeah::konversiNilai($total_promo)}} <span>{{Yeah::konversiNilaiString($total_promo)}}</span></div>
+					                <div>Promo</div>
 					            </div>
 					            <div class="c-chart-wrapper mt-3 mx-3" style="height:70px;"></div>
 					        </div>
 					    </a>
 					</div>
 					<div class="col-sm-6">
-					    <a href="{{URL('dashboard')}}" class="nonstyle">
+					    <a href="{{URL('dashboard/registrasi_event')}}" class="nonstyle">
 					        <div class="card" style="height: 100px; background-color: #fff; color: #000;">
 					            <div class="card-body pb-0">
 					                <div class="btn-group float-right">
@@ -107,8 +107,8 @@
 					                        <use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-user')}}"></use>
 					                    </svg>
 					                </div>
-					                <div class="text-value-lg">{{Yeah::konversiNilai(0)}} <span>{{Yeah::konversiNilaiString(0)}}</span></div>
-					                <div>Admin</div>
+					                <div class="text-value-lg">{{Yeah::konversiNilai($total_registrasi)}} <span>{{Yeah::konversiNilaiString($total_registrasi)}}</span></div>
+					                <div>Registrasi</div>
 					            </div>
 					            <div class="c-chart-wrapper mt-3 mx-3" style="height:70px;"></div>
 					        </div>
