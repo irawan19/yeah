@@ -20,7 +20,7 @@ class RegistrasiEventController extends Controller
             $data['hasil_kata']        	            = '';
             $hasil_event                            = $request->cari_event;
             $data['hasil_event']                    = \App\Models\Master_event::orderBy('tanggal_events','desc')
-                                                                            ->first();
+                                                                            ->first()->id_events;
             $data['lihat_events']                   = \App\Models\Master_event::orderBy('tanggal_events','desc')
                                                                                 ->get();
         	$data['lihat_registrasi_events']        = \App\Models\Registrasi_event_detail::selectRaw('*,
@@ -31,7 +31,7 @@ class RegistrasiEventController extends Controller
                                                                                         ->join('master_events','master_tickets.events_id','=','master_events.id_events')
                                                                                         ->join('master_jenis_kelamins','jenis_kelamins_id','=','master_jenis_kelamins.id_jenis_kelamins')
                                                                                         ->join('master_status_pembayarans','status_pembayarans_id','=','master_status_pembayarans.id_status_pembayarans')
-                                                                                        ->where('id_events',$data['hasil_event']->id_events)
+                                                                                        ->where('id_events',$data['hasil_event'])
                                                                                         ->orderBy('registrasi_events.created_at','desc')
                                                                                         ->get();
             session()->forget('halaman');
