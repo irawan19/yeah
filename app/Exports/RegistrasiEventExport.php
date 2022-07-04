@@ -15,7 +15,7 @@ class RegistrasiEventExport implements FromView, ShouldQueue
 
     public function view(): View
     {
-        $hasil_event = '';
+        $hasil_event = 0;
         if(!empty(session('hasil_event')))
             $hasil_event = session('hasil_event');
 

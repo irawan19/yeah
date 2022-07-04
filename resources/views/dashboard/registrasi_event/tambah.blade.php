@@ -49,9 +49,9 @@
                             </div>
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label class="form-col-form-label" for="bukti_pembayaran_registrasi_event_details">Bukti Pembayaran <b style="color:red">*</b></label>
-                                    <input class="form-control {{ Yeah::validForm($errors->first('bukti_pembayaran_registrasi_event_details')) }}" id="bukti_pembayaran_registrasi_event_details" type="text" name="bukti_pembayaran_registrasi_event_details" value="{{Request::old('bukti_pembayaran_registrasi_event_details')}}">
-                                    {{Yeah::pesanErorForm($errors->first('bukti_pembayaran_registrasi_event_details'))}}
+                                    <label class="form-col-form-label" for="bukti_pembayaran_registrasi_events">Bukti Pembayaran <b style="color:red">*</b></label>
+                                    <input class="form-control {{ Yeah::validForm($errors->first('bukti_pembayaran_registrasi_events')) }}" id="bukti_pembayaran_registrasi_events" type="text" name="bukti_pembayaran_registrasi_events" value="{{Request::old('bukti_pembayaran_registrasi_events')}}">
+                                    {{Yeah::pesanErorForm($errors->first('bukti_pembayaran_registrasi_events'))}}
                                 </div>
                             </div>
                         </div>

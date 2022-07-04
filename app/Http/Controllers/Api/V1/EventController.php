@@ -252,6 +252,19 @@ class EventController extends ApiController
             \App\Models\Registrasi_event::where('id_registrasi_events',$id_registrasi_events)
                                         ->update($update_registrasi_events);
             
+            $ambil_tickets = \App\Models\Master_ticket::where('id_tickets',$id_tickets)
+                            ->first();
+            if(!empty($ambil_tickets))
+            {
+                $sisa_kuota_tickets     = $ambil_tickets->sisa_kuota_tickets;
+                $hitung_kuota_tickets   = $sisa_kuota_tickets - $jumlah_registrasi_event_details;
+                $tickets_data           = [
+                    'sisa_kuota_tickets'    => $hitung_kuota_tickets
+                ];
+                \App\Models\Master_ticket::where('id_tickets',$id_tickets)
+                                        ->update($tickets_data);
+            }
+            
             return response()->json([
                 'status'            => 'sukses',
                 'message'           => [

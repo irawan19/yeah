@@ -18,9 +18,14 @@ class RegistrasiEventController extends Controller
             $data['link_registrasi_event']          = $link_registrasi_event;
             $url_sekarang              	            = $request->fullUrl();
             $data['hasil_kata']        	            = '';
-            $hasil_event                            = $request->cari_event;
-            $data['hasil_event']                    = \App\Models\Master_event::orderBy('tanggal_events','desc')
-                                                                            ->first()->id_events;
+            $cek_event                              = \App\Models\Master_event::orderBy('tanggal_events','desc')
+                                                                                ->first();
+            if(!empty($cek_event))
+                $hasil_event                        = $cek_event->id_events;
+            else
+                $hasil_event                        = 0;
+            
+            $data['hasil_event']                    = $hasil_event;
             $data['lihat_events']                   = \App\Models\Master_event::orderBy('tanggal_events','desc')
                                                                                 ->get();
         	$data['lihat_registrasi_events']        = \App\Models\Registrasi_event_detail::selectRaw('*,
@@ -31,7 +36,7 @@ class RegistrasiEventController extends Controller
                                                                                         ->join('master_events','master_tickets.events_id','=','master_events.id_events')
                                                                                         ->join('master_jenis_kelamins','jenis_kelamins_id','=','master_jenis_kelamins.id_jenis_kelamins')
                                                                                         ->join('master_status_pembayarans','status_pembayarans_id','=','master_status_pembayarans.id_status_pembayarans')
-                                                                                        ->where('id_events',$data['hasil_event'])
+                                                                                        ->where('id_events',$hasil_event)
                                                                                         ->orderBy('registrasi_events.created_at','desc')
                                                                                         ->get();
             session()->forget('halaman');
@@ -181,6 +186,19 @@ class RegistrasiEventController extends Controller
             ];
             \App\Models\Registrasi_event::where('id_registrasi_events',$id_registrasi_events)
                                         ->update($update_registrasi_events);
+
+            $ambil_tickets = \App\Models\Master_ticket::where('id_tickets',$request->tickets_id)
+                                                        ->first();
+            if(!empty($ambil_tickets))
+            {
+                $sisa_kuota_tickets     = $ambil_tickets->sisa_kuota_tickets;
+                $hitung_kuota_tickets   = $sisa_kuota_tickets - $jumlah_registrasi_event_details;
+                $tickets_data           = [
+                    'sisa_kuota_tickets'    => $hitung_kuota_tickets
+                ];
+                \App\Models\Master_ticket::where('id_tickets',$request->tickets_id)
+                                        ->update($tickets_data);
+            }
 
             $simpan                   = $request->simpan;
             $simpan_kembali           = $request->simpan_kembali;
