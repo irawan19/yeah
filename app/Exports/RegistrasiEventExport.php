@@ -23,7 +23,10 @@ class RegistrasiEventExport implements FromView, ShouldQueue
         if(!empty(session('hasil_kata')))
             $hasil_kata = session('hasil_kata');
 
-        $data['lihat_registrasi_events'] = \App\Models\Registrasi_event_detail::join('registrasi_events','registrasi_events_id','registrasi_events.id_registrasi_events')
+        $data['lihat_registrasi_events'] = \App\Models\Registrasi_event_detail::selectRaw('*,
+                                                                                            registrasi_event_details.created_at AS tanggal_registrasi_event_details,
+                                                                                            registrasi_event_details.updated_at AS update_registrasi_event_details')
+                                                                            ->join('registrasi_events','registrasi_events_id','registrasi_events.id_registrasi_events')
                                                                             ->join('master_tickets','tickets_id','=','master_tickets.id_tickets')
                                                                             ->join('master_events','events_id','=','master_events.id_events')
                                                                             ->join('master_jenis_kelamins','jenis_kelamins_id','=','master_jenis_kelamins.id_jenis_kelamins')
