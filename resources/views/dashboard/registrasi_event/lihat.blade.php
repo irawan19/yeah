@@ -20,12 +20,35 @@
 				<div class="card-body">
 					<form method="GET" action="{{ URL('dashboard/registrasi_event/cari') }}">
 						@csrf
-	                	<div class="input-group">
-	                		<input class="form-control" id="input2-group2" type="text" name="cari_kata" placeholder="Cari" value="{{$hasil_kata}}">
-	                		<span class="input-group-append">
-	                		  	<button class="btn btn-primary" type="submit"> Cari</button>
-	                		</span>
-	                	</div>
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="form-group">
+									<select class="form-control select2" id="cari_event" name="cari_event">
+										@foreach($lihat_events as $events)
+											@php($selected = '')
+											@if(!empty($hasil_event))
+												@if($events->id_events == $hasil_event)
+													@php($selected = 'selected')
+												@endif
+											@else
+												@if($events->id_events == Request::old('cari_event'))
+													@php($selected = 'selected')
+												@endif
+											@endif
+											<option value="{{$events->id_events}}" {{ $selected }}>{{$events->nama_events.' ( '.Yeah::ubahDBKeTanggalwaktu($events->tanggal_events).' ) '}}</option>
+										@endforeach
+									</select>
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="input-group">
+									<input class="form-control" id="input2-group2" type="text" name="cari_kata" placeholder="Cari" value="{{$hasil_kata}}">
+									<span class="input-group-append">
+										<button class="btn btn-primary" type="submit"> Cari</button>
+									</span>
+								</div>
+							</div>
+						</div>
 	                </form>
 	            	<br/>
 	            	<div class="scrolltable">
@@ -120,8 +143,6 @@
 				    		</tbody>
 				    	</table>
 				    </div>
-					<br/>
-				   	{{ $lihat_registrasi_events->appends(Request::except('page'))->links('vendor.pagination.custom') }}
 				</div>
 			</div>
 		</div>

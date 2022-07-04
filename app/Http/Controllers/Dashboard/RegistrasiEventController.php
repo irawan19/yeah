@@ -18,6 +18,11 @@ class RegistrasiEventController extends Controller
             $data['link_registrasi_event']          = $link_registrasi_event;
             $url_sekarang              	            = $request->fullUrl();
             $data['hasil_kata']        	            = '';
+            $hasil_event                            = $request->cari_event;
+            $data['hasil_event']                    = \App\Models\Master_event::orderBy('tanggal_events','desc')
+                                                                            ->first();
+            $data['lihat_events']                   = \App\Models\Master_event::orderBy('tanggal_events','desc')
+                                                                                ->get();
         	$data['lihat_registrasi_events']        = \App\Models\Registrasi_event_detail::selectRaw('*,
                                                                                                     registrasi_event_details.created_at AS tanggal_registrasi_event_details,
                                                                                                     registrasi_event_details.updated_at AS update_registrasi_event_details')
@@ -26,10 +31,12 @@ class RegistrasiEventController extends Controller
                                                                                         ->join('master_events','master_tickets.events_id','=','master_events.id_events')
                                                                                         ->join('master_jenis_kelamins','jenis_kelamins_id','=','master_jenis_kelamins.id_jenis_kelamins')
                                                                                         ->join('master_status_pembayarans','status_pembayarans_id','=','master_status_pembayarans.id_status_pembayarans')
+                                                                                        ->where('id_events',$data['hasil_event']->id_events)
                                                                                         ->orderBy('registrasi_events.created_at','desc')
-                                                                                        ->paginate(25);
+                                                                                        ->get();
             session()->forget('halaman');
             session()->forget('hasil_kata');
+            session()->forget('hasil_event');
             session(['halaman'                          => $url_sekarang]);
         	return view('dashboard.registrasi_event.lihat', $data);
         }
@@ -46,24 +53,38 @@ class RegistrasiEventController extends Controller
             $url_sekarang                 	        = $request->fullUrl();
             $hasil_kata                   	        = $request->cari_kata;
             $data['hasil_kata']           	        = $hasil_kata;
+            $hasil_event                            = $request->cari_event;
+            $data['hasil_event']                    = $hasil_event;
+            $data['lihat_events']                   = \App\Models\Master_event::orderBy('tanggal_events','desc')
+                                                                                ->get();
             $data['lihat_registrasi_events']        = \App\Models\Registrasi_event_detail::join('registrasi_events','registrasi_events_id','registrasi_events.id_registrasi_events')
                                                                                         ->join('master_tickets','tickets_id','=','master_tickets.id_tickets')
                                                                                         ->join('master_events','events_id','=','master_events.id_events')
                                                                                         ->join('master_jenis_kelamins','jenis_kelamins_id','=','master_jenis_kelamins.id_jenis_kelamins')
                                                                                         ->join('master_status_pembayarans','status_pembayarans_id','=','master_status_pembayarans.id_status_pembayarans')
                                                                                         ->where('no_registrasi_events', 'LIKE', '%'.$hasil_kata.'%')
+                                                                                        ->where('id_events',$hasil_event)
                                                                                         ->orWhere('nama_events', 'LIKE', '%'.$hasil_kata.'%')
+                                                                                        ->where('id_events',$hasil_event)
                                                                                         ->orWhere('nama_tickets', 'LIKE', '%'.$hasil_kata.'%')
+                                                                                        ->where('id_events',$hasil_event)
                                                                                         ->orWhere('email_registrasi_event_details', 'LIKE', '%'.$hasil_kata.'%')
+                                                                                        ->where('id_events',$hasil_event)
                                                                                         ->orWhere('telepon_registrasi_event_details', 'LIKE', '%'.$hasil_kata.'%')
+                                                                                        ->where('id_events',$hasil_event)
                                                                                         ->orWhere('nama_registrasi_event_details', 'LIKE', '%'.$hasil_kata.'%')
+                                                                                        ->where('id_events',$hasil_event)
                                                                                         ->orWhere('nama_jenis_kelamins', 'LIKE', '%'.$hasil_kata.'%')
+                                                                                        ->where('id_events',$hasil_event)
                                                                                         ->orWhere('tanggal_lahir_registrasi_event_details', 'LIKE', '%'.$hasil_kata.'%')
+                                                                                        ->where('id_events',$hasil_event)
                                                                                         ->orWhere('nama_status_pembayarans', 'LIKE', '%'.$hasil_kata.'%')
+                                                                                        ->where('id_events',$hasil_event)
                                                                                         ->orderBy('registrasi_events.created_at','desc')
-                                                                                        ->paginate(25);
+                                                                                        ->get();
             session(['halaman'                  => $url_sekarang]);
             session(['hasil_kata'               => $hasil_kata]);
+            session(['hasil_event'              => $hasil_event]);
             return view('dashboard.registrasi_event.lihat', $data);
         }
         else
