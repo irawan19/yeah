@@ -34,9 +34,12 @@ class DashboardController extends Controller
 
     public function index()
     {
+        $tanggal_sekarang                           = date('Y-m-d H:i:s');
         $data['lihat_konfigurasi_aplikasis']        = \App\Models\Master_konfigurasi_aplikasi::first();
-        $data['total_event']                        = \App\Models\Master_event::count();
-        $data['total_ticket']                       = \App\Models\Master_ticket::count();
+        $data['total_event']                        = \App\Models\Master_event::where('status_hapus_events',0)
+                                                                                ->count();
+        $data['total_ticket']                       = \App\Models\Master_ticket::where('status_hapus_tickets',0)
+                                                                                ->count();
         $data['total_promo']                        = \App\Models\Master_promo::count();
         $data['total_registrasi']                   = \App\Models\Registrasi_event_detail::count();
         return view('dashboard.dashboard.lihat',$data);
