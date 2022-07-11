@@ -26,7 +26,8 @@ class RegistrasiEventController extends Controller
                 $hasil_event                        = 0;
             
             $data['hasil_event']                    = $hasil_event;
-            $data['lihat_events']                   = \App\Models\Master_event::orderBy('tanggal_events','desc')
+            $data['lihat_events']                   = \App\Models\Master_event::where('status_hapus_events',0)
+                                                                                ->orderBy('tanggal_events','desc')
                                                                                 ->get();
         	$data['lihat_registrasi_events']        = \App\Models\Registrasi_event_detail::selectRaw('*,
                                                                                                     registrasi_event_details.created_at AS tanggal_registrasi_event_details,
@@ -60,7 +61,8 @@ class RegistrasiEventController extends Controller
             $data['hasil_kata']           	        = $hasil_kata;
             $hasil_event                            = $request->cari_event;
             $data['hasil_event']                    = $hasil_event;
-            $data['lihat_events']                   = \App\Models\Master_event::orderBy('tanggal_events','desc')
+            $data['lihat_events']                   = \App\Models\Master_event::where('status_hapus_events',0)
+                                                                                ->orderBy('tanggal_events','desc')
                                                                                 ->get();
             $data['lihat_registrasi_events']        = \App\Models\Registrasi_event_detail::selectRaw('*,
                                                                                                     registrasi_event_details.created_at AS tanggal_registrasi_event_details,
