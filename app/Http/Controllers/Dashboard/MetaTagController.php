@@ -15,7 +15,8 @@ class MetaTagController extends Controller
         $link_meta_tag = 'meta_tag';
         if(Yeah::hakAkses($link_meta_tag, 'lihat') == 'true')
         {
-            $data['lihat_meta_tags']       = \App\Models\Master_meta_tag::get();
+            $data['lihat_meta_tags']       = \App\Models\Master_meta_tag::orderBy('id_meta_tags')
+                                                                        ->get();
             session()->forget('halaman');
             return view('dashboard.meta_tag.lihat', $data);
         }
