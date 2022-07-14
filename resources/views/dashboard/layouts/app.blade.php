@@ -29,6 +29,8 @@
 	<link href="{{URL::asset('public/template/back/vendors/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
 	<link href="{{URL::asset('public/template/back/vendors/simple-line-icons/css/simple-line-icons.css')}}" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.1.6/css/fixedHeader.dataTables.min.css" />
+	<link type="text/css" media="screen" rel="stylesheet" href="{{ URL::asset('public/template/back/vendors/codemirror/css/codemirror.css')}}">
+
 	<meta name="_token" content="{{ csrf_token() }}">
 	<script src="{{URL::asset('public/template/back/vendors/jquery/js/jquery.min.js')}}"></script>
 	<style type="text/css">
@@ -239,6 +241,8 @@
 	<script type="text/javascript" src="{{ URL::asset('public/template/back/vendors/chained/jquery.chained.js') }}"></script>
 	<script type="text/javascript" src="{{ URL::asset('public/template/back/vendors/mousewheel/jquery.mousewheel.min.js') }}"></script>
 	<script src="https://cdn.datatables.net/fixedheader/3.1.6/js/dataTables.fixedHeader.min.js"></script>
+        <script type="text/javascript" src="{{ URL::asset('public/template/back/vendors/codemirror/js/codemirror.js') }}"></script>
+        <script type="text/javascript" src="{{ URL::asset('public/template/back/vendors/codemirror/js/xml.js') }}"></script>
 	<script type="text/javascript">
 		$(function() {
 		   	$(".scrolltable").mousewheel(function(event, delta) {

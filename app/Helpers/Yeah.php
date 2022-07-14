@@ -511,7 +511,11 @@ class Yeah
 				),
 				array(
 					'nama' 	=> 'Website',
-					'icon'	=> 'wordpress'
+					'icon'	=> 'website'
+				),
+				array(
+					'nama' 	=> 'Tiktok',
+					'icon'	=> 'tiktok'
 				),
 			);
 			return $sosial_media_data;

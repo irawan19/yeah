@@ -12,6 +12,10 @@ use App\Http\Controllers\Dashboard\TicketController as DashboardTicketController
 use App\Http\Controllers\Dashboard\PromoController as DashboardPromoController;
 use App\Http\Controllers\Dashboard\RegistrasiEventController as DashboardRegistrasiEventController;
 
+//Sosial Media
+use App\Http\Controllers\Dashboard\MetaTagController as DashboardMetaTagController;
+use App\Http\Controllers\Dashboard\SosialMediaController as DashboardSosialMediaController;
+
 //Konfigurasi Aplikasi
 use App\Http\Controllers\Dashboard\MenuController as DashboardMenuController;
 use App\Http\Controllers\Dashboard\LevelSistemController as DashboardLevelSistemController;
@@ -100,6 +104,25 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth:sanctum', config('
                 Route::get('/hapus/{id}', [DashboardRegistrasiEventController::class, 'hapus']);
                 Route::get('/cetakexcel', [DashboardRegistrasiEventController::class, 'cetakexcel']);
             });
+    
+    //Sosial Media
+        //Meta Tag
+            Route::group(['prefix' => 'meta_tag'], function() {
+                Route::get('/', [DashboardMetaTagController::class, 'index']);
+                Route::post('/prosesedit', [DashboardMetaTagController::class, 'prosesedit']);
+            });
+
+        //Sosial Media
+			Route::group(['prefix' => 'sosial_media'], function() {
+				Route::get('/', [DashboardSosialMediaController::class, 'index']);
+				Route::get('/cari', [DashboardSosialMediaController::class, 'cari']);
+				Route::get('/tambah', [DashboardSosialMediaController::class, 'tambah']);
+				Route::post('/prosestambah', [DashboardSosialMediaController::class, 'prosestambah']);
+				Route::get('/edit/{id}', [DashboardSosialMediaController::class, 'edit']);
+				Route::post('/prosesedit/{id}', [DashboardSosialMediaController::class, 'prosesedit']);
+				Route::get('/hapus/{id}', [DashboardSosialMediaController::class, 'hapus']);
+			});
+        
     
     //Konfigurasi Dashboard
         //Menu
