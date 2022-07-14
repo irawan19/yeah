@@ -23,7 +23,7 @@ class MetaTagController extends Controller
             return redirect('dashboard');
     }
 
-    public function prosesedit(Request $request)
+    public function prosesedit($id_meta_tags=0, Request $request)
     {
         $link_meta_tag = 'meta_tag';
         if (Yeah::hakAkses($link_meta_tag, 'lihat') == 'true')
@@ -37,8 +37,6 @@ class MetaTagController extends Controller
                 'konten_meta_tas.*.required'      => 'Form Konten Harus Diisi.',
             ];
             $this->validate($request, $aturan, $error_pesan);
-
-            $id_meta_tags = $request->id_meta_tags;
             $meta_tag_data = [
                 'nama_meta_tags'    => $request->nama_meta_tags[$id_meta_tags],
                 'konten_meta_tags'  => $request->konten_meta_tags[$id_meta_tags],

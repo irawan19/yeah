@@ -4,19 +4,18 @@
 	<div class="row">
         @if(!$lihat_meta_tags->isEmpty())
             @foreach($lihat_meta_tags as $meta_tags)
+                @php($id_meta_tags = $meta_tags->id_meta_tags)
                 <div class="col-sm-6">
                     <div class="card">
-                        <form class="form-horizontal m-t-40" action="{{ URL('dashboard/meta_tag/prosesedit') }}" method="POST">
+                        <form class="form-horizontal m-t-40" action="{{ URL('dashboard/meta_tag/prosesedit/'.$id_meta_tags) }}" method="POST">
                             {{ csrf_field() }}
                             <div class="card-header">
                                 <strong>Meta Tag {{$meta_tags->nama_meta_tags}}</strong>
                             </div>
                             <div class="card-body">
-                                @if (Session::get('setelah_simpan'.$meta_tags->id_meta_tags.'alert') == 'sukses')
-                                    {{ Yeah::pesanSuksesForm(Session::get('setelah_simpan'.$meta_tags->id_meta_tags.'text')) }}
+                                @if (Session::get('setelah_simpan'.$id_meta_tags.'.alert') == 'sukses')
+                                    {{ Yeah::pesanSuksesForm(Session::get('setelah_simpan'.$id_meta_tags.'.text')) }}
                                 @endif
-                                @php($id_meta_tags = $meta_tags->id_meta_tags)
-                                <input class="form-control {{ Yeah::validForm($errors->first('id_meta_tags')) }}" id="id_meta_tags" type="hidden" name="id_meta_tags" value="{{Request::old('id_meta_tags') == '' ? $meta_tags->id_meta_tags : Request::old('id_meta_tags')}}">
                                 <div class="form-group">
                                     <label class="form-col-form-label" for="nama_meta_tags{{$id_meta_tags}}">Nama <b style="color:red">*</b></label>
                                     <input class="form-control {{ Yeah::validForm($errors->first('nama_meta_tags.'.$id_meta_tags)) }}" id="nama_meta_tags{{$id_meta_tags}}" type="text" name="nama_meta_tags[{{$id_meta_tags}}]" value="{{Request::old('nama_meta_tags.'.$id_meta_tags) == '' ? $meta_tags->nama_meta_tags : Request::old('nama_meta_tags.'.$id_meta_tags)}}">

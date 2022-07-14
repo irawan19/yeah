@@ -109,7 +109,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth:sanctum', config('
         //Meta Tag
             Route::group(['prefix' => 'meta_tag'], function() {
                 Route::get('/', [DashboardMetaTagController::class, 'index']);
-                Route::post('/prosesedit', [DashboardMetaTagController::class, 'prosesedit']);
+                Route::post('/prosesedit/{id}', [DashboardMetaTagController::class, 'prosesedit']);
             });
 
         //Sosial Media
