@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('master_sosial_media', function (Blueprint $table) {
+        Schema::create('master_sosial_medias', function (Blueprint $table) {
             $table->id('id_sosial_medias');
             $table->string('nama_sosial_medias');
             $table->string('icon_sosial_medias');
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('master_sosial_media');
+        Schema::dropIfExists('master_sosial_medias');
     }
 };
