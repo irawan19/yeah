@@ -205,11 +205,13 @@ class EventController extends ApiController
             {
                 $pembayarans_id = 1;
                 $status_pembayarans_id = 2;
+                $bukti_pembayaran_registrasi_events = $no_registrasi;
             }
             else
             {
                 $pembayarans_id = 1;
                 $status_pembayarans_id = 1;
+                $bukti_pembayaran_registrasi_events = '';
             }
 
             $registrasi_events_data = [
