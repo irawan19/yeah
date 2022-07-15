@@ -41,7 +41,7 @@
                             @php($ambil_sosial_medias = \App\Models\Master_sosial_media::get())
                             @if(!$ambil_sosial_medias->isEmpty())
                                 @foreach($ambil_sosial_medias as $sosial_medias)
-                                    <a href="{{$sosial_medias->url_sosial_medias}}" target="_blank" class="button primary color1 circle icon solid fa-{{$sosial_medias->icon_sosial_medias}}"></a>
+                                    <a href="{{$sosial_medias->url_sosial_medias}}" target="_blank" class="button primary color1 circle icon brands solid fa-{{$sosial_medias->icon_sosial_medias}}"></a>
                                 @endforeach
                             @endif
                         </div>
