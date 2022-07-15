@@ -41,7 +41,7 @@ class DashboardController extends Controller
         $data['total_ticket']                       = \App\Models\Master_ticket::where('status_hapus_tickets',0)
                                                                                 ->count();
         $data['total_promo']                        = \App\Models\Master_promo::count();
-        $data['total_registrasi']                   = \App\Models\Registrasi_event_detail::whereRaw('DATE(created_at) = '.date('Y-m-d').')
+        $data['total_registrasi']                   = \App\Models\Registrasi_event_detail::where('DATE(created_at)',date('Y-m-d'))
                                                                                         ->count();
         return view('dashboard.dashboard.lihat',$data);
     }
