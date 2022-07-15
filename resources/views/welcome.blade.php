@@ -67,7 +67,7 @@
 			    	<div class="content span-5">
 			    		<h2 class="major">API</h2>
 			    		<p>Kami mempunyai API yang dapat diintegrasikan bersama<br/>
-                            <a href="https://api.yeah.biz.id" class="button primary color2">API</a>
+                            <a target="_blank" href="https://api.yeah.biz.id" class="button primary color2">API</a>
                         </p>
 			    	</div>
 			    	<div class="image filtered tinted" data-position="top right">
