@@ -201,11 +201,22 @@ class EventController extends ApiController
             $id_registrasi_events           = Yeah::autoIncrementKey('registrasi_events','id_registrasi_events');
             $harga_registrasi_events        = $ambil_tickets->harga_tickets;
 
+            if($harga_registrasi_events == 0)
+            {
+                $pembayarans_id = 1;
+                $status_pembayarans_id = 2;
+            }
+            else
+            {
+                $pembayarans_id = 1;
+                $status_pembayarans_id = 1;
+            }
+
             $registrasi_events_data = [
                 'id_registrasi_events'                          => $id_registrasi_events,
                 'tickets_id'                                    => $id_tickets,
-                'pembayarans_id'                                => 1,
-                'status_pembayarans_id'                         => 1,
+                'pembayarans_id'                                => $pembayarans_id,
+                'status_pembayarans_id'                         => $status_pembayarans_id,
                 'jumlah_registrasi_events'                      => 0,
                 'total_harga_registrasi_events'                 => 0,
                 'bukti_pembayaran_registrasi_events'            => '',
