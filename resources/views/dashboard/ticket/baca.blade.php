@@ -35,6 +35,11 @@
 							<td>{{$baca_tickets->sisa_kuota_tickets}}</td>
 						</tr>
 						<tr>
+							<th>Max Pemesanan</th>
+							<th>:</th>
+							<td>{{$baca_tickets->max_pemesanan_tickets}}</td>
+						</tr>
+						<tr>
 							<th>Deskripsi</th>
 							<th>:</th>
 							<td>{!! $baca_tickets->deskripsi_tickets !!}</td>

@@ -50,6 +50,11 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
+                                <label class="form-col-form-label" for="max_pemesanan_tickets">Max Pemesanan <b style="color:red">*</b></label>
+                                <input class="form-control {{ Yeah::validForm($errors->first('max_pemesanan_tickets')) }}" id="max_pemesanan_tickets" type="number" name="max_pemesanan_tickets" value="{{Request::old('max_pemesanan_tickets') == '' ? $edit_tickets->max_pemesanan_tickets : Request::old('max_pemesanan_tickets')}}">
+                                {{Yeah::pesanErorForm($errors->first('max_pemesanan_tickets'))}}
+                            </div>
+                            <div class="form-group">
                                 <label class="form-col-form-label" for="keterangan_tickets">Keterangan <b style="color:red">*</b></label>
                                 <textarea class="form-control {{ Yeah::validForm($errors->first('keterangan_tickets')) }}" id="keterangan_tickets" name="keterangan_tickets" rows="5">{{Request::old('keterangan_tickets') == '' ? $edit_tickets->keterangan_tickets : Request::old('keterangan_tickets')}}</textarea>
                                 {{Yeah::pesanErorForm($errors->first('keterangan_tickets'))}}

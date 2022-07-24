@@ -103,6 +103,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth:sanctum', config('
                 Route::post('/prosesedit/{id}', [DashboardRegistrasiEventController::class, 'prosesedit']);
                 Route::get('/hapus/{id}', [DashboardRegistrasiEventController::class, 'hapus']);
                 Route::get('/cetakexcel', [DashboardRegistrasiEventController::class, 'cetakexcel']);
+                Route::post('/ambilformregistrasidetails', [DashboardRegistrasiEventController::class, 'ambilformregistrasidetails']);
             });
     
     //Sosial Media

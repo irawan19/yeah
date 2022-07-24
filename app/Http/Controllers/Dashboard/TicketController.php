@@ -83,6 +83,7 @@ class TicketController extends Controller
                 'kuota_tickets'                     => 'required',
                 'deskripsi_tickets'                 => 'required',
                 'keterangan_tickets'                => 'required',
+                'max_pemesanan_tickets'             => 'required|numeric|min:1',
             ];
             $error_pesan = [
                 'events_id.required'                => 'Form Event Harus Diisi.',
@@ -91,6 +92,8 @@ class TicketController extends Controller
                 'kuota_tickets.required'            => 'Form Kuoat Harus Diisi.',
                 'deskripsi_tickets.required'        => 'Form Deskripsi Harus Diisi.',
                 'keterangan_tickets.required'       => 'Form Keterangan Harus Diisi.',
+                'max_pemesanan_tickets.required'    => 'Form Max Pemesanan Harus Diisi.',
+                'max_pemesanan_tickets.min'         => 'Form Max Pemesanan Minimal Harus Diisi 1.',
             ];
             $this->validate($request, $aturan, $error_pesan);
 
@@ -105,6 +108,7 @@ class TicketController extends Controller
                 'sisa_kuota_tickets'            => $request->kuota_tickets,
                 'deskripsi_tickets'             => $request->deskripsi_tickets,
                 'keterangan_tickets'            => $request->keterangan_tickets,
+                'max_pemesanan_tickets'         => $request->max_pemesanan_tickets,
                 'status_hapus_tickets'          => 0,
                 'created_at'                    => date('Y-m-d H:i:s'),
                 'updated_at'                    => date('Y-m-d H:i:s')
@@ -200,6 +204,7 @@ class TicketController extends Controller
                     'kuota_tickets'                     => 'required',
                     'deskripsi_tickets'                 => 'required',
                     'keterangan_tickets'                => 'required',
+                    'max_pemesanan_tickets'             => 'required|numeric|min:1',
                 ];
                 $error_pesan = [
                     'events_id.required'                => 'Form Event Harus Diisi.',
@@ -208,6 +213,8 @@ class TicketController extends Controller
                     'kuota_tickets.required'            => 'Form Kuoat Harus Diisi.',
                     'deskripsi_tickets.required'        => 'Form Deskripsi Harus Diisi.',
                     'keterangan_tickets.required'       => 'Form Keterangan Harus Diisi.',
+                    'max_pemesanan_tickets.required'    => 'Form Max Pemesanan Harus Diisi.',
+                    'max_pemesanan_tickets.min'         => 'Form Max Pemesanan Minimal Harus Diisi 1.',
                 ];
                 $this->validate($request, $aturan, $error_pesan);
         
@@ -220,6 +227,7 @@ class TicketController extends Controller
                     'sisa_kuota_tickets'            => $request->kuota_tickets,
                     'deskripsi_tickets'             => $request->deskripsi_tickets,
                     'keterangan_tickets'            => $request->keterangan_tickets,
+                    'max_pemesanan_tickets'         => $request->max_pemesanan_tickets,
                     'updated_at'                    => date('Y-m-d H:i:s')
                 ];
                 \App\Models\Master_ticket::where('id_tickets', $id_tickets)

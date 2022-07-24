@@ -40,9 +40,10 @@ class DashboardController extends Controller
                                                                                 ->count();
         $data['total_ticket']                       = \App\Models\Master_ticket::where('status_hapus_tickets',0)
                                                                                 ->count();
-        $data['total_promo']                        = \App\Models\Master_promo::count();
-        $data['total_registrasi']                   = \App\Models\Registrasi_event_detail::whereRaw("date(created_at) = '".date('Y-m-d')."'")
-                                                                                        ->count();
+        $data['total_promo']                        = \App\Models\Master_promo::where('status_hapus_promos',0)
+                                                                                ->orWhereRaw("selesai_promos <= '".date('Y-m-d H:i:s')."'")
+                                                                                ->count();
+        $data['total_registrasi']                   = \App\Models\Registrasi_event_detail::count();
         return view('dashboard.dashboard.lihat',$data);
     }
 

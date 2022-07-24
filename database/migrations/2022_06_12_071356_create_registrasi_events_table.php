@@ -23,6 +23,7 @@ return new class extends Migration
             $table->double('harga_registrasi_events');
             $table->double('total_harga_registrasi_events');
             $table->string('bukti_pembayaran_registrasi_events')->nullable();
+            $table->boolean('status_kedatangan_registrasi_events')->default(0);
             $table->timestamps();
         });
     }

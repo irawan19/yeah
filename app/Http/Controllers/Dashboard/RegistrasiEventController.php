@@ -101,6 +101,26 @@ class RegistrasiEventController extends Controller
             return redirect('dashboard/registrasi_event');
     }
 
+    public function ambilformregistrasidetails(Request $request)
+    {
+        $max_pemesanan_tickets                  = $request->max;
+        $id_registrasi_events                   = $request->id;
+        $data['max_pemesanan_tickets']          = $max_pemesanan_tickets;
+        if($id_registrasi_events == 0)
+        {
+            $data['edit_jenis_kelamins']            = \App\Models\Master_jenis_kelamin::get();
+            $data['edit_registrasi_event_details']  = collect();
+        }
+        else
+        {
+            $data['edit_jenis_kelamins']            = \App\Models\Master_jenis_kelamin::get();
+            $data['edit_registrasi_event_details']  = \App\Models\Registrasi_event_detail::join('master_jenis_kelamins','jenis_kelamins_id','=','master_jenis_kelamins.id_jenis_kelamins')
+                                                                                        ->where('registrasi_events_id',$id_registrasi_events)
+                                                                                        ->get();
+        }
+        return view('dashboard.registrasi_event.formregistrasidetail',$data);
+    }
+
     public function tambah()
     {
         $link_registrasi_event = 'registrasi_event';
@@ -115,7 +135,6 @@ class RegistrasiEventController extends Controller
                                                                             ->where('selesai_registrasi_events','>=',date('Y-m-d H:i:s'))
                                                                             ->where('sisa_kuota_tickets','>',0)
                                                                             ->get();
-            $data['tambah_jenis_kelamins']      = \App\Models\Master_jenis_kelamin::get();
             return view('dashboard.registrasi_event.tambah',$data);
         }
         else
@@ -127,36 +146,76 @@ class RegistrasiEventController extends Controller
         $link_registrasi_event = 'registrasi_event';
         if(Yeah::hakAkses($link_registrasi_event,'tambah') == 'true')
         {
-            $aturan = [
-                'tickets_id'                                => 'required',
-                'pembayarans_id'                            => 'required',
-                'status_pembayarans_id'                     => 'required',
-                'bukti_pembayaran_registrasi_events'        => 'required',
-            ];
-            $error_pesan = [
-                'tickets_id.required'                       => 'Form Ticket Harus Diisi.',
-                'pembayarans_id.required'                   => 'Form Pembayaran Harus Diisi.',
-                'status_pembayarans_id.required'            => 'Form Status Pembayaran Harus Diisi.',
-                'bukti_pembayaran_registrasi_events'        => 'Form Bukti Pembayaran Harus Diisi.',
-            ];
-            $this->validate($request, $aturan, $error_pesan);
+            if(!empty($request->userfile_bukti_pembayaran))
+            {
+                $aturan = [
+                    'tickets_id'                                => 'required',
+                    'pembayarans_id'                            => 'required',
+                    'status_pembayarans_id'                     => 'required',
+                    'userfile_bukti_pembayaran'                 => 'required|mimes:png,jpg,jpeg,pdf',
+                ];
+                $error_pesan = [
+                    'tickets_id.required'                           => 'Form Ticket Harus Diisi.',
+                    'pembayarans_id.required'                       => 'Form Pembayaran Harus Diisi.',
+                    'status_pembayarans_id.required'                => 'Form Status Pembayaran Harus Diisi.',
+                    'userfile_bukti_pembayaran.required'            => 'Form Bukti Pembayaran Harus Diisi.',
+                ];
+                $this->validate($request, $aturan, $error_pesan);
 
-            $id_registrasi_events       = Yeah::autoIncrementKey('registrasi_events','id_registrasi_events');
-            $harga_registrasi_events    = Yeah::ubahHargaKeDB($request->harga_tickets);
+                $id_registrasi_events       = Yeah::autoIncrementKey('registrasi_events','id_registrasi_events');
+                $harga_registrasi_events    = Yeah::ubahHargaKeDB($request->harga_tickets);
 
-            $registrasi_events_data = [
-                'id_registrasi_events'                  => $id_registrasi_events,
-                'tickets_id'                            => $request->tickets_id,
-                'pembayarans_id'                        => $request->pembayarans_id,
-                'status_pembayarans_id'                 => $request->status_pembayarans_id,
-                'jumlah_registrasi_events'              => 0,
-                'harga_registrasi_events'               => $harga_registrasi_events,
-                'total_harga_registrasi_events'         => 0,
-                'bukti_pembayaran_registrasi_events'    => $request->bukti_pembayaran_registrasi_events,
-                'created_at'                            => date('Y-m-d H:i:s'),
-                'updated_at'                            => date('Y-m-d H:i:s'),
-                'no_registrasi_events'                  => Yeah::noRegistrasi(),
-            ];
+                $nama_bukti_pembayaran = date('Ymd').date('His').str_replace(')','',str_replace('(','',str_replace(' ','-',$request->file('userfile_bukti_pembayaran')->getClientOriginalName())));
+                $path_bukti_pembayaran = './public/uploads/bukti_pembayaran/';
+                $request->file('userfile_bukti_pembayaran')->move(
+                    base_path() . '/public/uploads/bukti_pembayaran/', $nama_bukti_pembayaran
+                );
+
+                $registrasi_events_data = [
+                    'id_registrasi_events'                  => $id_registrasi_events,
+                    'tickets_id'                            => $request->tickets_id,
+                    'pembayarans_id'                        => $request->pembayarans_id,
+                    'status_pembayarans_id'                 => $request->status_pembayarans_id,
+                    'jumlah_registrasi_events'              => 0,
+                    'harga_registrasi_events'               => $harga_registrasi_events,
+                    'total_harga_registrasi_events'         => 0,
+                    'bukti_pembayaran_registrasi_events'    => $path_bukti_pembayaran.$nama_bukti_pembayaran,
+                    'created_at'                            => date('Y-m-d H:i:s'),
+                    'updated_at'                            => date('Y-m-d H:i:s'),
+                    'no_registrasi_events'                  => Yeah::noRegistrasi(),
+                ];
+            }
+            else
+            {
+                $aturan = [
+                    'tickets_id'                                => 'required',
+                    'pembayarans_id'                            => 'required',
+                    'status_pembayarans_id'                     => 'required',
+                ];
+                $error_pesan = [
+                    'tickets_id.required'                       => 'Form Ticket Harus Diisi.',
+                    'pembayarans_id.required'                   => 'Form Pembayaran Harus Diisi.',
+                    'status_pembayarans_id.required'            => 'Form Status Pembayaran Harus Diisi.',
+                ];
+                $this->validate($request, $aturan, $error_pesan);
+
+                $id_registrasi_events       = Yeah::autoIncrementKey('registrasi_events','id_registrasi_events');
+                $harga_registrasi_events    = Yeah::ubahHargaKeDB($request->harga_tickets);
+
+                $registrasi_events_data = [
+                    'id_registrasi_events'                  => $id_registrasi_events,
+                    'tickets_id'                            => $request->tickets_id,
+                    'pembayarans_id'                        => $request->pembayarans_id,
+                    'status_pembayarans_id'                 => $request->status_pembayarans_id,
+                    'jumlah_registrasi_events'              => 0,
+                    'harga_registrasi_events'               => $harga_registrasi_events,
+                    'total_harga_registrasi_events'         => 0,
+                    'bukti_pembayaran_registrasi_events'    => '',
+                    'created_at'                            => date('Y-m-d H:i:s'),
+                    'updated_at'                            => date('Y-m-d H:i:s'),
+                    'no_registrasi_events'                  => Yeah::noRegistrasi(),
+                ];
+            }
             \App\Models\Registrasi_event::insert($registrasi_events_data);
 
             $jumlah_registrasi_event_details = 0;
@@ -245,10 +304,6 @@ class RegistrasiEventController extends Controller
                                                                                 ->where('selesai_registrasi_events','>=',date('Y-m-d H:i:s'))
                                                                                 ->where('sisa_kuota_tickets','>',0)
                                                                                 ->get();
-                $data['edit_jenis_kelamins']            = \App\Models\Master_jenis_kelamin::get();
-                $data['edit_registrasi_event_details']  = \App\Models\Registrasi_event_detail::join('master_jenis_kelamins','jenis_kelamins_id','=','master_jenis_kelamins.id_jenis_kelamins')
-                                                                                            ->where('registrasi_events_id',$id_registrasi_events)
-                                                                                            ->get();
                 $data['edit_registrasi_events']         = \App\Models\Registrasi_event::where('id_registrasi_events',$id_registrasi_events)
                                                                                         ->first();
                 return view('dashboard.registrasi_event.edit',$data);
@@ -267,34 +322,72 @@ class RegistrasiEventController extends Controller
         {
             if (!is_numeric($id_registrasi_events))
                 $id_registrasi_events = 0;
-            $cek_registrasi_events = \App\Models\Registrasi_event::where('id_registrasi_events',$id_registrasi_events)->count();
-            if($cek_registrasi_events != 0)
+            $cek_registrasi_events = \App\Models\Registrasi_event::where('id_registrasi_events',$id_registrasi_events)->first();
+            if(!empty($cek_registrasi_events))
             {
-                $aturan = [
-                    'tickets_id'                                => 'required',
-                    'pembayarans_id'                            => 'required',
-                    'status_pembayarans_id'                     => 'required',
-                    'bukti_pembayaran_registrasi_events'        => 'required',
-                ];
-                $error_pesan = [
-                    'tickets_id.required'                       => 'Form Ticket Harus Diisi.',
-                    'pembayarans_id.required'                   => 'Form Pembayaran Harus Diisi.',
-                    'status_pembayarans_id.required'            => 'Form Status Pembayaran Harus Diisi.',
-                    'bukti_pembayaran_registrasi_events'        => 'Form Bukti Pembayaran Harus Diisi.',
-                ];
-                $this->validate($request, $aturan, $error_pesan);
+                if(!empty($request->userfile_bukti_pembayaran))
+                {
+                    $aturan = [
+                        'tickets_id'                                => 'required',
+                        'pembayarans_id'                            => 'required',
+                        'status_pembayarans_id'                     => 'required',
+                        'userfile_bukti_pembayaran'                 => 'required|mimes:png,jpg,jpeg,pdf',
+                    ];
+                    $error_pesan = [
+                        'tickets_id.required'                           => 'Form Ticket Harus Diisi.',
+                        'pembayarans_id.required'                       => 'Form Pembayaran Harus Diisi.',
+                        'status_pembayarans_id.required'                => 'Form Status Pembayaran Harus Diisi.',
+                        'userfile_bukti_pembayaran.required'            => 'Form Bukti Pembayaran Harus Diisi.',
+                    ];
+                    $this->validate($request, $aturan, $error_pesan);
 
-                $harga_registrasi_events    = Yeah::ubahHargaKeDB($request->harga_tickets);
+                    $harga_registrasi_events    = Yeah::ubahHargaKeDB($request->harga_tickets);
 
-                $registrasi_events_data = [
-                    'tickets_id'                            => $request->tickets_id,
-                    'pembayarans_id'                        => $request->pembayarans_id,
-                    'status_pembayarans_id'                 => $request->status_pembayarans_id,
-                    'jumlah_registrasi_events'              => 0,
-                    'harga_registrasi_events'               => $harga_registrasi_events,
-                    'bukti_pembayaran_registrasi_events'    => $request->bukti_pembayaran_registrasi_events,
-                    'updated_at'                            => date('Y-m-d H:i:s'),
-                ];
+                    $bukti_pembayaran_lama        = $cek_registrasi_events->bukti_pembayaran_registrasi_events;
+                    if (file_exists($bukti_pembayaran_lama))
+                        unlink($bukti_pembayaran_lama);
+
+                    $nama_bukti_pembayaran = date('Ymd').date('His').str_replace(')','',str_replace('(','',str_replace(' ','-',$request->file('userfile_bukti_pembayaran')->getClientOriginalName())));
+                    $path_bukti_pembayaran = './public/uploads/bukti_pembayaran/';
+                    $request->file('userfile_bukti_pembayaran')->move(
+                        base_path() . '/public/uploads/bukti_pembayaran/', $nama_bukti_pembayaran
+                    );
+
+                    $registrasi_events_data = [
+                        'tickets_id'                            => $request->tickets_id,
+                        'pembayarans_id'                        => $request->pembayarans_id,
+                        'status_pembayarans_id'                 => $request->status_pembayarans_id,
+                        'jumlah_registrasi_events'              => 0,
+                        'bukti_pembayaran_registrasi_events'    => $path_bukti_pembayaran.$nama_bukti_pembayaran,
+                        'harga_registrasi_events'               => $harga_registrasi_events,
+                        'updated_at'                            => date('Y-m-d H:i:s'),
+                    ];
+                }
+                else
+                {
+                    $aturan = [
+                        'tickets_id'                                => 'required',
+                        'pembayarans_id'                            => 'required',
+                        'status_pembayarans_id'                     => 'required',
+                    ];
+                    $error_pesan = [
+                        'tickets_id.required'                       => 'Form Ticket Harus Diisi.',
+                        'pembayarans_id.required'                   => 'Form Pembayaran Harus Diisi.',
+                        'status_pembayarans_id.required'            => 'Form Status Pembayaran Harus Diisi.',
+                    ];
+                    $this->validate($request, $aturan, $error_pesan);
+
+                    $harga_registrasi_events    = Yeah::ubahHargaKeDB($request->harga_tickets);
+
+                    $registrasi_events_data = [
+                        'tickets_id'                            => $request->tickets_id,
+                        'pembayarans_id'                        => $request->pembayarans_id,
+                        'status_pembayarans_id'                 => $request->status_pembayarans_id,
+                        'jumlah_registrasi_events'              => 0,
+                        'harga_registrasi_events'               => $harga_registrasi_events,
+                        'updated_at'                            => date('Y-m-d H:i:s'),
+                    ];
+                }
                 \App\Models\Registrasi_event::where('id_registrasi_events',$id_registrasi_events)
                                             ->update($registrasi_events_data);
 

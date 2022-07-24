@@ -4,7 +4,7 @@
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="card">
-				<form class="form-horizontal m-t-40" action="{{ URL('dashboard/registrasi_event/prosestambah') }}" method="POST">
+				<form class="form-horizontal m-t-40" enctype="multipart/form-data" action="{{ URL('dashboard/registrasi_event/prosestambah') }}" method="POST">
 					{{ csrf_field() }}
 					<div class="card-header">
 						<strong>Tambah Registrasi Event</strong>
@@ -19,7 +19,12 @@
                                     <label class="form-col-form-label" for="tickets_id">Ticket Event <b style="color:red">*</b></label>
                                     <select class="form-control select2" id="tickets_id" name="tickets_id">
                                         @foreach($tambah_tickets as $tickets)
-                                            <option value="{{$tickets->id_tickets}}" data-harga="{{Yeah::ubahDBKeHarga($tickets->harga_tickets)}}" {{ Request::old('tickets_id') == $tickets->id_tickets ? $select='selected' : $select='' }}>{{$tickets->nama_events.' - '.$tickets->nama_tickets.' ('.$tickets->sisa_kuota_tickets.')'}}</option>
+                                            @if($tickets->sisa_kuota_tickets >= $tickets->max_pemesanan_tickets)
+                                                @php($max_pemesanan_tickets = $tickets->max_pemesanan_tickets)
+                                            @else
+                                                @php($max_pemesanan_tickets = $tickets->sisa_kuota_tickets)
+                                            @endif
+                                            <option value="{{$tickets->id_tickets}}" data-maxpemesanan="{{$max_pemesanan_tickets}}" data-harga="{{Yeah::ubahDBKeHarga($tickets->harga_tickets)}}" {{ Request::old('tickets_id') == $tickets->id_tickets ? $select='selected' : $select='' }}>{{$tickets->nama_events.' - '.$tickets->nama_tickets.' ('.$tickets->sisa_kuota_tickets.')'}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -48,136 +53,15 @@
                                 </div>
                             </div>
                             <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label class="form-col-form-label" for="bukti_pembayaran_registrasi_events">Bukti Pembayaran <b style="color:red">*</b></label>
-                                    <input class="form-control {{ Yeah::validForm($errors->first('bukti_pembayaran_registrasi_events')) }}" id="bukti_pembayaran_registrasi_events" type="text" name="bukti_pembayaran_registrasi_events" value="{{Request::old('bukti_pembayaran_registrasi_events')}}">
-                                    {{Yeah::pesanErorForm($errors->first('bukti_pembayaran_registrasi_events'))}}
-                                </div>
+								<div class="form-group">
+									<label class="form-col-form-label" for="userfile_bukti_pembayaran">Bukti Pembayaran</label>
+									<br/>
+			                        <input id="userfile_bukti_pembayaran" type="file" name="userfile_bukti_pembayaran">
+			                    </div>
+								{{Yeah::pesanErorFormFile($errors->first('userfile_bukti_pembayaran'))}}
                             </div>
                         </div>
-                        @if(empty(Request::old('nama_registrasi_event_details')))
-                            <div id="dynamicform0" class="formregistrasi">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <h4>1.<hr/></h4>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label class="form-col-form-label" for="nama_registrasi_event_details0">Nama <b style="color:red">*</b></label>
-                                            <input class="form-control {{ Yeah::validForm($errors->first('nama_registrasi_event_details.0')) }}" id="nama_registrasi_event_details0" type="text" name="nama_registrasi_event_details[]" value="{{Request::old('nama_registrasi_event_details.0')}}">
-                                            {{Yeah::pesanErorForm($errors->first('nama_registrasi_event_details.0'))}}
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-col-form-label" for="email_registrasi_event_details0">Email <b style="color:red">*</b></label>
-                                            <input class="form-control {{ Yeah::validForm($errors->first('email_registrasi_event_details.0')) }}" id="email_registrasi_event_details0" type="email" name="email_registrasi_event_details[]" value="{{Request::old('email_registrasi_event_details.0')}}">
-                                            {{Yeah::pesanErorForm($errors->first('email_registrasi_event_details.0'))}}
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <label class="form-col-form-label" for="jenis_kelamins_id0">Jenis Kelamin <b style="color:red">*</b></label>
-                                                    <select class="form-control select2" id="jenis_kelamins_id0" name="jenis_kelamins_id[]">
-                                                        @foreach($tambah_jenis_kelamins as $jenis_kelamins)
-                                                            <option value="{{$jenis_kelamins->id_jenis_kelamins}}" {{ Request::old('jenis_kelamins_id.0') == $jenis_kelamins->id_jenis_kelamins ? $select='selected' : $select='' }}>{{$jenis_kelamins->nama_jenis_kelamins}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <label class="form-col-form-label" for="tanggal_lahir_registrasi_event_details0">Tanggal Lahir <b style="color:red">*</b></label>
-                                                    <input class="form-control {{ Yeah::validForm($errors->first('tanggal_lahir_registrasi_event_details.0')) }}" id="tanggal_lahir_registrasi_event_details0" type="date" name="tanggal_lahir_registrasi_event_details[]" value="{{Request::old('tanggal_lahir_registrasi_event_details.0')}}">
-                                                    {{Yeah::pesanErorForm($errors->first('tanggal_lahir_registrasi_event_details.0'))}}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-col-form-label" for="telepon_registrasi_event_details0">Telepon <b style="color:red">*</b></label>
-                                            <input class="form-control {{ Yeah::validForm($errors->first('telepon_registrasi_event_details.0')) }}" id="telepon_registrasi_event_details0" type="number" name="telepon_registrasi_event_details[]" value="{{Request::old('telepon_registrasi_event_details.0')}}">
-                                            {{Yeah::pesanErorForm($errors->first('telepon_registrasi_event_details.0'))}}
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <h4><hr/></h4>
-                                    </div>
-                                    <div class="col-12 col-center text-center">
-                                        <div class="form-group" style="margin-top: 35px;">
-                                            <button type="button" onclick="tambahForm(0)" class="btn btn-primary btn-md buttontambah" id="buttontambahform0">Tambah</button>
-                                            <button type="button" onclick="hapusForm(0)" class="btn btn-danger btn-md buttonhapus" id="buttonhapusform0" style="display: none; margin-left:20px">Hapus</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @else
-                            @php($get_total_form = count(Request::old('nama_registrasi_event_details')))
-				            @for($total_form = 0; $total_form < $get_total_form; $total_form++)
-                                <div id="dynamicform{{$total_form}}" class="formregistrasi">
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <h4>{{$total_form+1}}<hr/></h4>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label class="form-col-form-label" for="nama_registrasi_event_details{{$total_form}}">Nama <b style="color:red">*</b></label>
-                                                <input class="form-control {{ Yeah::validForm($errors->first('nama_registrasi_event_details.'.$total_form)) }}" id="nama_registrasi_event_details{{$total_form}}" type="text" name="nama_registrasi_event_details[]" value="{{Request::old('nama_registrasi_event_details.'.$total_form)}}">
-                                                {{Yeah::pesanErorForm($errors->first('nama_registrasi_event_details.'.$total_form))}}
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="form-col-form-label" for="email_registrasi_event_details0">Email <b style="color:red">*</b></label>
-                                                <input class="form-control {{ Yeah::validForm($errors->first('email_registrasi_event_details.'.$total_form)) }}" id="email_registrasi_event_details{{$total_form}}" type="email" name="email_registrasi_event_details[]" value="{{Request::old('email_registrasi_event_details.'.$total_form)}}">
-                                                {{Yeah::pesanErorForm($errors->first('email_registrasi_event_details.'.$total_form))}}
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        <label class="form-col-form-label" for="jenis_kelamins_id{{$total_form}}">Jenis Kelamin <b style="color:red">*</b></label>
-                                                        <select class="form-control select2" id="jenis_kelamins_id{{$total_form}}" name="jenis_kelamins_id[]">
-                                                            @foreach($tambah_jenis_kelamins as $jenis_kelamins)
-                                                                <option value="{{$jenis_kelamins->id_jenis_kelamins}}" {{ Request::old('jenis_kelamins_id.'.$total_form) == $jenis_kelamins->id_jenis_kelamins ? $select='selected' : $select='' }}>{{$jenis_kelamins->nama_jenis_kelamins}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        <label class="form-col-form-label" for="tanggal_lahir_registrasi_event_details{{$total_form}}">Tanggal Lahir <b style="color:red">*</b></label>
-                                                        <input class="form-control {{ Yeah::validForm($errors->first('tanggal_lahir_registrasi_event_details.'.$total_form)) }}" id="tanggal_lahir_registrasi_event_details{{$total_form}}" type="date" name="tanggal_lahir_registrasi_event_details[]" value="{{Request::old('tanggal_lahir_registrasi_event_details.'.$total_form)}}">
-                                                        {{Yeah::pesanErorForm($errors->first('tanggal_lahir_registrasi_event_details.'.$total_form))}}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="form-col-form-label" for="telepon_registrasi_event_details{{$total_form}}">Telepon <b style="color:red">*</b></label>
-                                                <input class="form-control {{ Yeah::validForm($errors->first('telepon_registrasi_event_details.'.$total_form)) }}" id="telepon_registrasi_event_details{{$total_form}}" type="number" name="telepon_registrasi_event_details[]" value="{{Request::old('telepon_registrasi_event_details.'.$total_form)}}">
-                                                {{Yeah::pesanErorForm($errors->first('telepon_registrasi_event_details.'.$total_form))}}
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <h4><hr/></h4>
-                                        </div>
-                                        <div class="col-12 col-center text-center">
-                                            <div class="form-group" style="margin-top: 35px;">
-												@if($total_form == $get_total_form - 1)
-											    	<button type="button" onclick="tambahForm({{$total_form}})" class="btn btn-primary btn-sm buttontambah" id="buttontambahform{{$total_form}}">Tambah</button>
-											    @else
-											    	<button type="button" onclick="tambahForm({{$total_form}})" class="btn btn-primary btn-sm buttontambah" id="buttontambahform{{$total_form}}" style="display: none;">Tambah</button>
-											    @endif
-
-											    @if($get_total_form == 1)
-											    	<button type="button" onclick="hapusForm({{$total_form}})" class="btn btn-danger btn-sm buttonhapus" id="buttonhapusform{{$total_form}}" style="display: none; margin-left: 20px;">Hapus</button>
-												@else
-											    	<button type="button" onclick="hapusForm({{$total_form}})" class="btn btn-danger btn-sm buttonhapus" id="buttonhapusform{{$total_form}}" style="margin-left:20px">Hapus</button>
-												@endif
-											</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endfor
-                        @endif
+                        <div class="formeventregistrasidetails"></div>
 					</div>
 			        <div class="card-footer right-align">
 			        	<button class="btn btn-sm btn-success" type="submit" name="simpan" value="simpan">
@@ -207,99 +91,29 @@
 	</div>
 
     <script type="text/javascript">
-        function hapusForm(no_form)
-        {
-            var gettotalform 	= $('.formregistrasi').length;
-            if(gettotalform != 1)
-            {
-                no_form_minus = no_form - 1;
-                if(no_form_minus != 0)
-                {
-                    attr = $('#buttontambahform'+no_form).attr('style');
-                    if (typeof attr !== typeof undefined && attr !== '') {
-                        $('#buttontambahform'+no_form_minus).hide();
-                    }
-                    else
-                        $('#buttontambahform'+no_form_minus).show();
-                }
-            }
-
-            $('#dynamicform'+no_form).remove();
-            var gettotalform 	= $('.formregistrasi').length;
-            if(gettotalform == 1)
-            {
-                $('.buttontambah').show();
-                $('.buttonhapus').hide();
-            }
-            else
-            {
-                var gettotaltambah = $('.buttontambah').length;
-                $('#buttontambahform'+(gettotaltambah - 1)).show();
-            }
-        }
-
-        function tambahForm(no_form){
-            noform          = no_form + 2;
-            no_form_plus 	= no_form + 1;
-            var component_item = $('<div id="dynamicform'+no_form_plus+'" class="formregistrasi">'+
-                                    '<div class="row">'+
-                                        '<div class="col-sm-12">'+
-                                            '<h4>'+noform+'<hr/></h4>'+
-                                        '</div>'+
-                                        '<div class="col-sm-6">'+
-                                            '<div class="form-group">'+
-                                                '<label class="form-col-form-label" for="nama_registrasi_event_details'+no_form_plus+'">Nama <b style="color:red">*</b></label>'+
-                                                '<input class="form-control {{ Yeah::validForm($errors->first("nama_registrasi_event_details.'+no_form_plus+'")) }}" id="nama_registrasi_event_details'+no_form_plus+'" type="text" name="nama_registrasi_event_details[]" value="{{Request::old("nama_registrasi_event_details.'+no_form_plus+'")}}">'+
-                                            '</div>'+
-                                            '<div class="form-group">'+
-                                                '<label class="form-col-form-label" for="email_registrasi_event_details'+no_form_plus+'">Email <b style="color:red">*</b></label>'+
-                                                '<input class="form-control {{ Yeah::validForm($errors->first("email_registrasi_event_details.'+no_form_plus+'")) }}" id="email_registrasi_event_details'+no_form_plus+'" type="email" name="email_registrasi_event_details[]" value="{{Request::old("email_registrasi_event_details.'+no_form_plus+'")}}">'+
-                                            '</div>'+
-                                        '</div>'+
-                                        '<div class="col-sm-6">'+
-                                            '<div class="row">'+
-                                                '<div class="col-sm-6">'+
-                                                    '<div class="form-group">'+
-                                                        '<label class="form-col-form-label" for="jenis_kelamins_id'+no_form_plus+'">Jenis Kelamin <b style="color:red">*</b></label>'+
-                                                        '<select class="form-control select2" id="jenis_kelamins_id'+no_form_plus+'" name="jenis_kelamins_id[]">'+
-                                                            @foreach($tambah_jenis_kelamins as $jenis_kelamins)
-                                                                '<option value="{{$jenis_kelamins->id_jenis_kelamins}}" {{ Request::old("jenis_kelamins_id.'+no_form_plus+'") == $jenis_kelamins->id_jenis_kelamins ? $select='selected' : $select='' }}>{{$jenis_kelamins->nama_jenis_kelamins}}</option>'+
-                                                            @endforeach
-                                                        '</select>'+
-                                                    '</div>'+
-                                                '</div>'+
-                                                '<div class="col-sm-6">'+
-                                                    '<div class="form-group">'+
-                                                        '<label class="form-col-form-label" for="tanggal_lahir_registrasi_event_details'+no_form_plus+'">Tanggal Lahir <b style="color:red">*</b></label>'+
-                                                        '<input class="form-control {{ Yeah::validForm($errors->first("tanggal_lahir_registrasi_event_details.'+no_form_plus+'")) }}" id="tanggal_lahir_registrasi_event_details'+no_form_plus+'" type="date" name="tanggal_lahir_registrasi_event_details[]" value="{{Request::old("tanggal_lahir_registrasi_event_details.'+no_form_plus+'")}}">'+
-                                                    '</div>'+
-                                                '</div>'+
-                                            '</div>'+
-                                            '<div class="form-group">'+
-                                                '<label class="form-col-form-label" for="telepon_registrasi_event_details'+no_form_plus+'">Telepon <b style="color:red">*</b></label>'+
-                                                '<input class="form-control {{ Yeah::validForm($errors->first("telepon_registrasi_event_details.'+no_form_plus+'")) }}" id="telepon_registrasi_event_details'+no_form_plus+'" type="number" name="telepon_registrasi_event_details[]" value="{{Request::old("telepon_registrasi_event_details.'+no_form_plus+'")}}">'+
-                                            '</div>'+
-                                        '</div>'+
-                                        '<div class="col-sm-12">'+
-                                            '<h4><hr/></h4>'+
-                                        '</div>'+
-                                        '<div class="col-12 col-center text-center">'+
-                                            '<div class="form-group" style="margin-top: 35px;">'+
-                                                '<button type="button" onclick="tambahForm('+no_form_plus+')" class="btn btn-primary btn-md buttontambah" id="buttontambahform'+no_form_plus+'">Tambah</button>'+
-                                                '<button type="button" onclick="hapusForm('+no_form_plus+')" class="btn btn-danger btn-md buttonhapus" id="buttonhapusform'+no_form_plus+'" style="margin-left:20px">Hapus</button>'+
-                                            '</div>'+
-                                        '</div>'+
-                                    '</div>'+
-                                '</div>');
-            component_item.find(".select2").select2({width:'100%'});
-            component_item.insertAfter("#dynamicform"+no_form);
-            $('#buttontambahform'+no_form).hide();
-            $('#buttonhapusform'+no_form).show();
-        }
-
-        $('#harga_tickets').val($('#tickets_id :selected').data('harga'));
         jQuery(document).ready(function () {
+            maxpemesanantickets = $('#tickets_id :selected').data('maxpemesanan');
+            $.ajax({
+                headers: { 'X-CSRF-Token': $('meta[name=_token]').attr('content') },
+                type: "POST",
+                url: "{{URL('/dashboard/registrasi_event/ambilformregistrasidetails')}}",
+                data: {max:maxpemesanantickets,id:0},
+                success: function(data){
+                    $('.formeventregistrasidetails').html(data)
+                },
+            });
+            $('#harga_tickets').val($('#tickets_id :selected').data('harga'));
             $('#tickets_id').on('change',function(){
+                maxpemesanantickets = $('#tickets_id :selected').data('maxpemesanan');
+                $.ajax({
+                    headers: { 'X-CSRF-Token': $('meta[name=_token]').attr('content') },
+                    type: "POST",
+                    url: "{{URL('/dashboard/registrasi_event/ambilformregistrasidetails')}}",
+                    data: {max:maxpemesanantickets,id:0},
+                    success: function(data){
+                        $('.formeventregistrasidetails').html(data)
+                    },
+                });
                 $('#harga_tickets').val($('#tickets_id :selected').data('harga'));
             });
         });

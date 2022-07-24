@@ -22,6 +22,7 @@
 									</div>
 			                        <input id="userfile_gambar_event" type="file" name="userfile_gambar_event">
 			                    </div>
+								{{Yeah::pesanErorFormFile($errors->first('userfile_gambar_event'))}}
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">

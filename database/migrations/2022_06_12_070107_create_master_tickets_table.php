@@ -23,6 +23,7 @@ return new class extends Migration
             $table->double('kuota_tickets');
             $table->double('sisa_kuota_tickets');
             $table->double('harga_tickets');
+            $table->double('max_pemesanan_tickets');
             $table->boolean('status_hapus_tickets')->default(0);
             $table->timestamps();
         });

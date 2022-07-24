@@ -20,6 +20,7 @@
 									<br/>
 			                        <input id="userfile_gambar_promo" type="file" name="userfile_gambar_promo">
 			                    </div>
+								{{Yeah::pesanErorFormFile($errors->first('userfile_gambar_promo'))}}
                             </div>
                             <div class="col-sm-12">
                                 <div class="form-group">

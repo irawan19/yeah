@@ -15,19 +15,3 @@ use App\Http\Controllers\Api\V1\EventController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::group(['prefix' => 'v1'], function(){
-    Route::group(['prefix' => 'data'], function(){
-        Route::get('/konfigurasiaplikasi', [DataController::class, 'konfigurasiaplikasi']);
-        Route::get('/jeniskelamin', [DataController::class, 'jeniskelamin']);
-        Route::get('/pembayaran', [DataController::class, 'pembayaran']);
-        Route::get('/statuspembayaran', [DataController::class, 'statuspembayaran']);
-    });
-
-    Route::group(['prefix' => 'event'], function() {
-        Route::get('/', [EventController::class, 'event']);
-        Route::get('/{id}', [EventController::class, 'eventdetail']);
-        Route::post('/registrasi', [EventController::class, 'registrasi']);
-        Route::post('/cekticket', [EventController::class, 'cekticket']);
-    });
-});

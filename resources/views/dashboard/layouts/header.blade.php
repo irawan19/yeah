@@ -14,18 +14,20 @@
 <ul class="c-header-nav ml-auto"></ul>
 <ul class="c-header-nav">
 	<li class="c-header-nav-item dropdown d-md-down-none mx-2"><a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-   		@php($total_notifikasi 					= 0)
+   		@php($registrasi_hari_ini 				= \App\Models\Registrasi_event_detail::whereRaw("date(created_at) = '".date('Y-m-d')."'")
+                                                                                  	->count())
+		@php($total_notifikasi 					= $registrasi_hari_ini)
    		<svg class="c-icon">
    		  	<use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-bell')}}"></use>
-   		</svg><span class="badge badge-pill badge-danger">{{$total_notifikasi}}</span></a>
+   		</svg><span class="badge badge-pill badge-success">{{$total_notifikasi}}</span></a>
    		<div class="dropdown-menu dropdown-menu-right dropdown-menu-lg pt-0" style="width:250px">
    			<div class="dropdown-header bg-light">
    				<strong>Ada {{$total_notifikasi}} Notifikasi</strong>
    			</div>
-   			<a class="dropdown-item" href="{{URL('dashboard/lemburan')}}">
-		   		<svg class="c-icon mr-2 text-danger">
+   			<a class="dropdown-item" href="{{URL('dashboard/registrasi_event')}}">
+		   		<svg class="c-icon mr-2 text-success">
 		   		  	<use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-notes')}}"></use>
-		   		</svg> Pesanan <span class="badge badge-pill badge-danger">0</span>
+		   		</svg> Registrasi <span class="badge badge-pill badge-success">{{$registrasi_hari_ini}}</span>
 		   	</a>
    		</div>
     </li>
