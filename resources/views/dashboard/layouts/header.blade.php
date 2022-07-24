@@ -19,7 +19,7 @@
                                                                                         ->join('master_events','events_id','=','master_events.id_events')
                                                                                         ->where('status_hapus_events',0)
                                                                                         ->where('status_hapus_tickets',0)
-																						->whereRaw("date(created_at) = '".date('Y-m-d')."'")
+																						->whereRaw("date(registrasi_event_details.created_at) = '".date('Y-m-d')."'")
 																						->count())
 		@php($total_notifikasi 					= $registrasi_hari_ini)
    		<svg class="c-icon">
