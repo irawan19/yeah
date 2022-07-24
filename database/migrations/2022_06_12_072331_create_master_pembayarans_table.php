@@ -15,7 +15,10 @@ return new class extends Migration
     {
         Schema::create('master_pembayarans', function (Blueprint $table) {
             $table->id('id_pembayarans');
+            $table->bigInteger('tipe_pembayarans_id')->default(0)->index();
             $table->string('nama_pembayarans');
+            $table->string('nama_rekening_pembayarans');
+            $table->string('no_rekening_pembayarans');
             $table->boolean('status_hapus_pembayarans')->default(0);
             $table->timestamps();
         });
