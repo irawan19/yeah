@@ -25,6 +25,7 @@ return new class extends Migration
             $table->longtext('disclaimer_events');
             $table->longtext('lokasi_events');
             $table->double('status_hapus_events')->default(0);
+            $table->string('kode_scanner_events');
             $table->timestamps();
         });
     }

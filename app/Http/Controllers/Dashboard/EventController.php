@@ -73,6 +73,7 @@ class EventController extends Controller
                 'disclaimer_events'             => 'required',
                 'lokasi_events'                 => 'required',
                 'tanggal_registrasi_events'     => 'required',
+                'kode_scanner_events'           => 'required',
             ];
             $error_pesan = [
                 'nama_events.required'              => 'Form Nama Harus Diisi.',
@@ -80,8 +81,9 @@ class EventController extends Controller
                 'userfile_gambar_event.required'    => 'Form Gambar Harus Diisi.',
                 'deskripsi_events.required'         => 'Form Deskripsi Harus Diisi.',
                 'disclaimer_events.required'        => 'Form Disclaimer Harus Diisi.',
-                'lokasi_events'                     => 'Form Lokasi Harus Diisi.',
-                'tanggal_registrasi_events'         => 'Form Tanggal Registrasi Harus Diisi.',
+                'lokasi_events.required'            => 'Form Lokasi Harus Diisi.',
+                'tanggal_registrasi_events.required'=> 'Form Tanggal Registrasi Harus Diisi.',
+                'kode_scanner_events.required'      => 'Form Kode Scanner Harus Diisi.',
             ];
             $this->validate($request, $aturan, $error_pesan);
 
@@ -107,6 +109,7 @@ class EventController extends Controller
                 'lokasi_events'             => $request->lokasi_events,
                 'mulai_registrasi_events'   => $mulai_registrasi,
                 'selesai_registrasi_events' => $selesai_registrasi,
+                'kode_scanner_events'       => $request->kode_scanner_events,
                 'status_hapus_events'       => 0,
                 'created_at'                => date('Y-m-d H:i:s'),
                 'updated_at'                => date('Y-m-d H:i:s')
@@ -199,6 +202,7 @@ class EventController extends Controller
                         'disclaimer_events'             => 'required',
                         'lokasi_events'                 => 'required',
                         'tanggal_registrasi_events'     => 'required',
+                        'kode_scanner_events'           => 'required',
                     ];
                     $error_pesan = [
                         'nama_events.required'              => 'Form Nama Harus Diisi.',
@@ -206,8 +210,9 @@ class EventController extends Controller
                         'userfile_gambar_event.required'    => 'Form Gambar Harus Diisi.',
                         'deskripsi_events.required'         => 'Form Deskripsi Harus Diisi.',
                         'disclaimer_events.required'        => 'Form Disclaimer Harus Diisi.',
-                        'lokasi_events'                     => 'Form Lokasi Harus Diisi.',
-                        'tanggal_registrasi_events'         => 'Form Tanggal Registrasi Harus Diisi.',
+                        'lokasi_events.required'            => 'Form Lokasi Harus Diisi.',
+                        'tanggal_registrasi_events.required'=> 'Form Tanggal Registrasi Harus Diisi.',
+                        'kode_scanner_events.required'      => 'Form Kode Scanner Harus Diisi.',
                     ];
                     $this->validate($request, $aturan, $error_pesan);
 
@@ -233,6 +238,7 @@ class EventController extends Controller
                         'deskripsi_events'          => $request->deskripsi_events,
                         'disclaimer_events'         => $request->disclaimer_events,
                         'lokasi_events'             => $request->lokasi_events,
+                        'kode_scanner_events'       => $request->kode_scanner_events,
                         'mulai_registrasi_events'   => $mulai_registrasi,
                         'selesai_registrasi_events' => $selesai_registrasi,
                         'updated_at'                => date('Y-m-d H:i:s')
@@ -247,14 +253,16 @@ class EventController extends Controller
                         'disclaimer_events'             => 'required',
                         'lokasi_events'                 => 'required',
                         'tanggal_registrasi_events'     => 'required',
+                        'kode_scanner_events'           => 'required',
                     ];
                     $error_pesan = [
                         'nama_events.required'              => 'Form Nama Harus Diisi.',
                         'tanggal_events.required'           => 'Form Tanggal Harus Diisi.',
                         'deskripsi_events.required'         => 'Form Deskripsi Harus Diisi.',
                         'disclaimer_events.required'        => 'Form Disclaimer Harus Diisi.',
-                        'lokasi_events'                     => 'Form Lokasi Harus Diisi.',
-                        'tanggal_registrasi_events'         => 'Form Tanggal Registrasi Harus Diisi.',
+                        'lokasi_events.required'            => 'Form Lokasi Harus Diisi.',
+                        'tanggal_registrasi_events.required'=> 'Form Tanggal Registrasi Harus Diisi.',
+                        'kode_scanner_events.required'      => 'Form Kode Scanner Harus Diisi.',
                     ];
                     $this->validate($request, $aturan, $error_pesan);
         
@@ -269,6 +277,7 @@ class EventController extends Controller
                         'deskripsi_events'          => $request->deskripsi_events,
                         'disclaimer_events'         => $request->disclaimer_events,
                         'lokasi_events'             => $request->lokasi_events,
+                        'kode_scanner_events'       => $request->kode_scanner_events,
                         'mulai_registrasi_events'   => $mulai_registrasi,
                         'selesai_registrasi_events' => $selesai_registrasi,
                         'updated_at'                => date('Y-m-d H:i:s')

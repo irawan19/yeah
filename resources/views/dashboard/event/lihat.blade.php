@@ -36,6 +36,7 @@
 					    			@endif
 				    				<th class="nowrap" width="50px">No</th>
 				    				<th class="nowrap">Tanggal</th>
+				    				<th class="nowrap">Kode Scanner</th>
 				    				<th class="nowrap">Nama</th>
 				    				<th class="nowrap">Lokasi</th>
 				    				<th class="nowrap">Mulai Registrasi</th>
@@ -65,6 +66,7 @@
 									    	@endif
 								    		<td class="nowrap">{{$no}}</td>
 								    		<td class="nowrap">{{Yeah::ubahDBKeTanggalwaktu($events->tanggal_events)}}</td>
+								    		<td class="nowrap">{{$events->kode_scanner_events}}</td>
 								    		<td class="nowrap">{{$events->nama_events}}</td>
 								    		<td class="nowrap">{{$events->lokasi_events}}</td>
 								    		<td class="nowrap">{{Yeah::ubahDBKeTanggalwaktu($events->mulai_registrasi_events)}}</td>
@@ -85,7 +87,8 @@
 								@else
 									<tr>
 										@if(Yeah::totalHakAkses($link_event) != 0)
-											<td colspan="9" class="center-align">Tidak ada data ditampilkan</td>
+											<td colspan="10" class="center-align">Tidak ada data ditampilkan</td>
+											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
@@ -95,7 +98,8 @@
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 										@else
-											<td colspan="8" class="center-align">Tidak ada data ditampilkan</td>
+											<td colspan="9" class="center-align">Tidak ada data ditampilkan</td>
+											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>

@@ -21,6 +21,11 @@
 							<td>{{Yeah::ubahDBKeTanggalwaktu($baca_events->tanggal_events)}}</td>
 						</tr>
 						<tr>
+							<th>Kode Scanner</th>
+							<th>:</th>
+							<td>{{$baca_events->kode_scanner_events}}</td>
+						</tr>
+						<tr>
 							<th>Nama</th>
 							<th>:</th>
 							<td>{{$baca_events->nama_events}}</td>

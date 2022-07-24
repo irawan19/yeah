@@ -31,6 +31,11 @@
                                     {{Yeah::pesanErorForm($errors->first('tanggal_events'))}}
                                 </div>
                                 <div class="form-group">
+                                    <label class="form-col-form-label" for="kode_scanner_events">Kode Scanner <b style="color:red">*</b></label>
+                                    <input class="form-control {{ Yeah::validForm($errors->first('kode_scanner_events')) }}" id="kode_scanner_events" type="text" name="kode_scanner_events" value="{{Request::old('kode_scanner_events') == '' ? $edit_events->kode_scanner_events : Request::old('kode_scanner_events')}}">
+                                    {{Yeah::pesanErorForm($errors->first('kode_scanner_events'))}}
+                                </div>
+                                <div class="form-group">
                                     <label class="form-col-form-label" for="nama_events">Nama <b style="color:red">*</b></label>
                                     <input class="form-control {{ Yeah::validForm($errors->first('nama_events')) }}" id="nama_events" type="text" name="nama_events" value="{{Request::old('nama_events') == '' ? $edit_events->nama_events : Request::old('nama_events')}}">
                                     {{Yeah::pesanErorForm($errors->first('nama_events'))}}
