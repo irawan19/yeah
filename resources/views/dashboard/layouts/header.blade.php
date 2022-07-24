@@ -14,8 +14,13 @@
 <ul class="c-header-nav ml-auto"></ul>
 <ul class="c-header-nav">
 	<li class="c-header-nav-item dropdown d-md-down-none mx-2"><a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-   		@php($registrasi_hari_ini 				= \App\Models\Registrasi_event_detail::whereRaw("date(created_at) = '".date('Y-m-d')."'")
-                                                                                  	->count())
+   		@php($registrasi_hari_ini 				= \App\Models\Registrasi_event_detail::join('registrasi_events','registrasi_events_id','=','registrasi_events.id_registrasi_events')
+                                                                                        ->join('master_tickets','tickets_id','=','master_tickets.id_tickets')
+                                                                                        ->join('master_events','events_id','=','master_events.id_events')
+                                                                                        ->where('status_hapus_events',0)
+                                                                                        ->where('status_hapus_tickets',0)
+																						->whereRaw("date(created_at) = '".date('Y-m-d')."'")
+																						->count())
 		@php($total_notifikasi 					= $registrasi_hari_ini)
    		<svg class="c-icon">
    		  	<use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-bell')}}"></use>
