@@ -75,13 +75,9 @@
 		    		<td>{{$registrasi_events->nama_status_pembayarans}}</td>
 					<td>
 						@if($registrasi_events->status_kedatangan_registrasi_events == false)
-							<svg class="c-icon" style="margin-right:5px; color:red">
-								<use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-x-circle')}}"></use>
-							</svg>
+							Tidak Datang
 						@else
-							<svg class="c-icon" style="margin-right:5px; color:green">
-								<use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-check-circle')}}"></use>
-							</svg>
+							Datang
 						@endif
 					</td>
 		    	</tr>
