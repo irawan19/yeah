@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\Master_konfigurasi_aplikasi;
+use Spatie\Sitemap\Sitemap;
+use Spatie\Sitemap\Tags\Url;
+
 //Dashboard
 use App\Http\Controllers\Dashboard\DashboardController as DashboardController;
 use App\Http\Controllers\Dashboard\KonfigurasiProfilController as DashboardKonfigurasiProfilController;
@@ -38,6 +42,14 @@ use App\Http\Controllers\Dashboard\KonfigurasiAplikasiController as DashboardKon
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/sitemap', function(){
+	$konfigurasiaplikasi = Master_konfigurasi_aplikasi::first();
+	$sitemap = Sitemap::create()
+						->add(url::create('/')->addImage(url('/'.$konfigurasiaplikasi->logo_konfigurasi_aplikasis), $konfigurasiaplikasi->nama_konfigurasi_aplikasis));
+	$sitemap->writeToFile(public_path('sitemap.xml'));
+	return redirect('public/sitemap.xml');
 });
 
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth:sanctum', config('jetstream.auth_session'), 'verified', 'cekuser']], function(){
