@@ -12,6 +12,9 @@ use App\Http\Controllers\Dashboard\TicketController as DashboardTicketController
 use App\Http\Controllers\Dashboard\PromoController as DashboardPromoController;
 use App\Http\Controllers\Dashboard\RegistrasiEventController as DashboardRegistrasiEventController;
 
+//Baca
+use App\Http\Controllers\Dashboard\PembayaranController as DashboardPembayaranController;
+
 //Sosial Media
 use App\Http\Controllers\Dashboard\MetaTagController as DashboardMetaTagController;
 use App\Http\Controllers\Dashboard\SosialMediaController as DashboardSosialMediaController;
@@ -105,6 +108,18 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth:sanctum', config('
                 Route::get('/cetakexcel', [DashboardRegistrasiEventController::class, 'cetakexcel']);
                 Route::post('/ambilformregistrasidetails', [DashboardRegistrasiEventController::class, 'ambilformregistrasidetails']);
             });
+    
+    //Pembayaran
+        Route::group(['prefix' => 'pembayaran'], function() {
+            Route::get('/', [DashboardPembayaranController::class, 'index']);
+            Route::get('/cari', [DashboardPembayaranController::class, 'cari']);
+            Route::get('/tambah', [DashboardPembayaranController::class, 'tambah']);
+            Route::post('/prosestambah', [DashboardPembayaranController::class, 'prosestambah']);
+            Route::get('/baca/{id}', [DashboardPembayaranController::class, 'baca']);
+            Route::get('/edit/{id}', [DashboardPembayaranController::class, 'edit']);
+            Route::post('/prosesedit/{id}', [DashboardPembayaranController::class, 'prosesedit']);
+            Route::get('/hapus/{id}', [DashboardPembayaranController::class, 'hapus']);
+        });
     
     //Sosial Media
         //Meta Tag
