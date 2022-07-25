@@ -15,7 +15,8 @@ class RegistrasiEventExport implements FromView, ShouldQueue
 
     public function view(): View
     {
-        $hasil_event = 0;
+        $hasil_event = \App\Models\Master_event::orderBy('tanggal_events','desc')
+                                                ->first()->id_events;
         if(!empty(session('hasil_event')))
             $hasil_event = session('hasil_event');
 
