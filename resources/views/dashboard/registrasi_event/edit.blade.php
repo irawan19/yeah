@@ -78,7 +78,7 @@
                                 <div class="form-group">
 									<label class="form-col-form-label" for="userfile_bukti_pembayaran">Bukti Pembayaran</label>
 									<br/>
-                                    @if(!empty($edit_registrasi_events->bukti_pembayaran_registrasi_events))
+                                    @if(!empty($edit_registrasi_events->bukti_pembayaran_registrasi_events) || $edit_registrasi_events->bukti_pembayaran_registrasi_events != $edit_registrasi_events->no_registrasi_events)
                                         <div class="form-group center-align">
                                             <a data-fancybox="gallery" href="{{URL::asset($edit_registrasi_events->bukti_pembayaran_registrasi_events)}}">
                                                 <img src="{{URL::asset($edit_registrasi_events->bukti_pembayaran_registrasi_events)}}" width="108">
