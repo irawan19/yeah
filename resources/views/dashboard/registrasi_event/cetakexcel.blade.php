@@ -1,7 +1,8 @@
 <table>
 	<tr>
-		<td colspan="11" style="font-weight: bold; text-align: center">Registrasi Event</td>
+		<td colspan="12" style="font-weight: bold; text-align: center">Registrasi Event</td>
 		<td style="display:none"></td>
+			<td style="display:none"></td>
 			<td style="display:none"></td>
 			<td style="display:none"></td>
 			<td style="display:none"></td>
@@ -16,7 +17,7 @@
 </table>
 <table>
 	<tr>
-		<td colspan="11" style="font-weight: bold; text-align: center">{{Yeah::ubahDBKeTanggalwaktu(date('Y-m-d H:i:s'))}}</td>
+		<td colspan="12" style="font-weight: bold; text-align: center">{{Yeah::ubahDBKeTanggalwaktu(date('Y-m-d H:i:s'))}}</td>
 		<td style="display:none"></td>
 		<td style="display:none"></td>
 		<td style="display:none"></td>
@@ -28,6 +29,7 @@
 		<td style="display:none"></td>
 		<td style="display:none"></td>
 		<td style="display:none"></td>
+			<td style="display:none"></td>
 	</tr>
 </table>
 <table>
@@ -43,7 +45,8 @@
 			<th>Nama</th>
 			<th>Jenis Kelamin</th>
 			<th>Tanggal Lahir</th>
-			<th>Status</th>
+			<th>Pembayaran</th>
+			<th>Kedatangan</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -70,6 +73,17 @@
 		    		<td>{{$registrasi_events->nama_jenis_kelamins}}</td>
 		    		<td>{{Yeah::ubahDBKeTanggal($registrasi_events->tanggal_lahir_registrasi_event_details)}}</td>
 		    		<td>{{$registrasi_events->nama_status_pembayarans}}</td>
+					<td>
+						@if($registrasi_events->status_kedatangan_registrasi_events == false)
+							<svg class="c-icon" style="margin-right:5px; color:red">
+								<use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-x-circle')}}"></use>
+							</svg>
+						@else
+							<svg class="c-icon" style="margin-right:5px; color:green">
+								<use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-check-circle')}}"></use>
+							</svg>
+						@endif
+					</td>
 		    	</tr>
 		    	@php($no++)
 		    @endforeach

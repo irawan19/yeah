@@ -68,7 +68,8 @@
 				    				<th class="nowrap">Nama</th>
 				    				<th class="nowrap">Jenis Kelamin</th>
 				    				<th class="nowrap">Tanggal Lahir</th>
-				    				<th class="nowrap">Status</th>
+				    				<th class="nowrap">Pembayaran</th>
+				    				<th class="nowrap">Kedatangan</th>
 				    			</tr>
 				    		</thead>
 				    		<tbody>
@@ -107,13 +108,25 @@
 								    		<td class="nowrap">{{$registrasi_events->nama_jenis_kelamins}}</td>
 								    		<td class="nowrap">{{Yeah::ubahDBKeTanggal($registrasi_events->tanggal_lahir_registrasi_event_details)}}</td>
 								    		<td class="nowrap">{{$registrasi_events->nama_status_pembayarans}}</td>
+								    		<td class="nowrap">
+												@if($registrasi_events->status_kedatangan_registrasi_events == false)
+													<svg class="c-icon" style="margin-right:5px; color:red">
+														<use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-x-circle')}}"></use>
+													</svg>
+												@else
+													<svg class="c-icon" style="margin-right:5px; color:green">
+														<use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-check-circle')}}"></use>
+													</svg>
+												@endif
+											</td>
 								    	</tr>
 								    	@php($no++)
 								    @endforeach
 								@else
 									<tr>
 										@if(Yeah::totalHakAkses($link_registrasi_event) != 0)
-											<td colspan="12" class="center-align">Tidak ada data ditampilkan</td>
+											<td colspan="13" class="center-align">Tidak ada data ditampilkan</td>
+											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
@@ -126,7 +139,8 @@
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 										@else
-											<td colspan="11" class="center-align">Tidak ada data ditampilkan</td>
+											<td colspan="12" class="center-align">Tidak ada data ditampilkan</td>
+											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
