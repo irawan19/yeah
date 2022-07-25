@@ -25,8 +25,27 @@
 								{{Yeah::pesanErorFormFile($errors->first('userfile_logo_pembayaran'))}}
                             </div>
                             <div class="col-sm-6">
+								<div class="form-group">
+									<label class="form-col-form-label" for="events_id">Event <b style="color:red">*</b></label>
+									<select class="form-control select2" id="events_id" name="events_id">
+										<option value="0">Semua Event</option>
+										@foreach($edit_events as $events)
+											@php($selected = '')
+											@if(Request::old('events_id') == '')
+												@if($events->id_events == $edit_pembayarans->events_id)
+													@php($selected = 'selected')
+												@endif
+											@else
+												@if($events->id_events == Request::old('events_id'))
+													@php($selected = 'selected')
+												@endif
+											@endif
+											<option value="{{$events->id_events}}" {{ $selected }}>{{$events->nama_events}}</option>
+										@endforeach
+									</select>
+								</div>
                                 <div class="form-group">
-                                    <label class="form-col-form-label" for="tipe_pembayarans_id">Event <b style="color:red">*</b></label>
+                                    <label class="form-col-form-label" for="tipe_pembayarans_id">Tipe <b style="color:red">*</b></label>
                                     <select class="form-control select2" id="tipe_pembayarans_id" name="tipe_pembayarans_id">
                                         @foreach($edit_tipe_pembayarans as $tipe_pembayarans)
                                             @php($selected = '')

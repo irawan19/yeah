@@ -21,6 +21,17 @@
 							<td>{{$baca_pembayarans->nama_tipe_pembayarans}}</td>
 						</tr>
 						<tr>
+							<th>Event</th>
+							<th>:</th>
+							<td>
+								@if($baca_pembayarans->id_events != null)
+									{{$baca_pembayarans->nama_events}}
+								@else
+									Semua Event
+								@endif
+							</td>
+						</tr>
+						<tr>
 							<th>Nama</th>
 							<th>:</th>
 							<td>{{$baca_pembayarans->nama_pembayarans}}</td>

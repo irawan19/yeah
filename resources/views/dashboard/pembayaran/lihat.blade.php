@@ -35,6 +35,7 @@
 					    				<th class="nowrap" width="5px"></th>
 					    			@endif
 				    				<th class="nowrap" width="50px">No</th>
+				    				<th class="nowrap">Event</th>
 				    				<th class="nowrap">Tipe</th>
 				    				<th class="nowrap">Logo</th>
 				    				<th class="nowrap">Nama</th>
@@ -62,6 +63,13 @@
 											    </td>
 									    	@endif
 								    		<td class="nowrap">{{$no}}</td>
+								    		<td class="nowrap">
+												@if($pembayarans->id_events != null)
+													{{$pembayarans->nama_events}}
+												@else
+													Semua Event
+												@endif
+											</td>
 								    		<td class="nowrap">{{$pembayarans->nama_tipe_pembayarans}}</td>
 								    		<td class="nowrap">
                                                 <a data-fancybox="gallery" href="{{URL::asset($pembayarans->logo_pembayarans)}}">
@@ -75,13 +83,15 @@
 								@else
 									<tr>
 										@if(Yeah::totalHakAkses($link_pembayaran) != 0)
-											<td colspan="5" class="center-align">Tidak ada data ditampilkan</td>
+											<td colspan="6" class="center-align">Tidak ada data ditampilkan</td>
+											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 										@else
-											<td colspan="4" class="center-align">Tidak ada data ditampilkan</td>
+											<td colspan="5" class="center-align">Tidak ada data ditampilkan</td>
+											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>

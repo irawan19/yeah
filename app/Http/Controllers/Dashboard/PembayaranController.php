@@ -17,6 +17,7 @@ class PembayaranController extends Controller
             $url_sekarang              	    = $request->fullUrl();
             $data['hasil_kata']        	    = '';
         	$data['lihat_pembayarans']      = \App\Models\Master_pembayaran::join('master_tipe_pembayarans','tipe_pembayarans_id','=','master_tipe_pembayarans.id_tipe_pembayarans')
+                                                                            ->leftJoin('master_events','events_id','=','master_events.id_events')
                                                                             ->where('status_hapus_pembayarans',0)
                                                                             ->orderBy('nama_tipe_pembayarans','asc')
                                                                             ->orderBy('nama_pembayarans','asc')
@@ -40,6 +41,7 @@ class PembayaranController extends Controller
             $hasil_kata                   	    = $request->cari_kata;
             $data['hasil_kata']           	    = $hasil_kata;
             $data['lihat_pembayarans']          = \App\Models\Master_pembayaran::join('master_tipe_pembayarans','tipe_pembayarans_id','=','master_tipe_pembayarans.id_tipe_pembayarans')
+                                                                                ->leftJoin('master_events','events_id','=','master_events.id_events')
                                                                                 ->where('nama_tipe_pembayarans', 'LIKE', '%'.$hasil_kata.'%')
                                                                                 ->where('status_hapus_pembayarans',0)
                                                                                 ->orWhere('nama_pembayarans', 'LIKE', '%'.$hasil_kata.'%')
@@ -60,6 +62,9 @@ class PembayaranController extends Controller
         $link_pembayaran = 'pembayaran';
         if(Yeah::hakAkses($link_pembayaran,'tambah') == 'true')
         {
+            $data['tambah_events']              = \App\Models\Master_event::where('status_hapus_events',0)
+                                                                            ->orderBy('tanggal_events','desc')
+                                                                            ->get();
             $data['tambah_tipe_pembayarans']    = \App\Models\Master_tipe_pembayaran::orderBy('nama_tipe_pembayarans')
                                                                                     ->get();            
             return view('dashboard.pembayaran.tambah',$data);
@@ -103,6 +108,7 @@ class PembayaranController extends Controller
             $data = [
             	'id_pembayarans'      	            => $id_pembayarans,
                 'tipe_pembayarans_id'               => $request->tipe_pembayarans_id,
+                'events_id'                         => $request->events_id,
                 'nama_pembayarans'    	            => $request->nama_pembayarans,
                 'logo_pembayarans'                  => $path_logo_pembayaran.$nama_logo_pembayaran,
                 'no_rekening_pembayarans'           => $no_rekening_pembayarans,
@@ -148,6 +154,7 @@ class PembayaranController extends Controller
             if($cek_pembayarans != 0)
             {
                 $data['baca_pembayarans']    = \App\Models\Master_pembayaran::join('master_tipe_pembayarans','tipe_pembayarans_id','=','master_tipe_pembayarans.id_tipe_pembayarans')
+                                                                            ->leftJoin('master_events','events_id','=','master_events.id_events')
                                                                             ->where('id_pembayarans',$id_pembayarans)
                                                                             ->first();
                 return view('dashboard.pembayaran.baca',$data);
@@ -169,6 +176,9 @@ class PembayaranController extends Controller
             $cek_pembayarans = \App\Models\Master_pembayaran::where('id_pembayarans',$id_pembayarans)->first();
             if(!empty($cek_pembayarans))
             {
+                $data['edit_events']            = \App\Models\Master_event::where('status_hapus_events',0)
+                                                                            ->orderBy('tanggal_events','desc')
+                                                                            ->get();
                 $data['edit_tipe_pembayarans']  = \App\Models\Master_tipe_pembayaran::orderBy('nama_tipe_pembayarans','asc')
                                                                                     ->get();
                 $data['edit_pembayarans']       = $cek_pembayarans;
@@ -225,6 +235,7 @@ class PembayaranController extends Controller
         
                     $data = [
                         'tipe_pembayarans_id'               => $request->tipe_pembayarans_id,
+                        'events_id'                         => $request->events_id,
                         'nama_pembayarans'    	            => $request->nama_pembayarans,
                         'logo_pembayarans'                  => $path_logo_pembayaran.$nama_logo_pembayaran,
                         'no_rekening_pembayarans'           => $no_rekening_pembayarans,
@@ -254,6 +265,7 @@ class PembayaranController extends Controller
         
                     $data = [
                         'tipe_pembayarans_id'               => $request->tipe_pembayarans_id,
+                        'events_id'                         => $request->events_id,
                         'nama_pembayarans'    	            => $request->nama_pembayarans,
                         'no_rekening_pembayarans'           => $no_rekening_pembayarans,
                         'nama_rekening_pembayarans'         => $nama_rekening_pembayarans,
