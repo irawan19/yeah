@@ -102,7 +102,7 @@ class EventController extends Controller
             	'id_events'      	        => $id_events,
                 'users_id'                  => Auth::user()->id,
                 'nama_events'    	        => $request->nama_events,
-                'tanggal_events'            => Yeah::ubahTanggalKeDB($request->tanggal_events),
+                'tanggal_events'            => Yeah::ubahTanggalwaktuKeDB($request->tanggal_events),
                 'gambar_events'             => $path_gambar_event.$nama_gambar_event,
                 'deskripsi_events'          => $request->deskripsi_events,
                 'disclaimer_events'         => $request->disclaimer_events,
@@ -233,7 +233,7 @@ class EventController extends Controller
                     $data = [
                         'nama_events'    	        => $request->nama_events,
                         'users_id'                  => Auth::user()->id,
-                        'tanggal_events'            => Yeah::ubahTanggalKeDB($request->tanggal_events),
+                        'tanggal_events'            => Yeah::ubahTanggalwaktuKeDB($request->tanggal_events),
                         'gambar_events'             => $path_gambar_event.$nama_gambar_event,
                         'deskripsi_events'          => $request->deskripsi_events,
                         'disclaimer_events'         => $request->disclaimer_events,
@@ -273,7 +273,7 @@ class EventController extends Controller
                     $data = [
                         'nama_events'    	        => $request->nama_events,
                         'users_id'                  => Auth::user()->id,
-                        'tanggal_events'            => Yeah::ubahTanggalKeDB($request->tanggal_events),
+                        'tanggal_events'            => Yeah::ubahTanggalwaktuKeDB($request->tanggal_events),
                         'deskripsi_events'          => $request->deskripsi_events,
                         'disclaimer_events'         => $request->disclaimer_events,
                         'lokasi_events'             => $request->lokasi_events,
