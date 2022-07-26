@@ -120,8 +120,6 @@ class AdminController extends Controller
                     'level_sistems_id'      => $request->level_sistems_id,
                     'user_statuses_id'      => 2,
                     'tipe_users_id'         => 1,
-                    'no_telp'               => '',
-                    'alamat'                => '',
                 ];
             }
             else
@@ -156,8 +154,6 @@ class AdminController extends Controller
                     'level_sistems_id'      => $request->level_sistems_id,
                     'user_statuses_id'      => 2,
                     'tipe_users_id'         => 1,
-                    'no_telp'               => '',
-                    'alamat'                => '',
                 ];
             }
             \App\Models\User::insert($data);
