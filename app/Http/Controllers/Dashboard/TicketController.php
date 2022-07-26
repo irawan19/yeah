@@ -194,8 +194,8 @@ class TicketController extends Controller
         {
             if (!is_numeric($id_tickets))
                 $id_tickets = 0;
-            $cek_tickets = \App\Models\Master_ticket::where('id_tickets',$id_tickets)->count();
-            if($cek_tickets != 0)
+            $cek_tickets = \App\Models\Master_ticket::where('id_tickets',$id_tickets)->first();
+            if(!empty($cek_tickets))
             {
                 $aturan = [
                     'events_id'                         => 'required',
@@ -217,28 +217,45 @@ class TicketController extends Controller
                     'max_pemesanan_tickets.min'         => 'Form Max Pemesanan Minimal Harus Diisi 1.',
                 ];
                 $this->validate($request, $aturan, $error_pesan);
-        
-                $data = [
-                    'events_id'                     => $request->events_id,
-                    'users_id'                      => Auth::user()->id,
-                    'nama_tickets'    	            => $request->nama_tickets,
-                    'harga_tickets'                 => Yeah::ubahHargaKeDB($request->harga_tickets),
-                    'kuota_tickets'                 => $request->kuota_tickets,
-                    'sisa_kuota_tickets'            => $request->kuota_tickets,
-                    'deskripsi_tickets'             => $request->deskripsi_tickets,
-                    'keterangan_tickets'            => $request->keterangan_tickets,
-                    'max_pemesanan_tickets'         => $request->max_pemesanan_tickets,
-                    'updated_at'                    => date('Y-m-d H:i:s')
-                ];
-                \App\Models\Master_ticket::where('id_tickets', $id_tickets)
-                                        ->update($data);
 
-                if(request()->session()->get('halaman') != '')
-                    $redirect_halaman    = request()->session()->get('halaman');
-                else
-                    $redirect_halaman  = 'dashboard/ticket';
+                $total_registrasi_events = \App\Models\Registrasi_event_detail::join('registrasi_events','registrasi_events_id','=','registrasi_events.id_registrasi_events')
+                                                                                ->where('tickets_id',$id_tickets)
+                                                                                ->count();
+
+                $sisa_kuota_tickets = $request->kuota_tickets - $total_registrasi_events;
                 
-                return redirect($redirect_halaman);
+                if($sisa_kuota_tickets < 0)
+                {
+                    $setelah_simpan = [
+                        'alert'  => 'error',
+                        'text'   => 'Kuota lebih kecil dari total yang sudah registrasi. Total registrasi = '.$total_registrasi_events.', kuota yang dimasukkan = '.$request->kuota_tickets,
+                    ];
+                    return redirect()->back()->with('setelah_simpan', $setelah_simpan);
+                }
+                else
+                {
+                    $data = [
+                        'events_id'                     => $request->events_id,
+                        'users_id'                      => Auth::user()->id,
+                        'nama_tickets'    	            => $request->nama_tickets,
+                        'harga_tickets'                 => Yeah::ubahHargaKeDB($request->harga_tickets),
+                        'kuota_tickets'                 => $request->kuota_tickets,
+                        'sisa_kuota_tickets'            => $sisa_kuota_tickets,
+                        'deskripsi_tickets'             => $request->deskripsi_tickets,
+                        'keterangan_tickets'            => $request->keterangan_tickets,
+                        'max_pemesanan_tickets'         => $request->max_pemesanan_tickets,
+                        'updated_at'                    => date('Y-m-d H:i:s')
+                    ];
+                    \App\Models\Master_ticket::where('id_tickets', $id_tickets)
+                                            ->update($data);
+
+                    if(request()->session()->get('halaman') != '')
+                        $redirect_halaman    = request()->session()->get('halaman');
+                    else
+                        $redirect_halaman  = 'dashboard/ticket';
+                    
+                    return redirect($redirect_halaman);
+                }
             }
             else
                 return redirect('dashboard/ticket');
