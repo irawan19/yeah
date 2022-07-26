@@ -69,6 +69,7 @@
 				    				<th class="nowrap">Jenis Kelamin</th>
 				    				<th class="nowrap">Tanggal Lahir</th>
 				    				<th class="nowrap">Pembayaran</th>
+				    				<th class="nowrap">Bukti</th>
 				    				<th class="nowrap">Kedatangan</th>
 				    			</tr>
 				    		</thead>
@@ -108,6 +109,15 @@
 								    		<td class="nowrap">{{$registrasi_events->nama_jenis_kelamins}}</td>
 								    		<td class="nowrap">{{Yeah::ubahDBKeTanggal($registrasi_events->tanggal_lahir_registrasi_event_details)}}</td>
 								    		<td class="nowrap">{{$registrasi_events->nama_status_pembayarans}}</td>
+											<td>
+											@if(!empty($registrasi_events->bukti_pembayaran_registrasi_events) && $registrasi_events->bukti_pembayaran_registrasi_events != $registrasi_events->no_registrasi_events)
+												<div class="form-group center-align">
+													<a data-fancybox="gallery" href="{{URL::asset($registrasi_events->bukti_pembayaran_registrasi_events)}}">
+														<img src="{{URL::asset($registrasi_events->bukti_pembayaran_registrasi_events)}}" width="50">
+													</a>
+												</div>
+											@endif
+											</td>
 								    		<td class="nowrap">
 												@if($registrasi_events->status_kedatangan_registrasi_events == false)
 													<svg class="c-icon" style="margin-right:5px; color:red">
@@ -125,7 +135,8 @@
 								@else
 									<tr>
 										@if(Yeah::totalHakAkses($link_registrasi_event) != 0)
-											<td colspan="13" class="center-align">Tidak ada data ditampilkan</td>
+											<td colspan="14" class="center-align">Tidak ada data ditampilkan</td>
+											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
@@ -139,7 +150,8 @@
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 										@else
-											<td colspan="12" class="center-align">Tidak ada data ditampilkan</td>
+											<td colspan="13" class="center-align">Tidak ada data ditampilkan</td>
+											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
 											<td style="display:none"></td>
