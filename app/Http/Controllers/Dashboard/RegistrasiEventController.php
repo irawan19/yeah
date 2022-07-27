@@ -424,6 +424,20 @@ class RegistrasiEventController extends Controller
                 \App\Models\Registrasi_event::where('id_registrasi_events',$id_registrasi_events)
                                             ->update($update_registrasi_events);
 
+                                            
+                $ambil_tickets = \App\Models\Master_ticket::where('id_tickets',$request->tickets_id)
+                                            ->first();
+                if(!empty($ambil_tickets))
+                {
+                    $sisa_kuota_tickets     = $ambil_tickets->sisa_kuota_tickets;
+                    $hitung_kuota_tickets   = $sisa_kuota_tickets - $jumlah_registrasi_event_details;
+                    $tickets_data           = [
+                        'sisa_kuota_tickets'    => $hitung_kuota_tickets
+                    ];
+                    \App\Models\Master_ticket::where('id_tickets',$request->tickets_id)
+                                            ->update($tickets_data);
+                }
+
                 if(request()->session()->get('halaman') != '')
                     $redirect_halaman    = request()->session()->get('halaman');
                 else
@@ -432,30 +446,76 @@ class RegistrasiEventController extends Controller
                 return redirect($redirect_halaman);
             }
             else
-                return redirect('registrasi_event');
+                return redirect('dashboard/registrasi_event');
         }
         else
             return redirect('dashboard/registrasi_event');
     }
 
-    public function hapus($id_registrasi_events=0)
+    public function hapus($id_registrasi_event_details=0)
     {
         $link_registrasi_event = 'registrasi_event';
         if(Yeah::hakAkses($link_registrasi_event,'hapus') == 'true')
         {
-            if (!is_numeric($id_registrasi_events))
-                $id_registrasi_events = 0;
-            $cek_registrasi_events = \App\Models\Registrasi_event::where('id_registrasi_events',$id_registrasi_events)->count();
-            if($cek_registrasi_events != 0)
+            if (!is_numeric($id_registrasi_event_details))
+                $id_registrasi_event_details = 0;
+            $cek_registrasi_event_details = \App\Models\Registrasi_event_detail::where('id_registrasi_event_details',$id_registrasi_event_details)
+                                                                                ->first();
+            if(!empty($cek_registrasi_event_details))
             {
-                \App\Models\Registrasi_event_detail::where('registrasi_events_id',$id_registrasi_events)
+                $cek_registrasi_events = \App\Models\Registrasi_event::where('id_registrasi_events',$cek_registrasi_event_details->registrasi_events_id)->first();
+                if(!empty($cek_registrasi_events))
+                {
+                    $ambil_tickets = \App\Models\Master_ticket::where('id_tickets',$cek_registrasi_events->tickets_id)
+                                                            ->first();
+                    if(!empty($ambil_tickets))
+                    {
+                        $sisa_kuota_tickets     = $ambil_tickets->sisa_kuota_tickets;
+                        $hitung_kuota_tickets   = $sisa_kuota_tickets + 1;
+                        $tickets_data           = [
+                            'sisa_kuota_tickets'    => $hitung_kuota_tickets
+                        ];
+                        \App\Models\Master_ticket::where('id_tickets',$request->tickets_id)
+                                    ->update($tickets_data);
+                    }
+
+                    \App\Models\Registrasi_event_detail::where('id_registrasi_event_details',$id_registrasi_event_details)
+                                                        ->delete();
+
+                    $jumlah_registrasi_events           = $cek_registrasi_events->jumlah_registrasi_events;
+                    $jumlah_registrasi_event_details    = \App\Models\Registrasi_event_detail::where('registrasi_events_id',$id_registrasi_events)
+                                                                                            ->count();
+                    if($jumlah_registrasi_event_details != 0)
+                    {
+                        if($jumlah_registrasi_events > $jumlah_registrasi_event_details)
+                        {
+                            $registrasi_events_data = [
+                                'jumlah_registrasi_events'      => $jumlah_registrasi_event_details,
+                                'total_harga_registrasi_events' => $cek_registrasi_events->harga_registrasi_events * $jumlah_registrasi_event_details,
+                                'updated_at'                    => date('Y-m-d H:i:s')
+                            ];
+                            \App\Models\Registrasi_event::where('id_registrasi_events',$id_registrasi_events)
+                                                        ->update($registrasi_events_data);
+                        }
+                        else
+                        {
+                            \App\Models\Registrasi_event::where('id_registrasi_events',$id_registrasi_events)
+                                                                ->delete();
+                        }
+                    }
+                    else
+                    {
+                        \App\Models\Registrasi_event::where('id_registrasi_events',$id_registrasi_events)
                                                             ->delete();
-                \App\Models\Registrasi_event::where('id_registrasi_events',$id_registrasi_events)
-                                                    ->delete();
-            	return response()->json(["sukses" => "sukses"], 200);
+                    }
+
+                    return response()->json(["sukses" => "sukses"], 200);
+                }
+                else
+                    return redirect('dashboard/registrasi_event');
             }
             else
-                return redirect('registrasi_event');
+                return redirect('dashboard/registrasi_event');
         }
         else
             return redirect('dashboard/registrasi_event');
@@ -470,6 +530,6 @@ class RegistrasiEventController extends Controller
             return Excel::download(New RegistrasiEventExport, 'registrasi_event_'.Yeah::ubahDBKeTanggal($tanggal_hari_ini).'.xlsx');
         }
         else
-            return redirect('registrasi_event');
+            return redirect('dashboard/registrasi_event');
     }
 }

@@ -132,3 +132,14 @@
         </div>
     @endfor
 @endif
+
+<script type="text/javascript">
+    function kosongkanForm(idForm)
+    {
+        $('#jenis_kelamins_id'+idForm).val(1).trigger('change');
+        $('#nama_registrasi_event_details'+idForm).val("");
+        $('#email_registrasi_event_details'+idForm).val("");
+        $('#tanggal_lahir_registrasi_event_details'+idForm).val("");
+        $('#telepon_registrasi_event_details'+idForm).val("");
+    }
+</script>
