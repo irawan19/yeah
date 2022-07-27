@@ -424,7 +424,7 @@ class RegistrasiEventController extends Controller
                 \App\Models\Registrasi_event::where('id_registrasi_events',$id_registrasi_events)
                                             ->update($update_registrasi_events);
 
-                                            
+
                 $ambil_tickets = \App\Models\Master_ticket::where('id_tickets',$request->tickets_id)
                                             ->first();
                 if(!empty($ambil_tickets))
@@ -466,6 +466,7 @@ class RegistrasiEventController extends Controller
                 $cek_registrasi_events = \App\Models\Registrasi_event::where('id_registrasi_events',$cek_registrasi_event_details->registrasi_events_id)->first();
                 if(!empty($cek_registrasi_events))
                 {
+                    $id_registrasi_events = $cek_registrasi_events->id_registrasi_events;
                     $ambil_tickets = \App\Models\Master_ticket::where('id_tickets',$cek_registrasi_events->tickets_id)
                                                             ->first();
                     if(!empty($ambil_tickets))
@@ -475,7 +476,7 @@ class RegistrasiEventController extends Controller
                         $tickets_data           = [
                             'sisa_kuota_tickets'    => $hitung_kuota_tickets
                         ];
-                        \App\Models\Master_ticket::where('id_tickets',$request->tickets_id)
+                        \App\Models\Master_ticket::where('id_tickets',$ambil_tickets->id_tickets)
                                     ->update($tickets_data);
                     }
 
