@@ -52,6 +52,7 @@ class RegistrasiEventExport implements FromView, ShouldQueue
                                                                             ->where('id_events',$hasil_event)
                                                                             ->orderBy('registrasi_events.created_at','desc')
                                                                             ->get();
+        $data['hasil_event']   = $hasil_event;
         return view('dashboard.registrasi_event.cetakexcel',$data);
     }
 }

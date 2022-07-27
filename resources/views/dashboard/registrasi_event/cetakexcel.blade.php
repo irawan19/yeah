@@ -29,7 +29,124 @@
 		<td style="display:none"></td>
 		<td style="display:none"></td>
 		<td style="display:none"></td>
-			<td style="display:none"></td>
+		<td style="display:none"></td>
+	</tr>
+</table>
+<table>
+	<tr>
+		<td colspan="12" style="font-weight: bold; text-align: center"></td>
+		<td style="display:none"></td>
+		<td style="display:none"></td>
+		<td style="display:none"></td>
+		<td style="display:none"></td>
+		<td style="display:none"></td>
+		<td style="display:none"></td>
+		<td style="display:none"></td>
+		<td style="display:none"></td>
+		<td style="display:none"></td>
+		<td style="display:none"></td>
+		<td style="display:none"></td>
+		<td style="display:none"></td>
+	</tr>
+</table>
+
+<table>
+<thead>
+		<tr>
+			<th>Ticket</th>
+			<th>Harga</th>
+			<th>Datang</th>
+			<th>Tidak Datang</th>
+			<th>Jumlah</th>
+			<th>Sisa</th>
+			<th>Terjual</th>
+			<th>Total Harga</th>
+		</tr>
+	</thead>
+	<tbody>
+		@php($lihat_tickets = \App\Models\Master_ticket::where('events_id',$hasil_event)->get())
+		@php($total_datang 			= 0)
+		@php($total_tidak_datang 	= 0)
+		@php($total_tickets 		= 0)
+		@php($total_sisa_tickets 	= 0)
+		@php($total_terjual_tickets = 0)
+		@php($total_harga_tickets 	= 0)
+		@if(!$lihat_tickets->isEmpty())
+			@foreach($lihat_tickets as $tickets)
+				<tr>
+					<td>{{$tickets->nama_tickets}}</td>
+					<td align="right">{{Yeah::ubahDBKeHarga($tickets->harga_tickets)}}</td>
+					<td align="right">
+						@php($lihat_datang = \App\Models\Registrasi_event_detail::join('registrasi_events','registrasi_events_id','=','registrasi_events.id_registrasi_events')
+																					->join('master_tickets','tickets_id','=','master_tickets.id_tickets')
+																					->where('events_id',$hasil_event)
+																					->where('tickets_id',$tickets->id_tickets)
+																					->where('status_kedatangan_registrasi_events',1)
+																					->count())
+						{{$lihat_datang}}
+					</td>
+					<td align="right">
+						@php($lihat_tidak_datang = \App\Models\Registrasi_event_detail::join('registrasi_events','registrasi_events_id','=','registrasi_events.id_registrasi_events')
+																					->join('master_tickets','tickets_id','=','master_tickets.id_tickets')
+																					->where('events_id',$hasil_event)
+																					->where('tickets_id',$tickets->id_tickets)
+																					->where('status_kedatangan_registrasi_events',0)
+																					->count())
+						{{$lihat_tidak_datang}}
+					</td>
+					<td align="right">{{$tickets->kuota_tickets}}</td>
+					<td align="right">{{$tickets->sisa_kuota_tickets}}</td>
+					<td align="right">{{$tickets->kuota_tickets - $tickets->sisa_kuota_tickets}}</td>
+					<td align="right">{{Yeah::ubahDBKeHarga(($tickets->kuota_tickets - $tickets->sisa_kuota_tickets) * $tickets->harga_tickets)}}</td>
+				</tr>
+				@php($total_datang 			+= $lihat_datang)
+				@php($total_tidak_datang 	+= $lihat_tidak_datang)
+				@php($total_tickets 		+= $tickets->kuota_tickets)
+				@php($total_sisa_tickets 	+= $tickets->sisa_kuota_tickets)
+				@php($total_terjual_tickets += $tickets->kuota_tickets - $tickets->sisa_kuota_tickets)
+				@php($total_harga_tickets 	+= ($tickets->kuota_tickets - $tickets->sisa_kuota_tickets) * $tickets->harga_tickets)
+			@endforeach
+		@else
+			<tr>
+				<td colspan="8" align="center">Tidak ada data ditampilkan</td>
+				<td style="display:none"></td>
+				<td style="display:none"></td>
+				<td style="display:none"></td>
+				<td style="display:none"></td>
+				<td style="display:none"></td>
+				<td style="display:none"></td>
+				<td style="display:none"></td>
+			</tr>
+		@endif
+	</tbody>
+	<tfoot>
+		<tr>
+			<th align="center" colspan="2">Total</th>
+			<th align="right">{{$total_datang}}</th>
+			<th align="right">{{$total_tidak_datang}}</th>
+			<th align="right">{{$total_tickets}}</th>
+			<th align="right">{{$total_sisa_tickets}}</th>
+			<th align="right">{{$total_terjual_tickets}}</th>
+			<th align="right">{{Yeah::ubahDBKeHarga($total_harga_tickets)}}</th>
+		</tr>
+	</tfoot>
+</table>
+
+<table>
+	<tr>
+		<td colspan="12" style="font-weight: bold; text-align: center"></td>
+		<td style="display:none"></td>
+		<td style="display:none"></td>
+		<td style="display:none"></td>
+		<td style="display:none"></td>
+		<td style="display:none"></td>
+		<td style="display:none"></td>
+		<td style="display:none"></td>
+		<td style="display:none"></td>
+		<td style="display:none"></td>
+		<td style="display:none"></td>
+		<td style="display:none"></td>
+		<td style="display:none"></td>
 	</tr>
 </table>
 <table>
@@ -85,7 +202,7 @@
 		    @endforeach
 		@else
 			<tr>
-				<td colspan="12" class="center-align">Tidak ada data ditampilkan</td>
+				<td colspan="12" align="center">Tidak ada data ditampilkan</td>
 				<td style="display:none"></td>
 				<td style="display:none"></td>
 				<td style="display:none"></td>
