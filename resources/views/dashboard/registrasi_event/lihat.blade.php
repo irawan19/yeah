@@ -85,7 +85,6 @@
 																										->where('tickets_id',$tickets->id_tickets)
 																										->where('status_kedatangan_registrasi_events',1)
 																										->where('status_hapus_tickets',0)
-																										->where('status_hapus_events',0)
 																										->count())
 											{{$lihat_datang}}
 										</td>
@@ -96,7 +95,6 @@
 																										->where('tickets_id',$tickets->id_tickets)
 																										->where('status_kedatangan_registrasi_events',0)
 																										->where('status_hapus_tickets',0)
-																										->where('status_hapus_events',0)
 																										->count())
 											{{$lihat_tidak_datang}}
 										</td>
