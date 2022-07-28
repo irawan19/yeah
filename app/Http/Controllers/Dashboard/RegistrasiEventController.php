@@ -18,7 +18,8 @@ class RegistrasiEventController extends Controller
             $data['link_registrasi_event']          = $link_registrasi_event;
             $url_sekarang              	            = $request->fullUrl();
             $data['hasil_kata']        	            = '';
-            $cek_event                              = \App\Models\Master_event::orderBy('tanggal_events','desc')
+            $cek_event                              = \App\Models\Master_event::where('status_hapus_events',0)
+                                                                                ->orderBy('tanggal_events','desc')
                                                                                 ->first();
             if(!empty($cek_event))
                 $hasil_event                        = $cek_event->id_events;
