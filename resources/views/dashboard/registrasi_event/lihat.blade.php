@@ -64,7 +64,9 @@
 							</tr>
 						</thead>
 						<tbody>
-							@php($lihat_tickets = \App\Models\Master_ticket::where('events_id',$hasil_event)->get())
+							@php($lihat_tickets = \App\Models\Master_ticket::where('events_id',$hasil_event)
+																			->where('status_hapus_tickets',0)
+																			->get())
 							@php($total_datang 			= 0)
 							@php($total_tidak_datang 	= 0)
 							@php($total_tickets 		= 0)
