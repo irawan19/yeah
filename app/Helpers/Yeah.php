@@ -438,9 +438,9 @@ class Yeah
 			return $jumlah_tanggal_waktu;
 		}
 
-		public static function potongText($text='')
+		public static function potongText($text='',$jumlah)
 		{
-			return Str::limit(strip_tags($text),100);
+			return Str::limit(strip_tags($text),$jumlah);
 		}
 
 		public static function angkaAlphabet($number=1)
