@@ -26,7 +26,7 @@
    		</svg><span class="badge badge-pill badge-success">{{$total_notifikasi}}</span></a>
    		<div class="dropdown-menu dropdown-menu-right dropdown-menu-lg pt-0" style="width:250px;">
    			<div class="dropdown-header bg-light">
-   				<strong>Ada {{$total_notifikasi}} Registrasi Baru</strong>
+   				<strong>Ada {{$total_notifikasi}} Registrasi Baru {{Yeah::ubahDBKeTanggal(date('Y-m-d'))}}</strong>
    			</div>
 			@foreach($registrasi_hari_ini->get() as $registrasi_hari_ini)
 				<div class="dropdown-header bg-warning py-2">
