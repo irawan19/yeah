@@ -32,7 +32,7 @@
 				<a class="dropdown-item" href="{{URL('dashboard/registrasi_event')}}">
 					<svg class="c-icon mr-2 text-success">
 						<use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-user')}}"></use>
-					</svg> {{$registrasi_hari_ini->nama_registrasi_event_details}}
+					</svg> {{$registrasi_hari_ini->no_registrasi_events.' - '.$registrasi_hari_ini->nama_registrasi_event_details}}
 				</a>
 			@endforeach
    		</div>
