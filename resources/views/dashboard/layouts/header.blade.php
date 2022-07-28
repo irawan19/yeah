@@ -24,15 +24,18 @@
    		<svg class="c-icon">
    		  	<use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-bell')}}"></use>
    		</svg><span class="badge badge-pill badge-success">{{$total_notifikasi}}</span></a>
-   		<div class="dropdown-menu dropdown-menu-right dropdown-menu-lg pt-0" style="width:250px">
+   		<div class="dropdown-menu dropdown-menu-right dropdown-menu-lg pt-0" style="width:250px;">
    			<div class="dropdown-header bg-light">
    				<strong>Ada {{$total_notifikasi}} Registrasi Baru</strong>
    			</div>
 			@foreach($registrasi_hari_ini->get() as $registrasi_hari_ini)
+				<div class="dropdown-header bg-warning py-2">
+					<div class="fw-semibold" style="color:black !important">{{$registrasi_hari_ini->nama_tickets}}</div>
+				</div>
 				<a class="dropdown-item" href="{{URL('dashboard/registrasi_event')}}">
 					<svg class="c-icon mr-2 text-success">
 						<use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-user')}}"></use>
-					</svg> {{$registrasi_hari_ini->no_registrasi_events.' - '.$registrasi_hari_ini->nama_registrasi_event_details}}
+					</svg>{{$registrasi_hari_ini->no_registrasi_events.' - '.$registrasi_hari_ini->nama_registrasi_event_details}}
 				</a>
 			@endforeach
    		</div>
