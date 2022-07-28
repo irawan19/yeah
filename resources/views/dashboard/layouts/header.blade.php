@@ -19,9 +19,8 @@
                                                                                         ->join('master_events','events_id','=','master_events.id_events')
                                                                                         ->where('status_hapus_events',0)
                                                                                         ->where('status_hapus_tickets',0)
-																						->whereRaw("date(registrasi_event_details.created_at) = '".date('Y-m-d')."'")
-																						->count())
-		@php($total_notifikasi 					= $registrasi_hari_ini)
+																						->whereRaw("date(registrasi_event_details.created_at) = '".date('Y-m-d')."'"))
+		@php($total_notifikasi 					= $registrasi_hari_ini->count())
    		<svg class="c-icon">
    		  	<use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-bell')}}"></use>
    		</svg><span class="badge badge-pill badge-success">{{$total_notifikasi}}</span></a>
@@ -29,11 +28,13 @@
    			<div class="dropdown-header bg-light">
    				<strong>Ada {{$total_notifikasi}} Notifikasi</strong>
    			</div>
-   			<a class="dropdown-item" href="{{URL('dashboard/registrasi_event')}}">
-		   		<svg class="c-icon mr-2 text-success">
-		   		  	<use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-notes')}}"></use>
-		   		</svg> Registrasi <span class="badge badge-pill badge-success">{{$registrasi_hari_ini}}</span>
-		   	</a>
+			@foreach($registrasi_hari_ini->get() as $registrasi_hari_ini)
+				<a class="dropdown-item" href="{{URL('dashboard/registrasi_event')}}">
+					<svg class="c-icon mr-2 text-success">
+						<use xlink:href="{{URL::asset('public/template/back/assets/icons/coreui/free.svg#cil-user')}}"></use>
+					</svg> {{$registrasi_hari_ini->nama_registrasi_event_details}}
+				</a>
+			@endforeach
    		</div>
     </li>
 	<li class="c-header-nav-item dropdown mr-3">
