@@ -147,6 +147,9 @@ class RegistrasiEventController extends Controller
         $link_registrasi_event = 'registrasi_event';
         if(Yeah::hakAkses($link_registrasi_event,'tambah') == 'true')
         {
+            $id_registrasi_events       = Yeah::autoIncrementKey('registrasi_events','id_registrasi_events');
+            $harga_registrasi_events    = Yeah::ubahHargaKeDB($request->harga_tickets);
+
             if(!empty($request->userfile_bukti_pembayaran))
             {
                 $aturan = [
@@ -162,9 +165,6 @@ class RegistrasiEventController extends Controller
                     'userfile_bukti_pembayaran.required'            => 'Form Bukti Pembayaran Harus Diisi.',
                 ];
                 $this->validate($request, $aturan, $error_pesan);
-
-                $id_registrasi_events       = Yeah::autoIncrementKey('registrasi_events','id_registrasi_events');
-                $harga_registrasi_events    = Yeah::ubahHargaKeDB($request->harga_tickets);
 
                 $nama_bukti_pembayaran = date('Ymd').date('His').str_replace(')','',str_replace('(','',str_replace(' ','-',$request->file('userfile_bukti_pembayaran')->getClientOriginalName())));
                 $path_bukti_pembayaran = './public/uploads/bukti_pembayaran/';
@@ -200,9 +200,6 @@ class RegistrasiEventController extends Controller
                 ];
                 $this->validate($request, $aturan, $error_pesan);
 
-                $id_registrasi_events       = Yeah::autoIncrementKey('registrasi_events','id_registrasi_events');
-                $harga_registrasi_events    = Yeah::ubahHargaKeDB($request->harga_tickets);
-
                 $registrasi_events_data = [
                     'id_registrasi_events'                  => $id_registrasi_events,
                     'tickets_id'                            => $request->tickets_id,
@@ -217,12 +214,11 @@ class RegistrasiEventController extends Controller
                     'no_registrasi_events'                  => Yeah::noRegistrasi(),
                 ];
             }
-            \App\Models\Registrasi_event::insert($registrasi_events_data);
 
             $jumlah_registrasi_event_details = 0;
             foreach($request->jenis_kelamins_id as $key => $jenis_kelamins)
             {
-                if(!empty($request->nama_registrasi_event_details))
+                if(!empty($request->nama_registrasi_event_details[$key]))
                 {
                     $registrasi_event_details_data = [
                         'id_registrasi_event_details'                   => Yeah::autoIncrementKey('registrasi_event_details','id_registrasi_event_details'),
@@ -240,6 +236,7 @@ class RegistrasiEventController extends Controller
                     $jumlah_registrasi_event_details += 1;
                 }
             }
+            \App\Models\Registrasi_event::insert($registrasi_events_data);
 
             $update_registrasi_events = [
                 'jumlah_registrasi_events'          => $jumlah_registrasi_event_details,
@@ -398,7 +395,7 @@ class RegistrasiEventController extends Controller
                 $jumlah_registrasi_event_details = 0;
                 foreach($request->jenis_kelamins_id as $key => $jenis_kelamins)
                 {
-                    if(!empty($request->nama_registrasi_event_details))
+                    if(!empty($request->nama_registrasi_event_details[$key]))
                     {
                         $registrasi_event_details_data = [
                             'id_registrasi_event_details'                   => Yeah::autoIncrementKey('registrasi_event_details','id_registrasi_event_details'),
