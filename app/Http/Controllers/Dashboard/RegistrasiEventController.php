@@ -323,6 +323,7 @@ class RegistrasiEventController extends Controller
             $cek_registrasi_events = \App\Models\Registrasi_event::where('id_registrasi_events',$id_registrasi_events)->first();
             if(!empty($cek_registrasi_events))
             {
+                $harga_registrasi_events    = Yeah::ubahHargaKeDB($request->harga_tickets);
                 if(!empty($request->userfile_bukti_pembayaran))
                 {
                     $aturan = [
@@ -338,8 +339,6 @@ class RegistrasiEventController extends Controller
                         'userfile_bukti_pembayaran.required'            => 'Form Bukti Pembayaran Harus Diisi.',
                     ];
                     $this->validate($request, $aturan, $error_pesan);
-
-                    $harga_registrasi_events    = Yeah::ubahHargaKeDB($request->harga_tickets);
 
                     $bukti_pembayaran_lama        = $cek_registrasi_events->bukti_pembayaran_registrasi_events;
                     if (file_exists($bukti_pembayaran_lama))
@@ -374,8 +373,6 @@ class RegistrasiEventController extends Controller
                         'status_pembayarans_id.required'            => 'Form Status Pembayaran Harus Diisi.',
                     ];
                     $this->validate($request, $aturan, $error_pesan);
-
-                    $harga_registrasi_events    = Yeah::ubahHargaKeDB($request->harga_tickets);
 
                     $registrasi_events_data = [
                         'tickets_id'                            => $request->tickets_id,
