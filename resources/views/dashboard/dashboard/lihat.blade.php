@@ -33,15 +33,15 @@
 				<div class="card" style="min-height: 225px;background-color: white">
 				    <div class="card-body pb-0">
 				    	<div class="row">
-				    		<div class="col-sm-6">
-					        	<div style="max-width: 350px;text-align: center; margin-top: 20px">
-					        		<img src="{{URL::asset($lihat_konfigurasi_aplikasis->logo_text_konfigurasi_aplikasis)}}" width="256px">
+				    		<div class="col-sm-12">
+					        	<div style="text-align: center;">
+					        		<img src="{{URL::asset($lihat_konfigurasi_aplikasis->logo_text_konfigurasi_aplikasis)}}">
 					        	</div>
 					        </div>
-				    		<div class="col-sm-6">
-				    			<div style="margin-top: 70px; text-align: center">
+				    		<div class="col-sm-12">
+				    			<div class="center-align">
 				        			<p style="font-weight: bold; font-size: 20px; margin-bottom: 5px">Halo, {{Auth::user()->name}}</p>
-				        			<p style="font-size: 16px">Selamat Datang di halaman dashboard</p>
+				        			<p style="font-size: 16px">Selamat Datang di halaman dashboard {{$lihat_konfigurasi_aplikasis->nama_konfigurasi_aplikasis}}</p>
 				    			</div>
 				    		</div>
 				    	</div>
@@ -60,7 +60,7 @@
 					                    </svg>
 					                </div>
 					                <div class="text-value-lg">{{Yeah::konversiNilai($total_event)}} <span>{{Yeah::konversiNilaiString($total_event)}}</span></div>
-					                <div>Event</div>
+					                <div class="textnotifberanda">Event</div>
 					            </div>
 					            <div class="c-chart-wrapper mt-3 mx-3" style="height:70px;"></div>
 					        </div>
@@ -76,7 +76,7 @@
 					                    </svg>
 					                </div>
 					                <div class="text-value-lg">{{Yeah::konversiNilai($total_ticket)}} <span>{{Yeah::konversiNilaiString($total_ticket)}}</span></div>
-					                <div>Ticket</div>
+					                <div class="textnotifberanda">Ticket</div>
 					            </div>
 					            <div class="c-chart-wrapper mt-3 mx-3" style="height:70px;"></div>
 					        </div>
@@ -92,7 +92,7 @@
 					                    </svg>
 					                </div>
 					                <div class="text-value-lg">{{Yeah::konversiNilai($total_promo)}} <span>{{Yeah::konversiNilaiString($total_promo)}}</span></div>
-					                <div>Promo</div>
+					                <div class="textnotifberanda">Promo</div>
 					            </div>
 					            <div class="c-chart-wrapper mt-3 mx-3" style="height:70px;"></div>
 					        </div>
@@ -108,7 +108,7 @@
 					                    </svg>
 					                </div>
 					                <div class="text-value-lg">{{Yeah::konversiNilai($total_registrasi)}} <span>{{Yeah::konversiNilaiString($total_registrasi)}}</span></div>
-					                <div>Registrasi</div>
+					                <div class="textnotifberanda">Registrasi</div>
 					            </div>
 					            <div class="c-chart-wrapper mt-3 mx-3" style="height:70px;"></div>
 					        </div>

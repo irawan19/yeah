@@ -102,6 +102,12 @@
 		.c-sidebar .c-sidebar-minimizer:hover{
 			background: #DCDCDC;
 		}
+		@media(min-width: 576px) and (max-width:744px)
+		{
+			.textnotifberanda{
+				display:none;
+			}
+		}
 		@media (max-width: 768px)
 	    {
 	    	.jam{
@@ -114,7 +120,7 @@
 	    		background-color: #fff !important;
 	    	}
 	    	.c-header-brand-minimized{
-	    		width: 90px;
+	    		width: 128px;
 	    	}
 		}
 	    @media (min-width: 768px)
@@ -126,6 +132,9 @@
 		    	box-shadow: none !important;
 		    	position: relative;
 		    }
+			.c-header-brand{
+				display:none
+			}
 	    }
 
 		#ui-datepicker-div{
@@ -180,11 +189,6 @@
 	        padding-top: 10px;
 	        color: red;
 	    }
-		.c-sidebar-nav-dropdown.c-show > .c-sidebar-nav-dropdown-items{
-			height: auto;
-			min-width: 1000px;
-			overflow: auto !important;
-		}
 	    .row-center {
 	        margin: 0 auto;
 	    }
